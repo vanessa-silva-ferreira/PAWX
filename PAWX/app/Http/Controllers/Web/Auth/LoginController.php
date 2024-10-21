@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Web\Auth;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthController extends Controller
+class LoginController extends Controller
 {
     // FROM https://laravel.com/docs/11.x/authentication
-    public function authenticate(Request $request): RedirectResponse
+    public function login (Request $request): RedirectResponse
     {
         // This validates the incoming request data.
         // It ensures that an email and password are provided, and that the email is in a valid format.
@@ -22,10 +22,10 @@ class AuthController extends Controller
         // Auth::attempt($credentials) tries to authenticate the user with the provided credentials.
         // If successful, it regenerates the session to prevent session fixation attacks.
         // It then redirects the user to their intended destination (or 'dashboard' if no intended URL was stored).
-        if (Auth::attempt($credentials)){
+        if (Auth::attempt($credentials, $request->boolean('remember'))){
             $request->session()->regenerate();
 
-            return redirect()->intended('dashboard');
+            return redirect()->intended('admin-dashboard');
         }
 
         // If authentication fails, it redirects back to the previous page with an error message,
