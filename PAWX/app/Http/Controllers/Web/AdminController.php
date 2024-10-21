@@ -12,6 +12,11 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function dashboard(){
+        return view('dashboards.admin-dashboard');
+    }
+
     public function index()
     {
         //
