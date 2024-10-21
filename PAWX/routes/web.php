@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\Auth\LoginController;
+use App\Http\Controllers\Web\Auth\LogoutController;
 use App\Http\Controllers\Web\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,6 @@ Route::get('register', [RegisterController::class, 'showRegistrationForm'])->nam
 Route::post('register', [RegisterController::class, 'register']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
-
+    Route::get('/logout', "LogoutController@logout");
+    Route::get('/admin', [AdminController::class, 'dashboard']);
 });
