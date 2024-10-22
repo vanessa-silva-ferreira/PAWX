@@ -14,9 +14,6 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-
-
-
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -32,23 +29,6 @@ class RegisterController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
-
-
-
-
-//        $request->validate([
-//            'name' => 'required|string|max:255',
-//            'email' => 'required|string|email|max:255|unique:users',
-//            'password' => 'required|string|min:8|confirmed',
-//        ]);
-//
-//        $user = User::create([
-//            'name' => $request->name,
-//            'email' => $request->email,
-//            'password' => Hash::make($request->password),
-//        ]);
-//
-//        Auth::login($user);
 
         return redirect()->route('dashboard')->with('success', 'Registration successful!');
     }
