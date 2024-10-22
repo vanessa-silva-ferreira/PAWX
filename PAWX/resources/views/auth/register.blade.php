@@ -1,18 +1,16 @@
 <p>Register Account</p>
 
+<script src="https://cdn.tailwindcss.com"></script>
 
-<form method="POST" action="{{ url('register') }}">
+<form method="POST" action="{{ url('register') }}" class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg">
     @csrf
-    <div class="form-group">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
-
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
-
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-
-    </div>
-    <button type="submit" class="mt-2 mb-5 btn btn-primary">Submit</button>
+    <x-form.input ref="name" title="Name" placeholder="Enter your name" />
+    <x-form.input ref="email" title="Email" type="email" placeholder="Enter your email" />
+    <x-form.input ref="password" title="Password" type="password" placeholder="Enter your password" />
 </form>
+
+
+
+
+
+

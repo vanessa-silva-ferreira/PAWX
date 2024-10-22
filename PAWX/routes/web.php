@@ -17,5 +17,5 @@ Route::post('register', [RegisterController::class, 'register']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', "LogoutController@logout");
-    Route::get('/admin', [AdminController::class, 'dashboard']);
+    Route::get('/admins', [AdminController::class, 'dashboard']);
 });

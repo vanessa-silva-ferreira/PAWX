@@ -25,7 +25,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))){
             $request->session()->regenerate();
 
-            return redirect('admin/');
+            return redirect('admins/');
         }
 
         // If authentication fails, it redirects back to the previous page with an error message,
