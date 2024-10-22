@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\AdminController;
+//use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\LogoutController;
 use App\Http\Controllers\Web\Auth\RegisterController;
@@ -17,5 +17,5 @@ Route::post('register', [RegisterController::class, 'register']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', "LogoutController@logout");
-    Route::get('/admins', [AdminController::class, 'dashboard']);
+    //Route::get('/admins', [AdminController::class, 'dashboard']);
 });
