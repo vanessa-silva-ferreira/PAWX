@@ -9,6 +9,12 @@ use App\Models\Employee;
 
 class EmployeeController extends Controller
 {
+
+    public function dashboard(){
+        return view('dashboards.employees.employee-dashboard');
+
+    }
+
     /**
      * Display a listing of the resource.
      */

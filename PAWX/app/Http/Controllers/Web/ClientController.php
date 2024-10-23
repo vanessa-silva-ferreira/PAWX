@@ -9,6 +9,10 @@ use App\Models\Client;
 
 class ClientController extends Controller
 {
+    public function dashboard(){
+        return view('dashboards.clients.client-dashboard');
+    }
+
     /**
      * Display a listing of the resource.
      */

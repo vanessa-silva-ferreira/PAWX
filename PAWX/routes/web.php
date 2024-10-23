@@ -37,11 +37,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:employee'])->group(function () {
-    Route::get('/employee/dashboard', [EmployeeController::class, 'dashboard']);
+    Route::get('/employees', [EmployeeController::class, 'dashboard']);
+    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
 Route::middleware(['auth', 'role:client'])->group(function () {
-    Route::get('/client/dashboard', [ClientController::class, 'dashboard']);
+    Route::get('/clients', [ClientController::class, 'dashboard']);
+    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
 Route::get('/test-role', function () {
