@@ -63,4 +63,44 @@ class User extends Authenticatable
         return $this->hasOne(Client::class);
     }
 
+    public function getRole(): string
+    {
+        if ($this->admin()->exists()) return 'admin';
+        if ($this->employee()->exists()) return 'employee';
+        if ($this->client()->exists()) return 'client';
+        return 'user'; // default role
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return $this->getRole() === $role;
+    }
+
+    public function hasAnyRole(array $roles): bool
+    {
+        return in_array($this->getRole(), $roles);
+    }
+
+//    public function getRole(): ?string
+//    {
+//        if ($this->admin()->exists()) {
+//            return 'admin';
+//        } elseif ($this->employee()->exists()) {
+//            return 'employee';
+//        } elseif ($this->client()->exists()) {
+//            return 'client';
+//        }
+//
+//        return null;
+//    }
+//
+//    public function hasRole(string $role): bool
+//    {
+//        return $this->getRole() === $role;
+//    }
+//
+//    public function hasAnyRole(array $roles): bool
+//    {
+//        return in_array($this->getRole(), $roles);
+//    }
 }

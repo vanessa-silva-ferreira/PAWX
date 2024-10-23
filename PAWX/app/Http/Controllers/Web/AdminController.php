@@ -1,13 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
-use App\Http\Requests\StoreClientRequest;
-use App\Http\Requests\UpdateClientRequest;
-use App\Models\Client;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAdminRequest;
+use App\Http\Requests\UpdateAdminRequest;
+use App\Models\Admin;
 
-class ClientController extends Controller
+class AdminController extends Controller
 {
+
+    public function dashboard(){
+        return view('dashboards.admins.admin-dashboard');
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -27,7 +34,7 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreClientRequest $request)
+    public function store(StoreAdminRequest $request)
     {
         //
     }
@@ -35,7 +42,7 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Client $client)
+    public function show(Admin $admin)
     {
         //
     }
@@ -43,7 +50,7 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Client $client)
+    public function edit(Admin $admin)
     {
         //
     }
@@ -51,7 +58,7 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateClientRequest $request, Client $client)
+    public function update(UpdateAdminRequest $request, Admin $admin)
     {
         //
     }
@@ -59,7 +66,7 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Client $client)
+    public function destroy(Admin $admin)
     {
         //
     }
