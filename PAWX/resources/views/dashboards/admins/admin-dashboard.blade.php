@@ -1,5 +1,3 @@
-
-
 <h1>Dashboard do Admin</h1>
 <x-action.logout/>
 

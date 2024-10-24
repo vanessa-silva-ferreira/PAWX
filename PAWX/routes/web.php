@@ -18,34 +18,25 @@ Route::post('login', [LoginController::class, 'login']);
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
 
-/*
-Route::middleware('auth')->group(function () {
-    Route::get('/logout', "LogoutController@logout");
-    //Route::get('/admins', [AdminController::class, 'dashboard']);
-});
-*/
 
-//Route::middleware(['auth', 'role:admin'])->group(function () {
-//    Route::get('/admins', [AdminController::class, 'dashboard']);
-//    Route::get('/logout', "LogoutController@logout");
-//});
-
+// So it doesn't give conflicts when logging out in different roles
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
+// ADMIN
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admins', [AdminController::class, 'dashboard']);
 });
-
+// EMPLOYEE
 Route::middleware(['auth', 'role:employee'])->group(function () {
     Route::get('/employees', [EmployeeController::class, 'dashboard']);
 });
-
+// CLIENT
 Route::middleware(['auth', 'role:client'])->group(function () {
-    Route::get('/clients', [ClientController::class, 'dashboard']);
-    //Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+    Route::get('/clients', [ClientController::class, 'dashboard'])->name('clients');
 });
+
 
 Route::get('/test-role', function () {
     $user = auth()->user();
