@@ -30,7 +30,11 @@ class RegisterController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect()->route('')->with('success', 'Registration successful!');
+        $user->client()->create();
+
+        Auth::login($user);
+
+        return redirect()->route('clients')->with('success', 'Registration successful!');
     }
 
     public function showRegistrationForm(){

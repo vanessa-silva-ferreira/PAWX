@@ -22,11 +22,29 @@ class LoginController extends Controller
         // Auth::attempt($credentials) tries to authenticate the user with the provided credentials.
         // If successful, it regenerates the session to prevent session fixation attacks.
         // It then redirects the user to their intended destination (or 'dashboard' if no intended URL was stored).
-        if (Auth::attempt($credentials, $request->boolean('remember'))){
+//        if (Auth::attempt($credentials, $request->boolean('remember'))){
+//            $request->session()->regenerate();
+//
+//            return redirect('admins/');
+//        }
+
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect('admins/');
+            $user = Auth::user();
+            switch ($user->getRole()) {
+                case 'admin':
+                    return redirect('admins/');
+                case 'employee':
+                    return redirect('employees/');
+                case 'client':
+                    return redirect('clients/');
+                default:
+                    return redirect('/');
+            }
         }
+
+
 
         // If authentication fails, it redirects back to the previous page with an error message,
         // only keeping the email input to prevent password exposure.
