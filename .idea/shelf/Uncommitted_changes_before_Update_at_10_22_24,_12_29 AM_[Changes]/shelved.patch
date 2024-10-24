@@ -1,0 +1,133 @@
+Index: PAWX/resources/views/auth/register.blade.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><p>Register Account</p>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PAWX/resources/views/auth/register.blade.php b/PAWX/resources/views/auth/register.blade.php
+--- a/PAWX/resources/views/auth/register.blade.php	(revision 817074f51b1ec908d1c85a924f8f7e589a310540)
++++ b/PAWX/resources/views/auth/register.blade.php	(date 1729545323431)
+@@ -1,1 +1,18 @@
+ <p>Register Account</p>
++
++
++<form method="POST" action="{{ url('register') }}">
++    @csrf
++    <div class="form-group">
++        <label for="name">Name:</label><br>
++        <input type="text" id="name" name="name" required><br><br>
++
++        <label for="email">Email:</label><br>
++        <input type="email" id="email" name="email" required><br><br>
++
++        <label for="password">Password:</label><br>
++        <input type="password" id="password" name="password" required><br><br>
++
++    </div>
++    <button type="submit" class="mt-2 mb-5 btn btn-primary">Submit</button>
++</form>
+Index: PAWX/app/Http/Controllers/Web/Auth/RegisterController.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\n\nnamespace App\\Http\\Controllers\\Web\\Auth;\n\nuse App\\Http\\Controllers\\Controller;\nuse App\\Models\\User;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\Hash;\nuse Illuminate\\Support\\Facades\\Auth;\n\nclass RegisterController extends Controller\n{\n\n    public function register(Request $request)\n    {\n        $request->validate([\n            'name' => 'required|string|max:255',\n            'email' => 'required|string|email|max:255|unique:users',\n            'password' => 'required|string|min:8|confirmed',\n        ]);\n\n        $user = User::create([\n            'name' => $request->name,\n            'email' => $request->email,\n            'password' => Hash::make($request->password),\n        ]);\n\n        Auth::login($user);\n\n        return redirect()->route('dashboard')->with('success', 'Registration successful!');\n    }\n\n    public function showRegistrationForm(){\n        return view('auth.register');\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PAWX/app/Http/Controllers/Web/Auth/RegisterController.php b/PAWX/app/Http/Controllers/Web/Auth/RegisterController.php
+--- a/PAWX/app/Http/Controllers/Web/Auth/RegisterController.php	(revision 817074f51b1ec908d1c85a924f8f7e589a310540)
++++ b/PAWX/app/Http/Controllers/Web/Auth/RegisterController.php	(date 1729545615441)
+@@ -5,6 +5,9 @@
+ use App\Http\Controllers\Controller;
+ use App\Models\User;
+ use Illuminate\Http\Request;
++use App\Http\Requests\StoreUserRequest;
++use App\Http\Requests\UpdateUserRequest;
++use Illuminate\Support\Facades\Storage;
+ use Illuminate\Support\Facades\Hash;
+ use Illuminate\Support\Facades\Auth;
+ 
+@@ -13,6 +16,15 @@
+ 
+     public function register(Request $request)
+     {
++
++        $this->validate($request, [
++            'name' => 'required',
++            'email' => 'required|email|unique:users',
++            'password' => 'required|min:6',
++        ]);
++
++        User::create($request->all());
++        /*
+         $request->validate([
+             'name' => 'required|string|max:255',
+             'email' => 'required|string|email|max:255|unique:users',
+@@ -24,10 +36,10 @@
+             'email' => $request->email,
+             'password' => Hash::make($request->password),
+         ]);
++        */
++       // Auth::login($user);
+ 
+-        Auth::login($user);
+-
+-        return redirect()->route('dashboard')->with('success', 'Registration successful!');
++        return redirect('/dashboard');
+     }
+ 
+     public function showRegistrationForm(){
+Index: PAWX/routes/web.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\n\nuse App\\Http\\Controllers\\Web\\AdminController;\nuse App\\Http\\Controllers\\Web\\Auth\\LoginController;\nuse App\\Http\\Controllers\\Web\\Auth\\LogoutController;\nuse App\\Http\\Controllers\\Web\\Auth\\RegisterController;\nuse Illuminate\\Support\\Facades\\Route;\n\nRoute::get('/', function () {\n    return view('welcome');\n});\n\nRoute::get('login', [LoginController::class, 'showLoginForm'])->name('login');\nRoute::post('login', [LoginController::class, 'login']);\nRoute::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');\nRoute::post('register', [RegisterController::class, 'register']);\n\nRoute::middleware('auth')->group(function () {\n    Route::get('/logout', \"LogoutController@logout\");\n    Route::get('/admin', [AdminController::class, 'dashboard']);\n});\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PAWX/routes/web.php b/PAWX/routes/web.php
+--- a/PAWX/routes/web.php	(revision 817074f51b1ec908d1c85a924f8f7e589a310540)
++++ b/PAWX/routes/web.php	(date 1729546400539)
+@@ -12,8 +12,16 @@
+ 
+ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+ Route::post('login', [LoginController::class, 'login']);
+-Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+-Route::post('register', [RegisterController::class, 'register']);
++
++
++Route::get('/users/create', 'UserController@create');
++Route::post('/users', 'UserController@store');
++
++
++
++
++//Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
++//Route::post('register', [RegisterController::class, 'register']);
+ 
+ Route::middleware('auth')->group(function () {
+     Route::get('/logout', "LogoutController@logout");
+Index: PAWX/app/Http/Controllers/Web/Auth/LoginController.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\n\nnamespace App\\Http\\Controllers\\Web\\Auth;\n\nuse App\\Http\\Controllers\\Controller;\nuse Illuminate\\Http\\RedirectResponse;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\Auth;\n\nclass LoginController extends Controller\n{\n    // FROM https://laravel.com/docs/11.x/authentication\n    public function login (Request $request): RedirectResponse\n    {\n        // This validates the incoming request data.\n        // It ensures that an email and password are provided, and that the email is in a valid format.\n        $credentials = $request->validate([\n            'email' => ['required', 'email'],\n            'password' => ['required'],\n        ]);\n\n        // Auth::attempt($credentials) tries to authenticate the user with the provided credentials.\n        // If successful, it regenerates the session to prevent session fixation attacks.\n        // It then redirects the user to their intended destination (or 'dashboard' if no intended URL was stored).\n        if (Auth::attempt($credentials, $request->boolean('remember'))){\n            $request->session()->regenerate();\n\n            return redirect('admin/');\n        }\n\n        // If authentication fails, it redirects back to the previous page with an error message,\n        // only keeping the email input to prevent password exposure.\n        return back()->withErrors([\n            'email' => 'The provided credentials do not match our records.',\n        ])->onlyInput('email');\n    }\n\n    public function showLoginForm(){\n        return view('auth.login');\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PAWX/app/Http/Controllers/Web/Auth/LoginController.php b/PAWX/app/Http/Controllers/Web/Auth/LoginController.php
+--- a/PAWX/app/Http/Controllers/Web/Auth/LoginController.php	(revision 817074f51b1ec908d1c85a924f8f7e589a310540)
++++ b/PAWX/app/Http/Controllers/Web/Auth/LoginController.php	(date 1729528169982)
+@@ -33,9 +33,14 @@
+         return back()->withErrors([
+             'email' => 'The provided credentials do not match our records.',
+         ])->onlyInput('email');
++
+     }
+ 
+     public function showLoginForm(){
++
++        if (Auth::check()){
++            return redirect('admin/');
++        }
+         return view('auth.login');
+     }
+ }
