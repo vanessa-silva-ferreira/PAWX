@@ -30,20 +30,21 @@ Route::middleware('auth')->group(function () {
 //    Route::get('/logout', "LogoutController@logout");
 //});
 
+Route::middleware(['auth'])->group(function () {
+    Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+});
+
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admins', [AdminController::class, 'dashboard']);
-    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
-    //Route::post('/logout', "LogoutController@logout");
 });
 
 Route::middleware(['auth', 'role:employee'])->group(function () {
     Route::get('/employees', [EmployeeController::class, 'dashboard']);
-    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
 Route::middleware(['auth', 'role:client'])->group(function () {
     Route::get('/clients', [ClientController::class, 'dashboard']);
-    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+    //Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
 Route::get('/test-role', function () {
