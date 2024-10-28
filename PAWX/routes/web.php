@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
 // ADMIN
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admins', [AdminController::class, 'dashboard']);
+    Route::get('/admins/create', 'AdminController@create');
 });
 // EMPLOYEE
 Route::middleware(['auth', 'role:employee'])->group(function () {

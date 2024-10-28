@@ -26,6 +26,7 @@ class CheckRole
     // It allows the middleware to accept any number of role arguments.
     // Provides flexibility in specifying multiple roles for a route without changing the middleware code.
 
+
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         $user = $request->user();
@@ -78,6 +79,5 @@ class CheckRole
 
         abort(403, 'Unauthorized action.');
     }
-
 
 }
