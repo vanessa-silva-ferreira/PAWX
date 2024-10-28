@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class span extends Component
 {
+
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -21,6 +22,6 @@ class span extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components..form.span');
+        return view('components.form.span');
     }
 }

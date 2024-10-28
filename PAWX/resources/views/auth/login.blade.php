@@ -15,42 +15,54 @@
     <title>Document</title>
 </head>
 <body>
-<form method="POST" action="{{ route('login') }}">
-    @csrf
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
         <div class="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl
                     md:flex-row md:space-y-0">
             <div class="flex flex-col justify-center p-8 md:p-14">
                 <div class="flex w-full justify-center">
-                    <x-form.button type="submit">
+                    <x-form.button class="bg-orange-600 text-white font-bold py-2 px-4 rounded-l">
                         Log in
                     </x-form.button>
-                    <x-form.button type="submit">
-                        Registe-se
+                    <x-form.button url="{{ route('register') }}" class="bg-gray-300 text-orange-600 font-bold py-2 px-4 rounded-r">
+                        Register
                     </x-form.button>
                 </div>
-
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
                 <div class="py-4 px-6">
-                    <x-form.span>Email</x-form.span>
-                    <input type="text" class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light
-                                placeholder:text-gray-500 bg-white" name="email" id="email"/>
+                    <x-form.span class="text-orange-600" >Email</x-form.span>
+                    <x-form.input name="email" type="text" placeholder="Enter your email"
+                                  class="border bg-white w-full border-orange-600 rounded p-2"
+                    />
                 </div>
                 <div class="py-4 px-6">
-                    <x-form.span>Password</x-form.span>
-                    <input type="password" name="pass" id="pass2" class="w-full p-2 border border-gray-300 rounded-md
-                                placeholder:font-light placeholder:text-gray-500 bg-white"/>
+                    <x-form.span class="text-orange-600">Password</x-form.span>
+                    <x-form.input name="password" type="password" placeholder="Enter your password"
+                        class="border bg-white w-full border-orange-600 rounded p-2"
+                    />
                 </div>
                 <div class="flex justify-between w-full py-4 px-6">
                     <div class="mr-24">
                         <input type="checkbox" name="ch" id="ch" class="mr-2"/>
-                        <span class="text-md">Lembrar de mim</span>
+                        <x-form.span class="text-orange-600">Lembrar nos próximos 30 dias</x-form.span>
                     </div>
                     {{--<x-form.link href="{{ route('password.request') }}">
                         Forgot your password?
                     </x-form.link>--}}
                 </div>
-                <div class="flex justify-between w-full px-6">
-                    <x-form.button type="submit" class="additional-classes">
+                <div class="flex justify-center w-full px-6">
+                    <x-form.button class="bg-orange-600 text-white font-bold py-2 px-4 rounded">
+                        Log in
+                    </x-form.button>
+                </div>
+                <div class="flex justify-center w-full px-2 py-6 gap-x-2">
+                    <x-form.button class="bg-white border font-bold py-2 px-6 rounded">
+                        Log in
+                    </x-form.button>
+                    <x-form.button class="bg-white border font-bold py-2 px-6 rounded">
+                        Log in
+                    </x-form.button>
+                    <x-form.button class="bg-white border font-bold py-2 px-6 rounded">
                         Log in
                     </x-form.button>
                 </div>

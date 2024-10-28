@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\AdminController;
+use App\Http\Controllers\Calendar;
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\LogoutController;
 use App\Http\Controllers\Web\Auth\RegisterController;
@@ -19,3 +20,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', "LogoutController@logout");
     Route::get('/admins', [AdminController::class, 'dashboard']);
 });
+
+Route::post('/calendar/navigate', [Calendar::class, 'navigate'])->name('calendar.navigate');
+Route::post('/calendar/select', [Calendar::class, 'selectDay'])->name('calendar.select');

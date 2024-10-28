@@ -1,26 +1,26 @@
 <?php
 
-namespace App\View\Components\form;
+namespace App\View\Components\dashboard;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class button extends Component
+class notification extends Component
 {
-    public $url;
-
-    public function __construct($url = null)
+    /**
+     * Create a new component instance.
+     */
+    public function __construct()
     {
-        $this->url = $url;
+        //
     }
-
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('components..form.button');
+        return view('components.dashboard.notification');
     }
 }
