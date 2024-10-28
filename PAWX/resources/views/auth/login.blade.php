@@ -24,6 +24,12 @@
                 <label for="remember" class="ml-2 block text-sm text-gray-900">Remember Me</label>
             </div>
 
+            <div class="col-2">
+                <a href="{{route('auth.google','google')}}">
+                    <i class="fab fa-google">Google</i>
+                </a>
+            </div>
+
             <div>
                 <button type="submit" class="w-full py-2 px-4 bg-indigo-600 text-white font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Log in

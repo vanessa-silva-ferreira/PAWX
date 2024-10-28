@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Auth\SocialLoginController;
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\ClientController;
 use App\Http\Controllers\Web\EmployeeController;
@@ -17,6 +18,38 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
+
+
+//Route::get('auth/{provider}/redirect', [SocialLoginController::class , 'redirect'])->name('auth.socialite.redirect');
+//Route::get('auth/{provider}/callback', [SocialLoginController::class , 'callback'])->name('auth.socialite.callback');
+
+Route::get('auth/google', [SocialLoginController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [SocialLoginController::class, 'handleGoogleCallback']);
+
+
+//Route::get('login/google', function () {
+//    return Socialite::driver('google')->redirect();
+//})->name('login.google');
+//
+//Route::get('login/google/callback', function () {
+//    $googleUser = Socialite::driver('google')->user();
+//
+//    // Check if user exists in your database, then log them in, or create a new user.
+//    $user = User::updateOrCreate(
+//        ['google_id' => $googleUser->id],
+//        [
+//            'name' => $googleUser->name,
+//            'email' => $googleUser->email,
+//        ]
+//    );
+//
+//    Auth::login($user);
+//
+//    return redirect()->intended('dashboard');
+//});
+
+
+
 
 
 // So it doesn't give conflicts when logging out in different roles

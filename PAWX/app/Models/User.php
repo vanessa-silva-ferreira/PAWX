@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Crypt;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -23,6 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'provider_name',
+        'provider_id',
     ];
 
     /**
@@ -33,7 +36,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'provider_token'
     ];
+
 
     /**
      * Get the attributes that should be cast.
@@ -46,6 +51,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function setProviderTokenAttribute($value){
+        return $this->attributes['provider_token'] = Crypt::crypt($value);
+    }
+
+    public function getProviderTokenAttribute($value)
+    {
+        return Crypt::decrypt($value);
     }
 
     public function admin(): HasOne
