@@ -7,7 +7,11 @@ use App\Http\Controllers\Web\Auth\LogoutController;
 
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\RegisterController;
+use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
+
+// set middleware aliases
+Route::aliasMiddleware('role', CheckRole::class);
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,9 +35,18 @@ Route::middleware(['auth'])->group(function () {
 //    Route::post('/admins', [AdminController::class, 'store'])->name('admins.store');
 //});
 
-Route::middleware(['auth', 'can:manage-admins'])->group(function () {
-    Route::get('/admins/create', [AdminController::class, 'create'])->name('admins.create');
-    Route::post('/admins', [AdminController::class, 'store'])->name('admins.store');
+//Route::middleware(['auth', 'can:manage-admins'])->group(function () {
+//    Route::get('/admins/create', [AdminController::class, 'create'])->name('admins.create');
+//    Route::post('/admins', [AdminController::class, 'store'])->name('admins.store');
+//});
+
+
+
+Route::middleware(['auth', 'role:admin'])->name('')->prefix('admin')->group( function () {
+    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/create/{type}', [AdminController::class, 'createUser'])->name('admin.create');
+    Route::post('/create/{type}', [AdminController::class, 'storeUser'])->name('admin.store');
+    Route::get('/list/{type}', [AdminController::class, 'index'])->name('admin.index')->where('type', 'employee|client');
 });
 
 // EMPLOYEE

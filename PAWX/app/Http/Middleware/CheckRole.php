@@ -31,24 +31,26 @@ class CheckRole
     {
         $user = $request->user();
 
+        $defaultLogPayload = ['ip' => $request->ip(),
+            'url' => $request->fullUrl(),
+            'method' => $request->method(),
+            'params' => $request->all(),
+        ];
+
         // Check if user is authenticated
         if (!$user) {
-            Log::warning('CheckRole: Unauthenticated access attempt', [
-                'ip' => $request->ip(),
-                'url' => $request->fullUrl(),
-            ]);
+            Log::warning('CheckRole: Unauthenticated access attempt', $defaultLogPayload);
             return $this->handleUnauthorized($request);
         }
 
         $userRole = $user->getRole();
 
-        Log::info('CheckRole: Checking user role', [
+        Log::info('CheckRole: Checking user role', array_merge([
             'user_id' => $user->id,
             'email' => $user->email,
             'user_role' => $userRole,
             'required_roles' => $roles,
-            'url' => $request->fullUrl(),
-        ]);
+        ], $defaultLogPayload));
 
         // Check if user has the required role
         if (in_array($userRole, $roles)) {

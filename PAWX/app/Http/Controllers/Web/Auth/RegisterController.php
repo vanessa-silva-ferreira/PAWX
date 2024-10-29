@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\UserManagementController;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +21,7 @@ class RegisterController extends Controller
         $this->userManagement = $userManagement;
     }
 
-    public function register(Request $request)
+    public function register(StoreUserRequest $request)
     {
         $user = $this->userManagement->createUser($request, 'client');
         Auth::login($user);

@@ -54,7 +54,8 @@ return [
 
         'stack' => [
             'driver' => 'stack',
-            'channels' => explode(',', env('LOG_STACK', 'single')),
+            // TODO ver isto, provavlmente sera stderr para consola
+            'channels' => ['single', 'stderr', 'syslog', 'errorlog'],
             'ignore_exceptions' => false,
         ],
 

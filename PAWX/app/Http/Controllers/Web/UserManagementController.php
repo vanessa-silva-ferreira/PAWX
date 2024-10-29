@@ -5,21 +5,55 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserManagementController extends Controller
 {
-    public function createUser(Request $request, string $type) {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required', // 'required|min:8'
-        ]);
+//    public function createUser(Request $request, string $type) {
+//        $validator = Validator::make($request->all(), [
+//            'name' => 'required',
+//            'email' => 'required|email|unique:users',
+//            'password' => 'required', // 'required|min:8'
+//        ]);
+//
+//        if ($validator->fails()) {
+//            return redirect()->back()->withErrors($validator)->withInput();
+//        }
+//
+//        $user = User::create([
+//            'name' => $request->name,
+//            'email' => $request->email,
+//            'password' => Hash::make($request->password),
+//        ]);
+//
+//        $user->save();
+//
+//        switch ($type) {
+////            case 'admin':
+////                $user->admin()->create([]);
+////                break;
+//            case 'employee':
+//                $user->employee()->create([]);
+//                break;
+//            case 'client':
+//                $user->client()->create([]);
+//                break;
+//            default:
+//                return redirect()->back()->withErrors('Invalid user type');
+//        }
+//        //$user->client()->create();
+//
+//
+//        return $user; // Return the created user for potential reuse
+//    }
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+    public function createUser(StoreUserRequest $request, string $type)
+    {
+
+
+        // The StoreUserRequest will handle validation, so we don't need the Validator here
 
         $user = User::create([
             'name' => $request->name,
@@ -27,12 +61,7 @@ class UserManagementController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $user->save();
-
         switch ($type) {
-            case 'admin':
-                $user->admin()->create([]);
-                break;
             case 'employee':
                 $user->employee()->create([]);
                 break;
@@ -40,13 +69,11 @@ class UserManagementController extends Controller
                 $user->client()->create([]);
                 break;
             default:
-                return redirect()->back()->withErrors('Invalid user type');
+                return null; // or throw an exception
         }
-        //$user->client()->create();
-
-
-        return $user; // Return the created user for potential reuse
+        return $user;
     }
+
 
     public function createAdmin()
     {
