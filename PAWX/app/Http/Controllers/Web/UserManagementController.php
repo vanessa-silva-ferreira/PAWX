@@ -14,17 +14,18 @@ class UserManagementController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required',
+            'password' => 'required', // 'required|min:8'
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
         $user->save();
 
@@ -49,7 +50,7 @@ class UserManagementController extends Controller
 
     public function createAdmin()
     {
-        return view('dashboards.admin.admin-create');
+        return view('dashboards.admins.admin-create');
     }
 
     public function storeAdmin(Request $request)
@@ -59,7 +60,7 @@ class UserManagementController extends Controller
 
     public function createEmployee()
     {
-        return view('dashboards.admin.employee-create');
+        return view('dashboards.admin.create-employee');
     }
 
     public function storeEmployee(Request $request)
@@ -69,7 +70,7 @@ class UserManagementController extends Controller
 
     public function createClient()
     {
-        return view('dashboards.admin.client-create');
+        return view('dashboards.admin.create-client');
     }
 
     public function storeClient(Request $request)

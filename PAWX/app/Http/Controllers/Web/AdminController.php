@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
+    protected $userManagement;
+
+    public function __construct(UserManagementController $userManagement)
+    {
+        $this->userManagement = $userManagement;
+    }
 
     public function dashboard(){
         return view('dashboards.admins.admin-dashboard');
@@ -29,7 +35,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('dashboards.admins.admin-create');
+        return $this->userManagement->createAdmin();
     }
 
     /**
@@ -37,22 +43,12 @@ class AdminController extends Controller
      */
     public function store(StoreAdminRequest $request)
     {
-        $validator = Validator::make($request->all(),[
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
+        $user = $this->userManagement->storeAdmin($request);
 
-        $user->admin()->create();
-        return redirect()->route('admins')->with('success', 'Admin created successfully!');
+        if ($user instanceof \App\Models\User) {
+            return redirect()->route('admin.dashboard')->with('success', 'Admin created successfully');
+        }
+        return $user;
     }
 
     /**
