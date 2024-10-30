@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class Calendar extends Controller
@@ -25,7 +26,7 @@ class Calendar extends Controller
         }
 
         // Update the selected date in session
-        session(['selected_date' => \Carbon\Carbon::createFromDate($year, $month, 1)]);
+        session(['selected_date' => Carbon::createFromDate($year, $month, 1)]);
         return back(); // Redirect back to the previous page
     }
 

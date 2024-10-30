@@ -1,6 +1,7 @@
 <?php
 
-namespace App\View\Components\Form; // Correct namespace and capitalization
+namespace App\View\Components\Form;
+// Correct namespace and capitalization
 
 use Closure;
 use Illuminate\Contracts\View\View;

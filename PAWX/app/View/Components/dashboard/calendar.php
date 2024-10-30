@@ -2,10 +2,8 @@
 
 namespace App\View\Components\dashboard;
 
-use Closure;
-use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
 use Carbon\Carbon;
+use Illuminate\View\Component;
 
 class calendar extends Component
 {
