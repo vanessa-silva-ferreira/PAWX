@@ -62,6 +62,9 @@ class UserManagementController extends Controller
         return $this->createUser($request, 'client');
     }
 
-
+    private function buildType(string $prefix, string $type)
+    {
+        return $prefix . '-' . $type . 's';
+    }
 
 }

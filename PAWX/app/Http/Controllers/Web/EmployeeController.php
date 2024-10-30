@@ -14,10 +14,6 @@ class EmployeeController extends Controller
 {
     protected $userManagement;
 
-    private function buildType(string $prefix, string $type)
-    {
-        return $prefix . '-' . $type . 's';
-    }
 
     public function __construct(UserManagementController $userManagement)
     {
