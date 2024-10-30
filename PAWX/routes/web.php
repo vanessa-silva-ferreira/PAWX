@@ -34,6 +34,10 @@ Route::middleware(['auth', 'role:admin'])->name('')->prefix('admin')->group( fun
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/create/{type}', [AdminController::class, 'createUser'])->name('admin.create');
     Route::post('/create/{type}', [AdminController::class, 'storeUser'])->name('admin.store');
+    // change the order of the create or the update
+    Route::get('/{type}/update/{id}', [AdminController::class, 'editUser'])->name('admin.edit');
+    Route::post('/{type}/update/{id}', [AdminController::class, 'updateUser'])->name('admin.update');
+
     Route::get('/list/{type}', [AdminController::class, 'index'])->name('admin.index')->where('type', 'employee|client');
 });
 
