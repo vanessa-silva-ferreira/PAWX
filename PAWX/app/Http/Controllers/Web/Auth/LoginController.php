@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     // FROM https://laravel.com/docs/11.x/authentication
-    public function login (Request $request): RedirectResponse
+    public function login(Request $request): RedirectResponse
     {
         // This validates the incoming request data.
         // It ensures that an email and password are provided, and that the email is in a valid format.
@@ -45,7 +45,6 @@ class LoginController extends Controller
         }
 
 
-
         // If authentication fails, it redirects back to the previous page with an error message,
         // only keeping the email input to prevent password exposure.
         return back()->withErrors([
@@ -53,7 +52,8 @@ class LoginController extends Controller
         ])->onlyInput('email');
     }
 
-    public function showLoginForm(){
+    public function showLoginForm()
+    {
         return view('auth.login');
     }
 }

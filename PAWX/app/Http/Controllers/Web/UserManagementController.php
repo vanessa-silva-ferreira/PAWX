@@ -3,14 +3,23 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class UserManagementController extends Controller
 {
+    public function createAdmin()
+    {
+        return view('dashboards.admins.admin-create');
+    }
+
+    public function storeAdmin(Request $request)
+    {
+        return $this->createUser($request, 'admin');
+    }
+
     public function createUser(StoreUserRequest $request, string $type)
     {
         $user = User::create([
@@ -30,16 +39,6 @@ class UserManagementController extends Controller
                 return null; // or throw an exception
         }
         return $user;
-    }
-
-    public function createAdmin()
-    {
-        return view('dashboards.admins.admin-create');
-    }
-
-    public function storeAdmin(Request $request)
-    {
-        return $this->createUser($request, 'admin');
     }
 
     public function createEmployee()

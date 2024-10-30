@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\Web\AdminController;
+
+use App\Http\Controllers\Calendar;
+use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\ClientController;
 use App\Http\Controllers\Web\EmployeeController;
 use App\Http\Controllers\Web\Auth\LogoutController;
-
-use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\RegisterController;
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
@@ -67,3 +68,6 @@ Route::get('/test-role', function () {
         'is_client' => $user->hasRole('client'),
     ];
 });
+
+Route::post('/calendar/navigate', [Calendar::class, 'navigate'])->name('calendar.navigate');
+Route::post('/calendar/select', [Calendar::class, 'selectDay'])->name('calendar.select');

@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employee;
-use Illuminate\Support\Facades\Gate;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class EmployeeController extends Controller
@@ -20,7 +20,8 @@ class EmployeeController extends Controller
         $this->userManagement = $userManagement;
     }
 
-    public function dashboard(){
+    public function dashboard()
+    {
         return view('dashboards.employees.employee-dashboard');
     }
 
@@ -34,17 +35,6 @@ class EmployeeController extends Controller
         }
         $users = User::whereHas($type)->get();
         return view('dashboards.employees.user-index', ['users' => $users, 'type' => $type]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function createUser($type)
-    {
-        if (!Gate::allows('manage-' . $type . 's')) {
-            abort(403, 'Unauthorized action.');
-        }
-        return view('dashboards.employees.employee-create', ['type' => $type]);
     }
 
     /**
@@ -63,6 +53,17 @@ class EmployeeController extends Controller
         }
 
         return back()->withErrors('Failed to create ' . $type);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function createUser($type)
+    {
+        if (!Gate::allows('manage-' . $type . 's')) {
+            abort(403, 'Unauthorized action.');
+        }
+        return view('dashboards.employees.employee-create', ['type' => $type]);
     }
 
     /**

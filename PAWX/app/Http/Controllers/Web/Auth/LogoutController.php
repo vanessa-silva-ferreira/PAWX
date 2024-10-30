@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Laravel\Passport\RefreshToken;
-use Laravel\Passport\Token;
+use Illuminate\Support\Facades\Auth;
 
 class LogoutController extends Controller
 {

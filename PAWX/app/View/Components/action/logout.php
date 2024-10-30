@@ -3,21 +3,21 @@
 namespace App\View\Components\action;
 
 use Illuminate\View\Component;
-use Closure;
-use Illuminate\Contracts\View\View;
 
 
 class Logout extends Component
 {
     public $route;
     public $type;
+
     /**
      * Create a new component instance.
      */
     public function __construct(
         $route,
         $type,
-    ) {
+    )
+    {
         $this->route = $route;
         $this->type = $type;
     }

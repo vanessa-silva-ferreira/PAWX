@@ -13,12 +13,6 @@ class AdminController extends Controller
 {
     protected $userManagement;
 
-
-    private function buildType(string $prefix, string $type)
-    {
-        return $prefix . '-' . $type . 's';
-    }
-
     public function __construct(UserManagementController $userManagement)
     {
         $this->userManagement = $userManagement;
@@ -41,14 +35,6 @@ class AdminController extends Controller
         return view('dashboards.admins.user-index', ['users' => $users, 'type' => $type]);
     }
 
-    public function createUser($type)
-    {
-        if (!Gate::allows('manage-' . $type . 's')) {
-            abort(403, 'Unauthorized action.');
-        }
-        return view('dashboards.admins.create-user', ['type' => $type]);
-    }
-
     public function storeUser(StoreUserRequest $request, $type)
     {
         if (!Gate::allows('manage-' . $type . 's')) {
@@ -63,6 +49,22 @@ class AdminController extends Controller
 
 
         return back()->withErrors('Failed to create ' . $type);
+    }
+
+    public function createUser($type)
+    {
+        if (!Gate::allows('manage-' . $type . 's')) {
+            abort(403, 'Unauthorized action.');
+        }
+        return view('dashboards.admins.create-user', ['type' => $type]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Admin $admin)
+    {
+        //
     }
 
     /**
@@ -90,14 +92,6 @@ class AdminController extends Controller
 //    }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Admin $admin)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Admin $admin)
@@ -119,5 +113,10 @@ class AdminController extends Controller
     public function destroy(Admin $admin)
     {
         //
+    }
+
+    private function buildType(string $prefix, string $type)
+    {
+        return $prefix . '-' . $type . 's';
     }
 }

@@ -10,9 +10,17 @@ class UserManagementPolicy
 {
     use HandlesAuthorization;
 
+    /**
+     * Create a new policy instance.
+     */
+    public function __construct()
+    {
+        //
+    }
+
     public function manageEmployees(User $user)
     {
-        Log::debug("manage-employees", ['role' => $user->getRole(), 'ok' =>  $user->getRole() === 'admin']);
+        Log::debug("manage-employees", ['role' => $user->getRole(), 'ok' => $user->getRole() === 'admin']);
 
         return $user->getRole() === 'admin';
     }
@@ -35,13 +43,5 @@ class UserManagementPolicy
     public function viewAnyClients(User $user)
     {
         return in_array($user->getRole(), ['admin', 'employee']);
-    }
-
-    /**
-     * Create a new policy instance.
-     */
-    public function __construct()
-    {
-        //
     }
 }

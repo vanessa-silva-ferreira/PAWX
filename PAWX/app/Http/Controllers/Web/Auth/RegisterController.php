@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class RegisterController extends Controller
 {
     protected $userManagement;
+
     public function __construct(UserManagementController $userManagement)
     {
         $this->userManagement = $userManagement;
@@ -24,7 +25,8 @@ class RegisterController extends Controller
         return redirect()->route('clients')->with('success', 'Registration successful!');
     }
 
-    public function showRegistrationForm(){
+    public function showRegistrationForm()
+    {
         return view('auth.register');
     }
 }

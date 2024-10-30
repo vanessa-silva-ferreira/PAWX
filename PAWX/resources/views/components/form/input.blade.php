@@ -15,16 +15,16 @@
 
     {{-- Input --}}
     <input
-            id="{{ $ref }}"
-            name="{{ $ref }}"
-            autocomplete="{{ $ref }}"
-            value="{{ old($ref, $val) }}"
-            {{ $attributes->merge([
-                    "class" => "block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 " .
-                    (isset($class) ? $class : "") .
-                    ($errors->has($ref) ? " border-red-500" : " border-gray-300"),
-                    "placeholder" => $placeholder ?? "Insert " . $ref,
-            ]) }}
+        id="{{ $ref }}"
+        name="{{ $ref }}"
+        autocomplete="{{ $ref }}"
+        value="{{ old($ref, $val) }}"
+        {{ $attributes->merge([
+                "class" => "block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 " .
+                (isset($class) ? $class : "") .
+                ($errors->has($ref) ? " border-red-500" : " border-gray-300"),
+                "placeholder" => $placeholder ?? "Insert " . $ref,
+        ]) }}
     >
     {{-- .Input --}}
 

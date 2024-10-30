@@ -9,7 +9,8 @@ use App\Models\Client;
 
 class ClientController extends Controller
 {
-    public function dashboard(){
+    public function dashboard()
+    {
         return view('dashboards.clients.client-dashboard');
     }
 

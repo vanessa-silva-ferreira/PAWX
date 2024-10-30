@@ -13,8 +13,3 @@
         Register
     </button>
 </form>
-
-
-
-
-

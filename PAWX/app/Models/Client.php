@@ -13,6 +13,7 @@ class Client extends Model
     protected $fillable = [
         'user_id'
     ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
