@@ -34,11 +34,11 @@ class LoginController extends Controller
             $user = Auth::user();
             switch ($user->getRole()) {
                 case 'admin':
-                    return redirect('admins/');
+                    return redirect('admin/');
                 case 'employee':
-                    return redirect('employees/');
+                    return redirect('employee/');
                 case 'client':
-                    return redirect('clients/');
+                    return redirect('client/');
                 default:
                     return redirect('/');
             }

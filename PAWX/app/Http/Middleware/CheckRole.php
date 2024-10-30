@@ -26,28 +26,31 @@ class CheckRole
     // It allows the middleware to accept any number of role arguments.
     // Provides flexibility in specifying multiple roles for a route without changing the middleware code.
 
+
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         $user = $request->user();
 
+        $defaultLogPayload = ['ip' => $request->ip(),
+            'url' => $request->fullUrl(),
+            'method' => $request->method(),
+            'params' => $request->all(),
+        ];
+
         // Check if user is authenticated
         if (!$user) {
-            Log::warning('CheckRole: Unauthenticated access attempt', [
-                'ip' => $request->ip(),
-                'url' => $request->fullUrl(),
-            ]);
+            Log::warning('CheckRole: Unauthenticated access attempt', $defaultLogPayload);
             return $this->handleUnauthorized($request);
         }
 
         $userRole = $user->getRole();
 
-        Log::info('CheckRole: Checking user role', [
+        Log::info('CheckRole: Checking user role', array_merge([
             'user_id' => $user->id,
             'email' => $user->email,
             'user_role' => $userRole,
             'required_roles' => $roles,
-            'url' => $request->fullUrl(),
-        ]);
+        ], $defaultLogPayload));
 
         // Check if user has the required role
         if (in_array($userRole, $roles)) {
@@ -78,6 +81,5 @@ class CheckRole
 
         abort(403, 'Unauthorized action.');
     }
-
 
 }

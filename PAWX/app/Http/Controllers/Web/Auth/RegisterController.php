@@ -3,35 +3,22 @@
 namespace App\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Web\UserManagementController;
+use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Auth;
+
 
 class RegisterController extends Controller
 {
-
-    public function register(Request $request)
+    protected $userManagement;
+    public function __construct(UserManagementController $userManagement)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-        ]);
+        $this->userManagement = $userManagement;
+    }
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        $user->client()->create();
-
+    public function register(StoreUserRequest $request)
+    {
+        $user = $this->userManagement->createUser($request, 'client');
         Auth::login($user);
 
         return redirect()->route('clients')->with('success', 'Registration successful!');
