@@ -1,38 +1,25 @@
 @props([
-    "ref",
-    "title" => null,
-    "val" => null,
-    "placeholder" => null,
-    "class" => null,
+    'type' => $type ?? 'text',
+    'name' => $name,
+    'label' => $label,
+    'value' => $value ?? '',
+    'required' => $required ?? false,
+    'placeholder' => $placeholder ?? '',
+    'class' => $class ?? 'form-control',
 ])
 
-<div class="mb-4">
-    {{-- Label --}}
-    <label for="{{ $ref }}" class="block text-sm font-medium text-gray-700 mb-1">
-        {{ $title ?? Str::ucfirst($ref) }}
-    </label>
-    {{-- .Label --}}
-
-    {{-- Input --}}
+<div class="form-group">
+    @if($label)
+        <label for="{{ $name }}">{{ $label }}</label>
+    @endif
     <input
-        id="{{ $ref }}"
-        name="{{ $ref }}"
-        autocomplete="{{ $ref }}"
-        value="{{ old($ref, $val) }}"
-        {{ $attributes->merge([
-                "class" => "block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 " .
-                (isset($class) ? $class : "") .
-                ($errors->has($ref) ? " border-red-500" : " border-gray-300"),
-                "placeholder" => $placeholder ?? "Insert " . $ref,
-        ]) }}
+        type="{{ $type }}"
+        id="{{ $name }}"
+        name="{{ $name }}"
+        value="{{ old($name, $value) }}"
+        placeholder="{{ $placeholder }}"
+        class="{{ $class }}"
+        @if($required) required @endif
+        {{ $attributes }}
     >
-    {{-- .Input --}}
-
-    {{-- Error Message --}}
-    @error($ref)
-    <span class="text-red-600 text-sm mt-1" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-    @enderror
-    {{-- .Error Message --}}
 </div>
