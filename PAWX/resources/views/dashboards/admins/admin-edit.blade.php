@@ -31,6 +31,7 @@
 @endif
 
 <form action="{{ route('admin.update', ['type' => $type, 'id' => $user->id]) }}" method="POST">
+{{--<form action="{{ route('admin.update', ["id" => 1]) }}" method="POST">--}}
     @csrf
     @method('POST')
 

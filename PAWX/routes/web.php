@@ -45,6 +45,10 @@ Route::middleware(['auth', 'role:employee'])->name('')->prefix('employee')->grou
     Route::get('/', [EmployeeController::class, 'dashboard'])->name('employee.dashboard');
     Route::get('/create/{type}', [EmployeeController::class, 'createUser'])->name('employee.create');
     Route::post('/create/{type}', [EmployeeController::class, 'storeUser'])->name('employee.store');
+
+    Route::get('/{type}/update/{id}', [EmployeeController::class, 'editUser'])->name('employee.edit');
+    Route::post('/{type}/update/{id}', [EmployeeController::class, 'updateUser'])->name('employee.update');
+
     Route::get('/list/{type}', [EmployeeController::class, 'index'])->name('employee.index')->where('type', 'client');
 });
 

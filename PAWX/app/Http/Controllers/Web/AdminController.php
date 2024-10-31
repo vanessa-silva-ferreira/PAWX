@@ -58,24 +58,28 @@ class AdminController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $user = User::findOrFail($id);
+        $user = User::resolveFromType($type, $id);
 
         return view('dashboards.admins.admin-edit', [
             'type' => $type,
-            'user' => $user
+            'user' => $user->user
         ]);
     }
 
 
     public function updateUser(UpdateUserRequest $request, $type, $id)
     {
+
+//        dd('here');
+
         if (!Gate::allows('manage-' . $type . 's')) {
             throw new AccessDeniedHttpException('Unauthorized action.');
         }
 
-        $user = $this->userManagement->updateUser($request, $type, $id);
+        $user = $this->userManagement->updateUser($request, $id);
 
-        if ($user instanceof User) {
+
+        if ($user) {
             return redirect()->route('admin.dashboard')->with('success', ucfirst($type) . ' updated successfully');
         }
 

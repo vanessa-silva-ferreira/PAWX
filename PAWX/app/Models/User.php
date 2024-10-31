@@ -3,17 +3,29 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Http\Controllers\Web\AdminController;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+
+
+enum UserType:string {
+    case Admin = 'admin';
+    case Client = 'client';
+    case User = 'user';
+    case Employee = 'employee';
+}
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
+
+    use UserUtils;
 
     /**
      * The attributes that are mass assignable.
@@ -68,6 +80,8 @@ class User extends Authenticatable
     {
         return in_array($this->getRole(), $roles);
     }
+
+
 
     /**
      * Get the attributes that should be cast.

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
@@ -66,6 +67,29 @@ class EmployeeController extends Controller
         return view('dashboards.employees.employee-create', ['type' => $type]);
     }
 
+    public function editUser($type, $id)
+    {
+        if (!Gate::allows('manage-' . $type . 's')) {
+            abort(403, 'Unauthorized action.');
+        }
+        $user = User::findOrFail($id);
+        return view('dashboards.employees.employee-edit', [
+            'user' => $user,
+            'type' => $type
+        ]);
+    }
+
+    public function updateUser(UpdateUserRequest $request, $type, $id)
+    {
+        if (!Gate::allows('manage-' . $type . 's')) {
+            abort(403, 'Unauthorized action.');
+        }
+        $user = $this->userManagement->updateUser($request, $type, $id);
+        if ($user instanceof User) {
+            return redirect()->route('employee.dashboard')->with('success', ucfirst($type) . ' updated successfully');
+        }
+        return back()->withErrors('Failed to update ' . $type);
+    }
     /**
      * Display the specified resource.
      */
