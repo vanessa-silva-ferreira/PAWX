@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -61,9 +62,24 @@ class UserManagementController extends Controller
         return $this->createUser($request, 'client');
     }
 
-    private function buildType(string $prefix, string $type)
+    public function updateUser(UpdateUserRequest $request, string $type, int $id)
+    {
+        $user = User::findOrFail($id);
+
+        $userData = $request->validated();
+
+        if ($request->filled('password')) {
+            $userData['password'] = Hash::make($request->password);
+        }
+
+        $user->update($userData);
+
+        return $user;
+    }
+
+
+    public function buildType(string $prefix, string $type)
     {
         return $prefix . '-' . $type . 's';
     }
-
 }

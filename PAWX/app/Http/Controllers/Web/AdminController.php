@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -28,6 +29,7 @@ class AdminController extends Controller
      */
     public function index($type)
     {
+        //if (!Gate::allows($this->buildType('view-any-', $type))) {
         if (!Gate::allows('view-any-' . $type . 's')) {
             abort(403, 'Unauthorized action.');
         }
@@ -47,6 +49,35 @@ class AdminController extends Controller
             return redirect()->route('admin.dashboard')->with('success', ucfirst($type) . ' created successfully');
         }
 
+        return back()->withErrors('Failed to create ' . $type);
+    }
+
+    public function editUser($type, $id)
+    {
+        if (!Gate::allows('manage-' . $type . 's')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $user = User::findOrFail($id);
+
+        return view('dashboards.admins.admin-edit', [
+            'type' => $type,
+            'user' => $user
+        ]);
+    }
+
+
+    public function updateUser(UpdateUserRequest $request, $type, $id)
+    {
+        if (!Gate::allows('manage-' . $type . 's')) {
+            throw new AccessDeniedHttpException('Unauthorized action.');
+        }
+
+        $user = $this->userManagement->updateUser($request, $type, $id);
+
+        if ($user instanceof User) {
+            return redirect()->route('admin.dashboard')->with('success', ucfirst($type) . ' updated successfully');
+        }
 
         return back()->withErrors('Failed to create ' . $type);
     }
