@@ -30,7 +30,7 @@ class UpdateUserRequest extends FormRequest
                 'max:255',
                 //Rule::unique('users')->ignore($this->route('id'))
             ],
-            'password' => 'sometimes|string|min:8',
+            'password' => 'nullable|string|min:8',
             'address' => 'nullable|string|max:255',
             'phone_number' => 'nullable|string|size:9',
             'nif' => 'nullable|string|size:9',

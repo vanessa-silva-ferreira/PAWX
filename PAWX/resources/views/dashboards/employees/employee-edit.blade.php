@@ -1,6 +1,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Edit {{ ucfirst($type) }}</title>
+{{--<title>Edit {{ ucfirst($type) }}</title>--}}
 <!-- You can include your CSS here -->
 <style>
     /* Add some basic styling */

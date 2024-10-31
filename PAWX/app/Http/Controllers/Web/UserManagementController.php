@@ -62,10 +62,26 @@ class UserManagementController extends Controller
         return $this->createUser($request, 'client');
     }
 
-    public function updateUser(UpdateUserRequest $request, string $type, int $id)
+    public function updateUser(UpdateUserRequest $request,  int $id)
     {
         $user = User::findOrFail($id);
 
+        //-------------------------------------------------------------------------------
+//        switch ($type) {
+//            case 'employee':
+//                $user = User::whereHas('employee', function ($query) use ($id) {
+//                    $query->where('id', $id);
+//                })->firstOrFail();
+//                break;
+//            case 'client':
+//                $user = User::whereHas('client', function ($query) use ($id) {
+//                    $query->where('id', $id);
+//                })->firstOrFail();
+//                break;
+//            default:
+//                throw new \InvalidArgumentException("Invalid user type: {$type}");
+//        }
+        //-------------------------------------------------------------------------------
         $userData = $request->validated();
 
         if ($request->filled('password')) {
