@@ -9,8 +9,8 @@
     <x-form.input ref="password" title="Password" type="password" placeholder="Enter your password" />
     <x-form.input ref="password" title="Password" type="password" placeholder="Re-enter your password" />
 
-    <button type="submit"
+    <x-form.button type="submit"
             class="w-full py-2 px-4 bg-indigo-600 text-white font-bold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
         Register
-    </button>
+    </x-form.button>
 </form>
