@@ -16,3 +16,4 @@
     <li><a href="{{ route('admin.index', 'employee') }}">View All Employees</a></li>
     <li><a href="{{ route('admin.index', 'client') }}">View All Clients</a></li>
 </ul>
+
