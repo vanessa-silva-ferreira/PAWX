@@ -7,7 +7,7 @@
 
 <form method="POST" action="{{ route('logout') }}" {{ $attributes }}>
     @csrf
-    <button type="submit" class="bg-transparent border-transparent font-small text-xs text-dark">
+    <button type="submit" class="mt-6 font-semibold text-gray-800 text-sm hover:text-gray-600 transition ease-in-out duration-150">
         Terminar Sessão
     </button>
 </form>
