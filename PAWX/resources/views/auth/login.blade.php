@@ -12,13 +12,29 @@
             @csrf
             <div class="mb-4">
                 <x-form.label for="email" class="block text-sm font-medium text-gray-700">Email</x-form.label>
-                <x-form.input id="email" type="email" name="email" class="mt-1 block w-full px-3 py-2 border bg-white border-black rounded" value="{{ old('email') }}" required autofocus/>
+                <x-form.input
+                    name="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    class="mt-1 block w-full px-3 py-2 border bg-white border-black rounded"
+                    required
+                />
                 <x-form.validation-error name="email"/>
             </div>
 
             <div class="mb-4">
-                <x-form.label for="password" class="block text-sm font-medium text-gray-700">Password</x-form.label>
-                <x-form.input id="password" type="password" name="password" class="mt-1 block w-full px-3 py-2 border bg-white border-black rounded" required/>
+                <x-form.label
+                    for="password"
+                    class="block text-sm font-medium text-gray-700">
+                    Password
+                </x-form.label>
+                <x-form.input
+                    name="password"
+                    type="password"
+                    placeholder="Enter your password"
+                    class="mt-1 block w-full px-3 py-2 border bg-white border-black rounded"
+                    required
+                />
                 <x-form.validation-error name="password"/>
             </div>
 
