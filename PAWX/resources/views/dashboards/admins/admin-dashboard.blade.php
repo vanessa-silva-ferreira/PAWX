@@ -16,7 +16,7 @@
     <title>Document</title>
 </head>
 <body>
-<div class="flex h-screen bg-gray-100">
+<div class="flex h-screen bg-white">
 
     <!-- Left Sidebar -->
     <aside class="w-64 bg-white p-4 shadow-md">
