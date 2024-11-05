@@ -14,7 +14,16 @@
             @foreach($menuItems ?? [] as $item)
                 @include('components.dashboard.sidebar.menu-item', [
                     'href' => $item['href'],
-                    'icon' => $item['icon'],
+                    'iconPaths' => [
+                        [
+                            'd' => $item['icon'],
+                            'stroke' => 'currentColor',
+                            //'stroke-width' => '1.5',
+                            'stroke-width' => '30',
+                            'stroke-linecap' => 'round',
+                            'stroke-linejoin' => 'round'
+                        ]
+                    ],
                     'label' => $item['label'],
                     'notification' => $item['notification'] ?? null
                 ])

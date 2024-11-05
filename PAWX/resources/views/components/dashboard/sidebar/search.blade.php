@@ -1,6 +1,7 @@
 <div class="relative left-2">
     <input type="text" placeholder="Search" class="w-full pl-14 pr-3 py-2 rounded-md placeholder-gray-400 focus:outline-none bg-gray-100 focus:ring-1 ring-white text-orange-950">
-    <div class="absolute top-1/2 transform -translate-y-1/2 bg-white border border-gray-400 rounded-md flex items-center justify-center" style="width: 40px; height: 40px;">
+{{--    bg-white border border-gray-400 to test the squared icon--}}
+    <div class="absolute top-1/2 transform -translate-y-1/2 rounded-md flex items-center justify-center" style="width: 40px; height: 40px;">
         <x-dashboard.sidebar.icon
             width="20"
             height="20"
@@ -20,7 +21,7 @@
                     'stroke-linecap' => 'round',
                     'stroke-linejoin' => 'round'
                 ]
-            ]"
+             ]"
         />
     </div>
 </div>
