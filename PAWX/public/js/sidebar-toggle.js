@@ -1,7 +1,7 @@
 // Function to toggle sidebar collapse
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
-    const menuTexts = document.querySelectorAll('.menu-text');
+    const menuTexts = document.querySelectorAll('#menu-text');
     const toggleIcon = document.getElementById('toggle-icon');
     const searchSection = document.getElementById('search-section');
 

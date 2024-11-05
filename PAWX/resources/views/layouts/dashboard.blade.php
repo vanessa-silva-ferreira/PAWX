@@ -9,19 +9,30 @@
     {{--    @vite('resources/css/app.css')--}}
     {{--    <script src="{{ asset('js/app.js') }}" defer></script>--}}
     <title>Dashboard</title>
+
+    {{--change it later to an "OVERALL" layout--}}
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {},
+            },
+            plugins: [],
+        }
+    </script>
 </head>
 <body>
-    <div class="dashboard-container">
-        <div class="main-content">
+<div class="dashboard-container">
+    <div class="main-content">
 
-            @include('partials.dashboard.sidebar')
+        @include('partials.dashboard.sidebar')
 
 
-            {{--        @include('partials.dashboard.header')--}}
-            {{--        @include('partials.dashboard.content')--}}
-            {{--        @yield('content')--}}
-            {{--        @include('partials.dashboard.footer')--}}
-        </div>
+        {{--        @include('partials.dashboard.header')--}}
+        {{--        @include('partials.dashboard.content')--}}
+        {{--        @yield('content')--}}
+        {{--        @include('partials.dashboard.footer')--}}
     </div>
+</div>
 </body>
 </html>
