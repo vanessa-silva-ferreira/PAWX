@@ -13,7 +13,12 @@ class PetController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $pets = Pet::all();
+            return response()->json(['status' => 'success', 'data' => $pets], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PetController;
 use App\Http\Middleware\CheckCustomSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,9 +20,9 @@ Route::middleware(['custom.session'])->group(function () {
         return response()->json($request->user_data);
     });
 
+    Route::apiResource('pets', PetController::class);
 });
 
-Route::apiResource('pets', PetContrtoller::class);
 
 //    Route::get('/user', function (Request $request) {
 //        return $request->user();
