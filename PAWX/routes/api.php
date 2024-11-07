@@ -21,6 +21,8 @@ Route::middleware(['custom.session'])->group(function () {
 
 });
 
+Route::apiResource('pets', PetContrtoller::class);
+
 //    Route::get('/user', function (Request $request) {
 //        return $request->user();
 //    })->middleware('auth:api');

@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(PetSeeder::class);
+
         User::factory(10)->create();
 
         $adminUser = User::factory()->create([
