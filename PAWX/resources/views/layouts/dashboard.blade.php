@@ -25,7 +25,7 @@
     <div class="dashboard-container">
         <div class="main-content sm:grid grid-cols-6">
             @include('partials.dashboard.sidebar')
-            <div class="col-span-3">
+            <div class="col-span-4">
                 @include('partials.dashboard.content')
             </div>
             {{--        @include('partials.dashboard.header')--}}

@@ -79,7 +79,7 @@
 
         {{--    correct (and change) the light and dark colors--}}
         {{--    change its position and icons--}}
-{{--        @include('components.dashboard.sidebar.theme-toggle')--}}
+        @include('components.dashboard.sidebar.theme-toggle')
 
 
 
