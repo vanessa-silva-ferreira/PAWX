@@ -21,7 +21,8 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        return view('dashboards.admins.admin-dashboard');
+//        return view('dashboards.admins.admin-dashboard');
+        return view('dashboards.admins.index');
     }
 
     /**
@@ -34,7 +35,7 @@ class AdminController extends Controller
             abort(403, 'Unauthorized action.');
         }
         $users = User::whereHas($type)->get();
-        return view('dashboards.admins.user-index', ['users' => $users, 'type' => $type]);
+        return view('dashboards.admins.index', ['users' => $users, 'type' => $type]);
     }
 
     public function storeUser(StoreUserRequest $request, $type)
@@ -60,7 +61,7 @@ class AdminController extends Controller
 
         $user = User::resolveFromType($type, $id);
 
-        return view('dashboards.admins.admin-edit', [
+        return view('dashboards.admins.edit', [
             'type' => $type,
             'user' => $user->user
         ]);
@@ -91,7 +92,7 @@ class AdminController extends Controller
         if (!Gate::allows('manage-' . $type . 's')) {
             abort(403, 'Unauthorized action.');
         }
-        return view('dashboards.admins.create-user', ['type' => $type]);
+        return view('dashboards.admins.create', ['type' => $type]);
     }
 
     /**
