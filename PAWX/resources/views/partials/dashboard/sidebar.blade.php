@@ -1,9 +1,9 @@
-<div class="flex h-screen">
-    <aside id="sidebar" class="bg-white dark:bg-gray-800 p-4 transition-all duration-300">
+{{--<div class="flex h-screen">--}}
+    <aside id="sidebar" class="bg-white dark:bg-gray-800 p-4 transition-all duration-300" data-collapsed="false">
         {{--        w-64--}}
         <!-- Toggle Button -->
         <button onclick="toggleSidebar()" class="p-2 focus:outline-none dark:text-gray-100">
-            <span id="toggle-icon" class="material-symbols-outlined">chevron_left</span>
+            <span id="toggle-icon" class="material-symbols-outlined">..</span>
         </button>
 
         <div class="px-3">
@@ -79,12 +79,12 @@
 
         {{--    correct (and change) the light and dark colors--}}
         {{--    change its position and icons--}}
-        @include('components.dashboard.sidebar.theme-toggle')
+{{--        @include('components.dashboard.sidebar.theme-toggle')--}}
 
 
 
         {{--        @include('')--}}
 
     </aside>
-</div>
+{{--</div>--}}
 <script src="js/sidebar-toggle.js"></script>

@@ -27,6 +27,7 @@ Route::post('register', [RegisterController::class, 'register']);
 // So it doesn't give conflicts when logging out in different roles
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
 });
 
 
