@@ -1,25 +1,29 @@
 @props([
-    'type' => $type ?? 'text',
-    'name' => $name,
-    'label' => $label,
-    'value' => $value ?? '',
-    'required' => $required ?? false,
-    'placeholder' => $placeholder ?? '',
-    'class' => $class ?? 'form-control',
+   'type' => 'text',
+    'name',
+    'label' => null,
+    'value' => '',
+    'required' => false,
+    'placeholder' => '',
+    'class' => 'form-control',
+    'id' => null,
 ])
 
 <div class="form-group">
     @if($label)
-        <label for="{{ $name }}">{{ $label }}</label>
+        <label for="{{ $id ?? $name }}">{{ $label }}</label>
     @endif
     <input
         type="{{ $type }}"
-        id="{{ $name }}"
+        id="{{ $id ?? $name }}"
         name="{{ $name }}"
         value="{{ old($name, $value) }}"
         placeholder="{{ $placeholder }}"
-        class="{{ $class }}"
+        @class([$class, 'is-invalid' => $errors->has($name)])
         @if($required) required @endif
         {{ $attributes }}
     >
+    @error($name)
+    <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
 </div>
