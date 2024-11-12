@@ -11,7 +11,6 @@
         <tbody class="text-gray-600 text-sm font-light">
         @foreach ($data as $index => $row)
             <tr class="{{ $loop->odd ? 'bg-gray-50' : 'bg-white' }} border-b hover:bg-gray-100">
-                <th class="py-3 px-6">{{ $index + 1 }}</th>
                 @foreach ($row as $value)
                     <td class="py-3 px-6">{{ $value }}</td>
                 @endforeach
