@@ -14,7 +14,7 @@ class PetController extends Controller
     public function index()
     {
         $pets = Pet::paginate(15);
-        return view('pets.index', ['pets' => $pets]);
+        return view('pages.pets.index', ['pets' => $pets]);
     }
 
     /**
@@ -22,7 +22,7 @@ class PetController extends Controller
      */
     public function create()
     {
-        return view('pets.create');
+        return view('pages.pets.create');
     }
 
     /**
@@ -43,7 +43,7 @@ class PetController extends Controller
      */
     public function show(Pet $pet)
     {
-        return view('pets.show', ['pet' => $pet]);
+        return view('pages.pets.show', ['pet' => $pet]);
     }
 
     /**
@@ -51,7 +51,7 @@ class PetController extends Controller
      */
     public function edit(Pet $pet)
     {
-        return view('pets.edit', ['pet' => $pet]);
+        return view('pages.pets.edit', ['pet' => $pet]);
     }
 
     /**

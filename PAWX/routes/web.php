@@ -28,6 +28,14 @@ Route::post('register', [RegisterController::class, 'register']);
 // So it doesn't give conflicts when logging out in different roles
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+    Route::get('/pets/{pet}', [PetController::class, 'show'])->name('pets.show');
+    Route::get('/pets', [PetController::class, 'index'])->name('pets');
+    Route::get('/pets/create', [PetController::class,'create'])->name('pets.create');
+    Route::post('/pets', [PetController::class,'store'])->name('pets.store');
+    Route::get('/pets/{pet}/edit', [PetController::class,'edit'])->name('pets.edit');
+    Route::post('/pets/{pet}', [PetController::class,'update'])->name('pets.update');
+    Route::delete('/pets/{pet}/soft-delete', [PetController::class,'softDelete'])->name('pets.softDelete');
 });
 
 
@@ -51,6 +59,8 @@ Route::middleware(['auth', 'role:employee'])->name('')->prefix('employee')->grou
     Route::post('/{type}/update/{id}', [EmployeeController::class, 'updateUser'])->name('employee.update');
 
     Route::get('/list/{type}', [EmployeeController::class, 'index'])->name('employee.index')->where('type', 'client');
+
+
 });
 
 // EMPLOYEE
@@ -65,13 +75,7 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::get('/clients', [ClientController::class, 'dashboard'])->name('clients');
 
 
-    Route::get('/pets', [PetController::class, 'dashboard'])->name('pets');
-    Route::get('/pets/{pet}', [PetController::class, 'show'])->name('pets.show');
-    Route::get('/pets/create', [PetController::class, 'create'])->name('pets.create');
-    Route::post('/pets', [PetController::class, 'store'])->name('pets.store');
-    Route::get('/pets/{pet}/edit', [PetController::class, 'edit'])->name('pets.edit');
-    Route::post('/pets/{pet}', [PetController::class, 'update'])->name('pets.update');
-    Route::delete('/pets/{pet}/soft-delete', [PetController::class, 'softDelete'])->name('pets.softDelete');
+
 });
 
 
