@@ -12,5 +12,6 @@
             <p class="text-gray-500">No data available.</p>
         @endif
 
+
     </div>
 </div>

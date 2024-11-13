@@ -30,7 +30,6 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-
 Route::middleware(['auth', 'role:admin'])->name('')->prefix('admin')->group( function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/create/{type}', [AdminController::class, 'createUser'])->name('admin.create');

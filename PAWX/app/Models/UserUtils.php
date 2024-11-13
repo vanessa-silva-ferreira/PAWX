@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 
@@ -21,13 +20,4 @@ trait UserUtils {
                 throw new BadRequestException('Non specific type');
         }
     }
-//        UserType::Admin => Admin::findOrFail($id)->with(self::class)->first(),
-//            UserType::Employee => Employee::findOrFail($id)->with(self::class)->first(),
-//            UserType::Client => Client::findOrFail($id)->with(self::class)->first(),
-//            UserType::User => ,
-//    }
-//
-//    public static function GetUserTypes() {
-//        return UserType::cases();
-//    }
 }
