@@ -13,12 +13,8 @@ class PetController extends Controller
      */
     public function index()
     {
-        try {
-            $pets = Pet::all();
-            return response()->json(['status' => 'success', 'data' => $pets], 200);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
-        }
+        $pets = Pet::paginate(15);
+        return view('pets.index', ['pets' => $pets]);
     }
 
     /**
@@ -26,7 +22,7 @@ class PetController extends Controller
      */
     public function create()
     {
-        //
+        return view('pets.create');
     }
 
     /**
@@ -34,7 +30,12 @@ class PetController extends Controller
      */
     public function store(StorePetRequest $request)
     {
-        //
+        Pet::create($request->only([
+            'name', 'birthdate', 'gender', 'medical_history',
+            'spay_neuter_status', 'status', 'obs'
+        ]));
+
+        return redirect('/pets')->with('success', 'Pet created!');
     }
 
     /**
@@ -42,7 +43,7 @@ class PetController extends Controller
      */
     public function show(Pet $pet)
     {
-        //
+        return view('pets.show', ['pet' => $pet]);
     }
 
     /**
@@ -50,7 +51,7 @@ class PetController extends Controller
      */
     public function edit(Pet $pet)
     {
-        //
+        return view('pets.edit', ['pet' => $pet]);
     }
 
     /**
@@ -58,7 +59,12 @@ class PetController extends Controller
      */
     public function update(UpdatePetRequest $request, Pet $pet)
     {
-        //
+        $pet->update($request->only([
+            'name', 'birthdate', 'gender', 'medical_history',
+            'spay_neuter_status', 'status', 'obs'
+        ]));
+
+        return redirect('/pets')->with('success', 'Pet updated!');
     }
 
     /**
@@ -67,5 +73,11 @@ class PetController extends Controller
     public function destroy(Pet $pet)
     {
         //
+    }
+
+    public function softDelete(Pet $pet)
+    {
+        $pet->delete();
+        return redirect('/pets')->with('success', 'Pet deleted!');
     }
 }

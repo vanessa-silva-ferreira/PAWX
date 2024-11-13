@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Pet extends Model
 {
     use HasFactory;
-    use softdeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'client_id',
@@ -21,6 +21,10 @@ class Pet extends Model
         'status',
         'obs'
     ];
+
+    public function client(){
+        return $this->belongsTo(Client::class);
+    }
 
 
 }

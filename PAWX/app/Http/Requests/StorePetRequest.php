@@ -11,6 +11,12 @@ class StorePetRequest extends FormRequest
      */
     public function authorize(): bool
     {
+
+        $user = auth()->user();
+        if ($user->hasRole('employee') || $user->hasRole('admin') || $user->hasRole('client')) {
+            return true;
+        }
+
         return false;
     }
 
@@ -22,7 +28,13 @@ class StorePetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'birthdate' => 'required|date',
+            'gender' => 'required|in:male,female',
+            'medical_history' => 'required|string',
+            'spay_neuter_status' => 'required|boolean',
+            'status' => 'required|string|max:255',
+            'obs' => 'required|string|max:1000',
         ];
     }
 }

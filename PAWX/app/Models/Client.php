@@ -21,4 +21,9 @@ class Client extends User
     {
         return $this->belongsTo(User::class);
     }
+
+    public function pets()
+    {
+        return $this->hasMany(Pet::class);
+    }
 }

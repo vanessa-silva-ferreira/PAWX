@@ -153,6 +153,8 @@
       <path value="$PROJECT_DIR$/PAWX/vendor/laravel/passport" />
       <path value="$PROJECT_DIR$/PAWX/vendor/nyholm/psr7" />
       <path value="$PROJECT_DIR$/PAWX/vendor/symfony/psr-http-message-bridge" />
+      <path value="$PROJECT_DIR$/PAWX/vendor/league/oauth1-client" />
+      <path value="$PROJECT_DIR$/PAWX/vendor/laravel/socialite" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
