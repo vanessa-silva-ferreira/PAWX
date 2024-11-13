@@ -53,9 +53,12 @@ class AdminController extends Controller
             $typeModel = $user->$type;
             return [
                 'id' => $typeModel->id,
-                'email' => $user->email,
                 'name' => $user->name,
-                // Add any other fields you need
+                'username' => $user->username,
+                'email' => $user->email,
+                'address' => $user->address,
+                'phone_number' => $user->phone_number,
+                'nif' => $user->nif,
             ];
         });
 
@@ -95,7 +98,6 @@ class AdminController extends Controller
 
     public function updateUser(UpdateUserRequest $request, $type, $id)
     {
-
 //        dd('here');
 
         if (!Gate::allows('manage-' . $type . 's')) {
@@ -103,7 +105,6 @@ class AdminController extends Controller
         }
 
         $user = $this->userManagement->updateUser($request, $id);
-
 
         if ($user) {
             return redirect()->route('admin.dashboard')->with('success', ucfirst($type) . ' updated successfully');

@@ -17,7 +17,7 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => random_int(1, 200),
         ];
     }
 }

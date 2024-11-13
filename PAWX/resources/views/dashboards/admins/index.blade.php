@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     @php
-        $headers = ['Email', 'Name'];
+        $headers = ['Nome', 'Username', 'Email', 'Morada', 'Contacto', 'NIF'];
         $users = $users ?? [];
         $type = $type ?? 'unknown';
     @endphp
