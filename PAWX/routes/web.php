@@ -16,7 +16,11 @@ Route::aliasMiddleware('role', CheckRole::class);
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
+
+Route::get('/services', function () {
+    return view('services');
+})->name('services');
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
