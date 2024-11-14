@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/pets/{pet}/soft-delete', [PetController::class,'softDelete'])->name('pets.softDelete');
 });
 
+});
 
 Route::middleware(['auth', 'role:admin'])->name('')->prefix('admin')->group( function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');

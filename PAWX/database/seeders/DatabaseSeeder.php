@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Employee;
+use App\Models\Client;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,9 +19,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-
-        User::factory(10)->create();
+        User::factory(200)->create();
+        Employee::factory(100)->create();
+        Client::factory(100)->create();
 
         $adminUser = User::factory()->create([
             'name' => 'Admin User',
