@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Client;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Employee;
@@ -22,7 +23,6 @@ class DatabaseSeeder extends Seeder
         Employee::factory(100)->create();
         Client::factory(100)->create();
 
-
         $adminUser = User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
@@ -42,5 +42,24 @@ class DatabaseSeeder extends Seeder
         Employee::factory()->create([
             'user_id' => $employeeUser->id
         ]);
+
+        $clientUser = User::factory()->create([
+            'name' => 'Client User',
+            'email' => 'client@example.com',
+            'password' => Hash::make('password')
+        ]);
+        Client::factory()->create([
+            'user_id' => $clientUser->id
+        ]);
+
+        User::factory()->count(30)->create([
+            'password' => Hash::make('password') // define a mesma password para todos, se desejar
+        ])->each(function ($user) {
+            Client::factory()->create([
+                'user_id' => $user->id
+            ]);
+        });
+
+        $this->call(PetSeeder::class);
     }
 }
