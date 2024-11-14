@@ -22,17 +22,17 @@
     </script>
 </head>
 <body>
-    <div class="dashboard-container">
-        <div class="main-content sm:grid grid-cols-6">
-            @include('partials.dashboard.sidebar')
-            <div class="col-span-4">
-                @include('partials.dashboard.content')
-            </div>
-            {{--        @include('partials.dashboard.header')--}}
-            {{--                @include('partials.dashboard.content')--}}
-            {{--                @yield('content')--}}
-            {{--        @include('partials.dashboard.footer')--}}
+<div class="dashboard-container">
+    <div class="main-content sm:grid grid-cols-6">
+        @include('partials.dashboard.sidebar')
+        <div class="col-span-4">
+            @include('partials.dashboard.list')
         </div>
+        {{--        @include('partials.dashboard.header')--}}
+        {{--                @include('partials.dashboard.content')--}}
+        {{--                @yield('content')--}}
+        {{--        @include('partials.dashboard.footer')--}}
     </div>
+</div>
 </body>
 </html>

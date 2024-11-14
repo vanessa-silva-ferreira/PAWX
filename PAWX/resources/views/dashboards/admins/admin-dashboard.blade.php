@@ -59,6 +59,6 @@
             ['Jane Smith', 'jane@example.com', 'User'],
         ];
     @endphp
-    @include('partials.dashboard.content', ['headers' => $headers, 'data' => $data])
+    @include('partials.dashboard.list', ['headers' => $headers, 'data' => $data])
 @endsection
 

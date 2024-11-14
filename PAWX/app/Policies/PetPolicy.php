@@ -13,7 +13,7 @@ class PetPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return in_array($user->getRole(), ['admin', 'employee']);
     }
 
     /**
@@ -21,15 +21,20 @@ class PetPolicy
      */
     public function view(User $user, Pet $pet): bool
     {
-        //
+        if (in_array($user->getRole(), ['admin', 'employee'])) {
+            return true;
+        }
+
+        return $user->getRole() === 'client' && $pet->client_id === $user->client->id;
     }
+
 
     /**
      * Determine whether the user can create models.
      */
     public function create(User $user): bool
     {
-        //
+        return in_array($user->getRole(), ['admin', 'employee', 'client']);
     }
 
     /**
@@ -37,7 +42,10 @@ class PetPolicy
      */
     public function update(User $user, Pet $pet): bool
     {
-        //
+        if(in_array($user->getRole(), ['admin', 'employee'])){
+            return true;
+        }
+        return $user->getRole() === 'client' && $pet->client_id === $user->client->id;
     }
 
     /**
@@ -45,7 +53,7 @@ class PetPolicy
      */
     public function delete(User $user, Pet $pet): bool
     {
-        //
+        return $user->getRole() === 'admin';
     }
 
     /**
@@ -53,7 +61,7 @@ class PetPolicy
      */
     public function restore(User $user, Pet $pet): bool
     {
-        //
+        return $user->getRole() === 'admin';
     }
 
     /**
