@@ -38,6 +38,8 @@ Route::middleware(['auth', 'role:admin'])->name('')->prefix('admin')->group( fun
     Route::get('/{type}/update/{id}', [AdminController::class, 'editUser'])->name('admin.edit');
     Route::post('/{type}/update/{id}', [AdminController::class, 'updateUser'])->name('admin.update');
 
+    Route::get('/{type}/show/{id}', [AdminController::class, 'showUser'])->name('admin.show');
+
     Route::get('/list/{type}', [AdminController::class, 'index'])->name('admin.index')->where('type', 'employee|client');
 });
 

@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('content')
     @php
-        $headers = ['Nome', 'Username', 'Email', 'Morada', 'Contacto', 'NIF'];
+        $headers = ['Nome', 'Username', 'Email', 'Morada', 'Contacto', 'NIF', 'Ações'];
         $users = $users ?? [];
-        $type = $type ?? 'unknown';
+        $type = request()->route('type');
     @endphp
 
     @include('partials.dashboard.content', [

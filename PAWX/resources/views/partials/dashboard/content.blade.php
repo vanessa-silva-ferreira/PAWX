@@ -7,7 +7,7 @@
         <h2 class="text-xl font-semibold mb-4">Dashboard Overview</h2>
 
         @if ($data && count($data) > 0)
-            <x-dashboard.content.users-table :headers="$headers" :data="$users" />
+            <x-dashboard.content.users-table :headers="$headers" :data="$users" :type="$type" />
         @else
             <p class="text-gray-500">No data available.</p>
         @endif

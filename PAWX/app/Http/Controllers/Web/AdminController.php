@@ -124,10 +124,22 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Admin $admin)
+    /*public function showUser($type, $id)
     {
-        //
-    }
+        // Check if the user is authorized to view the specified type (client or employee)
+        if (!Gate::allows('manage-' . $type . 's')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Retrieve the user data based on the type and id
+        $user = $type::findOrFail($id);  // Assumes `client` or `employee` models are correctly named
+
+        // Return the view with the user data and type
+        return view('dashboards.admins.show', [
+            'type' => $type,
+            'user' => $user
+        ]);
+    }*/
 
     /**
      * Show the form for creating a new resource.

@@ -1,3 +1,4 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <div class="overflow-x-auto">
     <table class="min-w-full bg-white border border-gray-300">
         <thead>
@@ -14,8 +15,20 @@
                 @foreach ($row as $value)
                     <td class="py-3 px-6">{{ $value }}</td>
                 @endforeach
+                    <td class="py-3 px-6 flex space-x-2 items-center">
+                        <a href="/{{ $type }}/show/{{ $row['id'] }}" class="text-blue-500 hover:text-blue-700">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="/{{ $type }}/update/{{ $row['id'] }}" class="text-yellow-500 hover:text-yellow-700">
+                            <i class="fas fa-user-edit"></i>
+                        </a>
+                        <a href="/{{ $type }}/delete/{{ $row['id'] }}" class="text-red-500 hover:text-red-700">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
             </tr>
         @endforeach
+
         </tbody>
     </table>
 </div>
