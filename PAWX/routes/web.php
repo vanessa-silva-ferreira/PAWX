@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pets/create', [PetController::class,'create'])->name('pets.create');
     Route::post('/pets', [PetController::class,'store'])->name('pets.store');
     Route::get('/pets/{pet}/edit', [PetController::class,'edit'])->name('pets.edit');
-    Route::post('/pets/{pet}', [PetController::class,'update'])->name('pets.update');
+    Route::put('/pets/{pet}', [PetController::class,'update'])->name('pets.update');
     Route::delete('/pets/{pet}/soft-delete', [PetController::class,'softDelete'])->name('pets.softDelete');
 });
 

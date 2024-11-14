@@ -16,7 +16,10 @@ class UpdatePetRequest extends FormRequest
         $pet = $this->route('pet');
         $user = auth()->user();
 
-        if ($pet->client_id === $user->getClientId() ) {
+//
+//        $user = User::whereHas('client_id')->whereId($user_id)->first();
+
+        if ($pet->client_id === $user->getClientId()) {
             return true;
         }
 

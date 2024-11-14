@@ -17,9 +17,9 @@ class PetFactory extends Factory
     public function definition(): array
     {
         return [
-            'client_id' => rand(1,10),
+            'client_id' => rand(12,13),
             'name' => $this->faker->name(),
-            'birthdate' => $this->faker->date('Y-m-d'),
+            'birthdate' => $this->faker->dateTime('Y-m-d'),
             'gender' => $this->faker->randomElement(['male', 'female']),
             'medical_history' => $this->faker->text(),
             'spay_neuter_status' => $this->faker->boolean(),

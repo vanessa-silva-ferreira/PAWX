@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePetRequest;
 use App\Http\Requests\UpdatePetRequest;
+use App\Models\Client;
 use App\Models\Pet;
 
 class PetController extends Controller
@@ -49,10 +50,13 @@ class PetController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
     public function edit(Pet $pet)
     {
-        return view('pages.pets.edit', ['pet' => $pet]);
+        $clients = Client::all();
+        return view('pages.pets.edit', ['pet' => $pet, 'clients' => $clients]);
     }
+
 
     /**
      * Update the specified resource in storage.

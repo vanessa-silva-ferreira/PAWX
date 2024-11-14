@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('client_id')->constrained();
             $table->string('name');
-            $table->date('birthdate')->nullable();
+            $table->dateTime('birthdate')->nullable();
             $table->enum('gender', ['male', 'female']);
             $table->string('medical_history')->nullable();
             $table->boolean('spay_neuter_status');

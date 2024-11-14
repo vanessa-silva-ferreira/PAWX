@@ -78,8 +78,11 @@ class User extends Authenticatable
 
     public function getClientId()
     {
-        return $this->client ? $this->client->id : null;
+        return $this->id;
+//        $client = $this->client()->first();
+//        return $client ? $client->id : null;
     }
+
 
     public function hasAnyRole(array $roles): bool
     {
