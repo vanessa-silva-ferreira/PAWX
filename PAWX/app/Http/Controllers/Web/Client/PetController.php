@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePetRequest;
 use Illuminate\Http\Request;
 use App\Models\Pet;
 use App\Models\User;
@@ -33,5 +34,25 @@ class PetController extends Controller
         }
 
         return view('pages.client.pets.show', compact('pet'));
+    }
+
+    public function create()
+    {
+        return view('pages.client.pets.create');
+    }
+
+    public function store(StorePetRequest $request)
+    {
+        $client = auth()->user()->client;
+
+        Pet::create(array_merge(
+            $request->only([
+                'name', 'birthdate', 'gender', 'medical_history',
+                'spay_neuter_status', 'status', 'obs',
+            ]),
+            ['client_id' => $client->id]
+        ));
+
+        return redirect()->route('client.pets.index')->with('success', 'Pet added successfully!');
     }
 }
