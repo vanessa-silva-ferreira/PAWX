@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePetRequest;
+use App\Models\Client;
 use App\Models\Pet;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
@@ -28,6 +30,41 @@ class PetController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        return view('pages.admin.pets.show', compact('pet'));
+        return view('pages.employee.pets.show', compact('pet'));
     }
+
+    public function create(): View {
+        if(Gate::denies('create', Pet::class)){
+            abort(403, 'Unauthorized action.');
+        }
+
+        $clients = Client::all();
+
+        return view('pages.employee.pets.create', compact('clients'));
+    }
+
+    public function store(StorePetRequest $request) {
+        if (Gate::denies('create', Pet::class)) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        Gate::authorize('create', Pet::class);
+
+        $client_id = $request->input('client_id');
+
+        if (!Client::where('id', $client_id)->exists()) {
+            return back()->withErrors('Selected client does not exist.');
+        }
+
+        Pet::create(array_merge(
+            $request->only([
+                'name', 'birthdate', 'gender', 'medical_history',
+                'spay_neuter_status', 'status', 'obs',
+            ]),
+            ['client_id' => $client_id]
+        ));
+
+        return redirect()->route('employee.pets.index')->with('success', 'Pet created successfully!');
+    }
+
 }
