@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreClientRequest;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -48,5 +49,30 @@ class ClientController extends Controller
         }
 
         return view('pages.admin.clients.show', compact('client'));
+    }
+
+    public function create()
+    {
+        if(Gate::denies('manage-clients')){
+            abort(403, 'Unauthorized action.');
+        }
+        return view('pages.admin.clients.create');
+    }
+
+    public function store(StoreClientRequest $request) {
+        if(Gate::denies('manage-clients')){
+            abort(403, 'Unauthorized action.');
+        }
+
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+        ]);
+
+        $client = Client::create([
+            'user_id' => $user->id,
+        ]);
+        return redirect()->route('admin.clients.show', $client->id);
     }
 }

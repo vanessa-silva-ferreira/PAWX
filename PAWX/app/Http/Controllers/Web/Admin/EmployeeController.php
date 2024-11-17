@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreEmployeeRequest;
 use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Http\Request;
@@ -47,5 +48,32 @@ class EmployeeController extends Controller
         }
 
         return view('pages.admin.employees.show', compact('employee'));
+    }
+
+    public function create()
+    {
+        if (Gate::denies('manage-employees')) {
+            abort(403, 'Unauthorized action.');
+        }
+        return view('pages.admin.employees.create');
+    }
+
+    public function store(StoreEmployeeRequest $request)
+    {
+        if (Gate::denies('manage-employees')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+        ]);
+//        \Log::info('Created User:', ['user' => $user]);
+        $employee = Employee::create([
+            'user_id' => $user->id,
+        ]);
+        return redirect()->route('admin.employees.index')
+            ->with('success', 'Employee created successfully!');
     }
 }
