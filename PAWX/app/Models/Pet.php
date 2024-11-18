@@ -22,10 +22,7 @@ class Pet extends Model
         'obs'
     ];
 
-
     public function client(){
         return $this->belongsTo(Client::class);
     }
-
-
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePetRequest;
+use App\Http\Requests\UpdatePetRequest;
 use Illuminate\Http\Request;
 use App\Models\Pet;
 use App\Models\User;
@@ -55,4 +56,34 @@ class PetController extends Controller
 
         return redirect()->route('client.pets.index')->with('success', 'Pet added successfully!');
     }
+
+    public function edit($id)
+    {
+        $pet = Pet::findOrFail($id);
+
+        Gate::authorize('update', $pet);
+
+        return view('pages.client.pets.edit', compact('pet'));
+    }
+
+    public function update(UpdatePetRequest $request, $id)
+    {
+
+        $pet = Pet::findOrFail($id);
+
+        // Ensure that the pet belongs to the authenticated user
+        if ($pet->client_id !== Auth::user()->client->id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Proceed with the update
+        $petData = $this->extractPetData($request->all());
+        unset($petData['client_id']);  // Ensure client_id isn't being overwritten
+
+        $pet->update($petData);
+
+        return redirect()->route('client.pets.index')->with('success', 'Pet updated successfully!');
+    }
+
+
 }

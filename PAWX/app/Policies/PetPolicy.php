@@ -40,12 +40,20 @@ class PetPolicy
     /**
      * Determine whether the user can update the model.
      */
+//    public function update(User $user, Pet $pet): bool
+//    {
+//        if(in_array($user->getRole(), ['admin', 'employee'])){
+//            return true;
+//        }
+//        return $user->getRole() === 'client' && $pet->client_id === $user->getClientId();
+//    }
+
     public function update(User $user, Pet $pet): bool
     {
-        if(in_array($user->getRole(), ['admin', 'employee'])){
+        if ($user->hasRole('admin') || $user->hasRole('employee')) {
             return true;
         }
-        return $user->getRole() === 'client' && $pet->client_id === $user->client->id;
+        return $pet->client_id === $user->client->id;
     }
 
     /**

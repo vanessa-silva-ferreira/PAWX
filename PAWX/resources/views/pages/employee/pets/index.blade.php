@@ -30,3 +30,6 @@
         {{ $pets->links() }}
     </div>
 @endsection
+
+
+<x-action.logout/>

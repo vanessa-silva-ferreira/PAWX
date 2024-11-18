@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePetRequest;
+use App\Http\Requests\UpdatePetRequest;
 use App\Models\Client;
 use App\Models\Pet;
 use Illuminate\Support\Facades\Gate;
@@ -68,6 +69,22 @@ class PetController extends Controller
         return redirect()->route('admin.pets.index')->with('success', 'Pet created successfully!');
     }
 
+    public function edit($id): View
+    {
+        $pet = Pet::findOrFail($id);
 
+        Gate::authorize('update', $pet);
+
+        $clients = Client::all();
+
+        return view('pages.admin.pets.edit', compact('pet', 'clients'));
+    }
+
+    public function update(UpdatePetRequest $request, Pet $pet) {
+
+        $pet->update($request->validated());
+
+        return redirect()->route('admin.pets.index')->with('success', 'Pet updated successfully!');
+    }
 
 }
