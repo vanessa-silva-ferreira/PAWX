@@ -58,7 +58,7 @@ class User extends Authenticatable
         if ($this->admin()->exists()) return 'admin';
         if ($this->employee()->exists()) return 'employee';
         if ($this->client()->exists()) return 'client';
-        return 'user'; // default role
+        return 'user';
     }
 
     public function admin(): HasOne
@@ -76,7 +76,7 @@ class User extends Authenticatable
         return $this->hasOne(Client::class);
     }
 
-    public function getClientId()
+    public function getClientId(): ?int
     {
         return $this->client ? $this->client->id : null;
     }
@@ -85,8 +85,6 @@ class User extends Authenticatable
     {
         return in_array($this->getRole(), $roles);
     }
-
-
 
     /**
      * Get the attributes that should be cast.

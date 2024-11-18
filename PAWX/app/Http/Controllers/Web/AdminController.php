@@ -45,9 +45,13 @@ class AdminController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
+//        $users = User::whereHas($type, function($query) {
+//            $query->select('id', 'user_id');
+//        })->with($type)->get();
+
         $users = User::whereHas($type, function($query) {
             $query->select('id', 'user_id');
-        })->with($type)->get();
+        })->with($type)->simplepaginate(5);
 
         $users = $users->map(function ($user) use ($type) {
             $typeModel = $user->$type;
@@ -62,7 +66,7 @@ class AdminController extends Controller
             ];
         });
 
-        return view('dashboards.admins.index', ['users' => $users, 'type' => $type]);
+        return view('dashboards.admins.index', ['users' => $users, 'type' => $type ]);
     }
 
 

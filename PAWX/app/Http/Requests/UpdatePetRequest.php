@@ -4,9 +4,12 @@ namespace App\Http\Requests;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Traits\PetValidationRules;
+
 
 class UpdatePetRequest extends FormRequest
 {
+    use PetValidationRules;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -14,17 +17,7 @@ class UpdatePetRequest extends FormRequest
     public function authorize(): bool
     {
         $pet = $this->route('pet');
-        $user = auth()->user();
-
-        if ($pet->client_id === $user->getClientId() ) {
-            return true;
-        }
-
-        if ($user->hasRole('employee') || $user->hasRole('admin')) {
-            return true;
-        }
-
-        return false;
+        return auth()->user()->can('update', $pet);
     }
 
     /**
@@ -34,14 +27,14 @@ class UpdatePetRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string|max:255',
-            'birthdate' => 'required|date',
-            'gender' => 'required|in:male,female',
-            'medical_history' => 'required|string',
-            'spay_neuter_status' => 'required|boolean',
-            'status' => 'required|string|max:255',
-            'obs' => 'required|string|max:1000',
-        ];
+        return array_merge($this->petRules(), [
+            'client_id' => 'nullable|exists:clients,id'
+        ]);
+    }
+
+    public function validated($key = null, $default = null): array
+    {
+        $validatedData = parent::validated();
+        return $this->extractPetData($validatedData);
     }
 }

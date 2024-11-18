@@ -6,7 +6,7 @@
         $type = $type ?? 'unknown';
     @endphp
 
-    @include('partials.dashboard.content', [
+    @include('partials.dashboard.list', [
         'headers' => $headers,
         'data' => $users,
         'type' => $type

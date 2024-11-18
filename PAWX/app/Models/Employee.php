@@ -12,8 +12,9 @@ class Employee extends User
 
     protected $with = ['user'];
 
-    // eager load user
-
+    protected $fillable = [
+        'user_id'
+    ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -3,15 +3,17 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Models\Pet;
 use App\Policies\UserManagementPolicy;
+use App\Policies\PetPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
     protected $policies = [
-        User::class => UserManagementPolicy::class
+        User::class => UserManagementPolicy::class,
+        Pet::class => PetPolicy::class
     ];
 
     /**
