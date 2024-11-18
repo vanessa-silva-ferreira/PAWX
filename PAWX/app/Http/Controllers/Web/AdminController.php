@@ -124,7 +124,7 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    /*public function showUser($type, $id)
+    public function showUser($type, $id)
     {
         // Check if the user is authorized to view the specified type (client or employee)
         if (!Gate::allows('manage-' . $type . 's')) {
@@ -139,7 +139,7 @@ class AdminController extends Controller
             'type' => $type,
             'user' => $user
         ]);
-    }*/
+    }
 
     /**
      * Show the form for creating a new resource.
