@@ -29,3 +29,13 @@ module.exports = {
         // require('@tailwindcss/typography'),
     ],
 };
+
+
+module.exports = {
+    mode: 'jit',
+    purge: ['./*.html'],
+    theme: {
+        extend: {},
+    },
+    plugins: [],
+};
