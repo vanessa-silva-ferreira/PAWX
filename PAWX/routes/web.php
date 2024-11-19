@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Calendar;
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\LogoutController;
@@ -26,6 +27,20 @@ Route::post('register', [RegisterController::class, 'register']);
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+    Route::resource('appointments', AppointmentController::class);
+
+    // Additional routes
+    Route::prefix('appointments')->group(function () {
+        // List canceled appointments (soft-deleted)
+        Route::get('/trashed', [AppointmentController::class, 'trashed'])->name('appointments.trashed');
+
+        // Restore canceled appointment
+        Route::patch('/restore/{id}', [AppointmentController::class, 'restore'])->name('appointments.restore');
+
+        // Cancel appointments (soft delete)
+        Route::delete('/cancel/{id}', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
+    });
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
