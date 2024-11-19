@@ -37,7 +37,7 @@ class UserManagementController extends Controller
                 $user->client()->create([]);
                 break;
             default:
-                return null; // or throw an exception
+                return null;
         }
         return $user;
     }
@@ -66,22 +66,6 @@ class UserManagementController extends Controller
     {
         $user = User::findOrFail($id);
 
-        //-------------------------------------------------------------------------------
-//        switch ($type) {
-//            case 'employee':
-//                $user = User::whereHas('employee', function ($query) use ($id) {
-//                    $query->where('id', $id);
-//                })->firstOrFail();
-//                break;
-//            case 'client':
-//                $user = User::whereHas('client', function ($query) use ($id) {
-//                    $query->where('id', $id);
-//                })->firstOrFail();
-//                break;
-//            default:
-//                throw new \InvalidArgumentException("Invalid user type: {$type}");
-//        }
-        //-------------------------------------------------------------------------------
         $userData = $request->validated();
 
         if ($request->filled('password')) {
@@ -92,7 +76,6 @@ class UserManagementController extends Controller
 
         return $user;
     }
-
 
     public function buildType(string $prefix, string $type)
     {
