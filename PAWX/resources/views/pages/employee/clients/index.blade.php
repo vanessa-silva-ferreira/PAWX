@@ -1,5 +1,5 @@
 
-@extends('layouts.employee')
+@extends('layouts.dashboard')
 
 @section('content')
     <h1>Clients List</h1>

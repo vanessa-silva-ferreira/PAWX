@@ -1,4 +1,4 @@
-@extends('layouts.client') <!-- Client-specific layout -->
+@extends('layouts.dashboard') <!-- Client-specific layout -->
 
 @section('content')
     <h1>Your Pets</h1>
