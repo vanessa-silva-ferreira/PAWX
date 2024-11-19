@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Calendar;
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\ClientController;
@@ -39,6 +40,21 @@ Route::middleware(['auth'])->group(function () {
 //    Route::get('/pets/{pet}/edit', [PetController::class,'edit'])->name('pets.edit');
 //    Route::post('/pets/{pet}', [PetController::class,'update'])->name('pets.update');
 //    Route::delete('/pets/{pet}/soft-delete', [PetController::class,'softDelete'])->name('pets.softDelete');
+    // Standard RESTful
+    Route::resource('appointments', AppointmentController::class);
+
+    // Additional routes
+    Route::prefix('appointments')->group(function () {
+        // List canceled appointments (soft-deleted)
+        Route::get('/trashed', [AppointmentController::class, 'trashed'])->name('appointments.trashed');
+
+        // Restore canceled appointment
+        Route::patch('/restore/{id}', [AppointmentController::class, 'restore'])->name('appointments.restore');
+
+        // Cancel appointments (soft delete)
+        Route::delete('/cancel/{id}', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
+    });
+
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
