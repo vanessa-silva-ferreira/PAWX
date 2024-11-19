@@ -29,6 +29,7 @@ class ClientController extends Controller
                 ->simplePaginate(5);
 
             return view('pages.admin.clients.index', compact('clients'));
+
         }
 
         abort(403, 'Unauthorized action.');

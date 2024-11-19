@@ -14,18 +14,6 @@ class CheckRole
      *
      * @param Closure(Request): (Response) $next
      */
-//    public function handle(Request $request, Closure $next, string ...$roles): Response
-//    {
-//
-//        if (!$request->user() || !$request->user()->hasRole($roles)) {
-//            abort(403, 'Unauthorized action.');
-//        }
-//        return $next($request);
-//    }
-    // string ...roles
-    // It allows the middleware to accept any number of role arguments.
-    // Provides flexibility in specifying multiple roles for a route without changing the middleware code.
-
 
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
@@ -37,7 +25,6 @@ class CheckRole
             'params' => $request->all(),
         ];
 
-        // Check if user is authenticated
         if (!$user) {
             Log::warning('CheckRole: Unauthenticated access attempt', $defaultLogPayload);
             return $this->handleUnauthorized($request);
@@ -52,7 +39,6 @@ class CheckRole
             'required_roles' => $roles,
         ], $defaultLogPayload));
 
-        // Check if user has the required role
         if (in_array($userRole, $roles)) {
             Log::info('CheckRole: Access granted', [
                 'user_id' => $user->id,
@@ -62,7 +48,6 @@ class CheckRole
             return $next($request);
         }
 
-        // If we reach here, the user doesn't have the required role
         Log::warning('CheckRole: Access denied', [
             'user_id' => $user->id,
             'user_role' => $userRole,
