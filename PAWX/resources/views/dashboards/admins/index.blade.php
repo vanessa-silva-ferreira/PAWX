@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.dashboard')
 @section('content')
     @php
         $headers = ['Nome', 'Username', 'Email', 'Morada', 'Contacto', 'NIF'];

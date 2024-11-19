@@ -10,7 +10,7 @@
 {{--    </div>--}}
 {{--@endif--}}
 
-@extends('layouts.admin')
+@extends('layouts.dashboard')
 
 @section('content')
 
