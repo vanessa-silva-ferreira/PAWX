@@ -40,7 +40,8 @@ class AuthController extends Controller
 
                 return response()->json([
                     'message' => 'Login successful',
-                    'role_redirect' => $roleRedirect
+                    'role_redirect' => $roleRedirect,
+                    'token' => $sessionToken,
                 ], 200)->withCookie($cookie);
             } catch (\Exception $e) {
                 \Log::error('Session creation failed', [

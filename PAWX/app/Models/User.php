@@ -76,6 +76,11 @@ class User extends Authenticatable
         return $this->hasOne(Client::class);
     }
 
+    public function getClientId()
+    {
+        return $this->client ? $this->client->id : null;
+    }
+
     public function hasAnyRole(array $roles): bool
     {
         return in_array($this->getRole(), $roles);

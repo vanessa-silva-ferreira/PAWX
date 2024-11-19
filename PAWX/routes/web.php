@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\Web\AdminController;
-
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Calendar;
 use App\Http\Controllers\Web\Auth\LoginController;
-use App\Http\Controllers\Web\ClientController;
-use App\Http\Controllers\Web\EmployeeController;
 use App\Http\Controllers\Web\Auth\LogoutController;
 use App\Http\Controllers\Web\Auth\RegisterController;
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 
-// Set middleware aliases
+use App\Http\Controllers\Web\Admin;
+use App\Http\Controllers\Web\Employee;
+use App\Http\Controllers\Web\Client;
+
+
 Route::aliasMiddleware('role', CheckRole::class);
 
 Route::get('/', function () {
@@ -28,44 +29,40 @@ Route::get('register', [RegisterController::class, 'showRegistrationForm'])->nam
 Route::post('register', [RegisterController::class, 'register']);
 
 
-// So it doesn't give conflicts when logging out in different roles
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+    Route::resource('appointments', AppointmentController::class);
+
+    // Additional routes
+    Route::prefix('appointments')->group(function () {
+        // List canceled appointments (soft-deleted)
+        Route::get('/trashed', [AppointmentController::class, 'trashed'])->name('appointments.trashed');
+
+        // Restore canceled appointment
+        Route::patch('/restore/{id}', [AppointmentController::class, 'restore'])->name('appointments.restore');
+
+        // Cancel appointments (soft delete)
+        Route::delete('/cancel/{id}', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
+    });
 });
 
-
-Route::middleware(['auth', 'role:admin'])->name('')->prefix('admin')->group( function () {
-    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/create/{type}', [AdminController::class, 'createUser'])->name('admin.create');
-    Route::post('/create/{type}', [AdminController::class, 'storeUser'])->name('admin.store');
-    // change the order of the create or the update
-    Route::get('/{type}/update/{id}', [AdminController::class, 'editUser'])->name('admin.edit');
-    Route::post('/{type}/update/{id}', [AdminController::class, 'updateUser'])->name('admin.update');
-
-    Route::get('/list/{type}', [AdminController::class, 'index'])->name('admin.index')->where('type', 'employee|client');
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('dashboard', [Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('employees', Admin\EmployeeController::class);
+    Route::resource('clients', Admin\ClientController::class);
+    Route::resource('pets', Admin\PetController::class);
 });
 
-Route::middleware(['auth', 'role:employee'])->name('')->prefix('employee')->group( function () {
-    Route::get('/', [EmployeeController::class, 'dashboard'])->name('employee.dashboard');
-    Route::get('/create/{type}', [EmployeeController::class, 'createUser'])->name('employee.create');
-    Route::post('/create/{type}', [EmployeeController::class, 'storeUser'])->name('employee.store');
-
-    Route::get('/{type}/update/{id}', [EmployeeController::class, 'editUser'])->name('employee.edit');
-    Route::post('/{type}/update/{id}', [EmployeeController::class, 'updateUser'])->name('employee.update');
-
-    Route::get('/list/{type}', [EmployeeController::class, 'index'])->name('employee.index')->where('type', 'client');
+Route::middleware(['auth', 'role:employee'])->prefix('employee')->name('employee.')->group(function () {
+    Route::get('dashboard', [Employee\DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('clients', Employee\ClientController::class);
+    Route::resource('pets', Employee\PetController::class);
 });
 
-// EMPLOYEE
-//Route::middleware(['auth', 'role:employee'])->group(function () {
-//    Route::get('/employees', [EmployeeController::class, 'dashboard']);
-//});
-
-
-
-// CLIENT
-Route::middleware(['auth', 'role:client'])->group(function () {
-    Route::get('/clients', [ClientController::class, 'dashboard'])->name('clients');
+Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->group(function () {
+    Route::get('dashboard', [Client\DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('pets', Client\PetController::class);
 });
 
 
