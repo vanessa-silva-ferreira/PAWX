@@ -11,8 +11,12 @@ class UpdateAppointmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
-    }
+        $user = auth()->user();
+        if ($user->hasRole('employee') || $user->hasRole('admin') || $user->hasRole('client')) {
+            return true;
+        }
+
+        return false;    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -21,8 +25,8 @@ class UpdateAppointmentRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return array_merge($this->petRules(), [
+            'client_id' => 'nullable|exists:clients,id'
+        ]);
     }
 }

@@ -11,8 +11,12 @@ class StoreAppointmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
-    }
+        $user = auth()->user();
+        if ($user->hasRole('employee') || $user->hasRole('admin') || $user->hasRole('client')) {
+            return true;
+        }
+
+        return false;    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -22,7 +26,11 @@ class StoreAppointmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'pet_id' => 'required|exists:pets,id',
+            'employee_id' => 'required|exists:employees,id',
+            'appointment_date' => 'required|date|after:now',
+            'status' => 'required|string|max:255',
+            'total_price' => 'required|numeric|min:0',
         ];
     }
 }
