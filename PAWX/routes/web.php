@@ -52,7 +52,7 @@ Route::middleware(['auth', 'role:employee'])->prefix('employee')->name('employee
     Route::get('dashboard', [Employee\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('clients', Employee\ClientController::class);
     Route::resource('pets', Employee\PetController::class);
-    Route::resource('appointments', AppointmentController::class);
+    Route::resource('appointments', Employee\AppointmentController::class);
 
     Route::prefix('appointments')->group(function () {
         // List canceled appointments (soft-deleted)

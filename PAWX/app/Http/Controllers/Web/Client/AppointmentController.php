@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Web\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateAppointmentRequest;
 use App\Models\Appointment;
+use App\Models\Employee;
 use App\Models\Pet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 
 class AppointmentController extends Controller
 {
@@ -14,113 +18,89 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $client = auth()->user()->client();
 
-        $appointments = Appointment::with(['pet', 'employee'])
-            ->whereHas('pet', function ($query) use ($client) {
-                $query->where('client_id', $client->id);
-            })
+        if (Gate::denies('show', Appointment::class)) {
+            abort(403, 'Unauthorized action.');
+        }
+        $appointments = Appointment::with(['pet', 'employee', 'pet.client'])
             ->orderBy('appointment_date', 'desc')
-            ->simplePaginate(10);
+            ->paginate(10);
 
         return view('pages.client.appointments.index', compact('appointments'));
     }
 
-    /**
-     * Show the details of a specific appointment.
-     */
     public function show($id)
     {
-        $appointment = Appointment::with(['pet', 'employee'])->findOrFail($id);
-
-        if ($appointment->pet->client_id !== auth()->user()->client->id) {
+        if (Gate::denies('show', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
+        $appointment = Appointment::with(['pet', 'pet.client'])->findOrFail($id);
 
         return view('pages.client.appointments.show', compact('appointment'));
     }
 
-    /**
-     * Show the form for creating a new appointment.
-     */
-    public function create()
+    public function create(): View
     {
-        $client = auth()->user()->client;
-        $pets = $client->pets; // Obter todos os pets associados ao cliente
-
-        return view('pages.client.appointments.create', compact('pets'));
-    }
-
-    /**
-     * Store a newly created appointment in storage.
-     */
-    public function store(Request $request)
-    {
-        $client = auth()->user()->client;
-
-        $validatedData = $request->validate([
-            'pet_id' => 'required|exists:pets,id',
-            'appointment_date' => 'required|date|after:now',
-            'status' => 'required|string|max:255',
-            'total_price' => 'required|numeric|min:0',
-        ]);
-
-        // Garantir que o pet pertence ao cliente
-        if (!in_array($validatedData['pet_id'], $client->pets->pluck('id')->toArray())) {
+        if (Gate::denies('create', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
 
-        Appointment::create($validatedData);
+        $pets = Pet::all();
+        $employees = Employee::all();
 
-        return redirect()->route('client.appointments.index')
+        return view('pages.client.appointments.create', compact('pets', 'employees'));
+    }
+
+    public function store(Request $request)
+    {
+        if (Gate::denies('create', Appointment::class)) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        Gate::authorize('create', Appointment::class);
+
+        Appointment::create($request->all());
+
+        return redirect()->route('client.dashboard')
             ->with('success', 'Appointment created successfully!');
     }
 
-    /**
-     * Show the form for editing an appointment.
-     */
-    public function edit($id)
+    public function edit($appointmentId): View
     {
-        $appointment = Appointment::findOrFail($id);
+        $appointment = Appointment::findOrFail($appointmentId);
 
-        if ($appointment->pet->client_id !== auth()->user()->client->id) {
+        if (Gate::denies('manage-appointments', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
 
-        return view('pages.client.appointments.edit', compact('appointment'));
+        $pets = Pet::all();
+        $employees = Employee::all();
+
+        return view('pages.client.appointments.edit', compact('appointment', 'pets', 'employees'));
     }
 
     /**
      * Update the specified appointment in storage.
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAppointmentRequest $request, $appointmentId)
     {
-        $appointment = Appointment::findOrFail($id);
+        $appointment = Appointment::findOrFail($appointmentId);
 
-        if ($appointment->pet->client_id !== auth()->user()->client->id) {
+        if (Gate::denies('update', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
 
-        $validatedData = $request->validate([
-            'appointment_date' => 'required|date|after:now',
-            'status' => 'required|string|max:255',
-            'total_price' => 'required|numeric|min:0',
-        ]);
+        $appointment->update($request->validated());
 
-        $appointment->update($validatedData);
-
-        return redirect()->route('client.appointments.index')
+        return redirect()->route('admin.appointments.index')
             ->with('success', 'Appointment updated successfully!');
     }
 
-    /**
-     * Cancel an appointment (soft delete).
-     */
     public function cancel($id)
     {
         $appointment = Appointment::findOrFail($id);
 
-        if ($appointment->pet->client_id !== auth()->user()->client->id) {
+        if (Gate::denies('cancel', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
 

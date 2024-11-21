@@ -3,20 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Traits\AppointmentValidationRules;
 
 class UpdateAppointmentRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        $user = auth()->user();
-        if ($user->hasRole('employee') || $user->hasRole('admin') || $user->hasRole('client')) {
-            return true;
-        }
-
-        return false;    }
+    use AppointmentValidationRules;
 
     /**
      * Get the validation rules that apply to the request.
@@ -25,8 +16,11 @@ class UpdateAppointmentRequest extends FormRequest
      */
     public function rules(): array
     {
-        return array_merge($this->petRules(), [
-            'client_id' => 'nullable|exists:clients,id'
-        ]);
+        return $this->appointmentRules();
+    }
+
+    public function validated($key = null, $default = null)
+    {
+        return $this->extractAppointmentData(parent::validated());
     }
 }

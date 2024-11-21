@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateAppointmentRequest;
 use App\Models\Appointment;
 use App\Models\Pet;
 use App\Models\Employee;
@@ -15,81 +16,55 @@ class AppointmentController extends Controller
     /**
      * Display a listing of appointments with pets and employees.
      */
-    public function index(): View
+    public function index()
     {
-        $user = auth()->user();
 
-        if (Gate::denies('view-any-appointments')) {
+        if (Gate::denies('show', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
+        $appointments = Appointment::with(['pet', 'employee', 'pet.client'])
+            ->orderBy('appointment_date', 'desc')
+            ->paginate(10);
 
-        // List all appointments with pets and employees for admin
-        if ($user->getRole() === 'admin') {
-            $appointments = Appointment::with(['pet', 'employee'])
-                ->orderBy('appointment_date', 'desc')
-                ->simplePaginate(10);
-
-            return view('pages.admin.appointments.index', compact('appointments'));
-        }
-
-        abort(403, 'Unauthorized action.');
+        return view('pages.admin.appointments.index', compact('appointments'));
     }
 
-    /**
-     * Show details of a specific appointment.
-     */
-    public function show($appointmentId): View
+    public function show($id)
     {
-        $appointment = Appointment::with(['pet', 'employee'])->findOrFail($appointmentId);
-
-        if (Gate::denies('view-appointment', $appointment)) {
+        if (Gate::denies('show', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
+        $appointment = Appointment::with(['pet', 'pet.client'])->findOrFail($id);
 
         return view('pages.admin.appointments.show', compact('appointment'));
     }
 
-    /**
-     * Show the form for creating a new appointment.
-     */
     public function create(): View
     {
-        if (Gate::denies('manage-appointments')) {
+        if (Gate::denies('create', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
 
-        $pets = Pet::all(); // Retrieve all pets for dropdown
-        $employees = Employee::all(); // Retrieve all employees for dropdown
+        $pets = Pet::all();
+        $employees = Employee::all();
 
         return view('pages.admin.appointments.create', compact('pets', 'employees'));
     }
 
-    /**
-     * Store a newly created appointment in storage.
-     */
     public function store(Request $request)
     {
-        if (Gate::denies('manage-appointments')) {
+        if (Gate::denies('create', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
 
-        $validatedData = $request->validate([
-            'pet_id' => 'required|exists:pets,id',
-            'employee_id' => 'required|exists:employees,id',
-            'appointment_date' => 'required|date|after:now',
-            'status' => 'required|string|max:255',
-            'total_price' => 'required|numeric|min:0',
-        ]);
+        Gate::authorize('create', Appointment::class);
 
-        Appointment::create($validatedData);
+        Appointment::create($request->all());
 
-        return redirect()->route('admin.appointments.index')
+        return redirect()->route('admin.dashboard')
             ->with('success', 'Appointment created successfully!');
     }
 
-    /**
-     * Show the form for editing an appointment.
-     */
     public function edit($appointmentId): View
     {
         $appointment = Appointment::findOrFail($appointmentId);
@@ -98,8 +73,8 @@ class AppointmentController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $pets = Pet::all(); // Retrieve all pets for dropdown
-        $employees = Employee::all(); // Retrieve all employees for dropdown
+        $pets = Pet::all();
+        $employees = Employee::all();
 
         return view('pages.admin.appointments.edit', compact('appointment', 'pets', 'employees'));
     }
@@ -107,66 +82,71 @@ class AppointmentController extends Controller
     /**
      * Update the specified appointment in storage.
      */
-    public function update(Request $request, $appointmentId)
+    public function update(UpdateAppointmentRequest $request, $appointmentId)
     {
         $appointment = Appointment::findOrFail($appointmentId);
 
-        if (Gate::denies('manage-appointments', $appointment)) {
+        if (Gate::denies('update', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
 
-        $validatedData = $request->validate([
-            'pet_id' => 'required|exists:pets,id',
-            'employee_id' => 'required|exists:employees,id',
-            'appointment_date' => 'required|date|after:now',
-            'status' => 'required|string|max:255',
-            'total_price' => 'required|numeric|min:0',
-        ]);
-
-        $appointment->update($validatedData);
+        $appointment->update($request->validated());
 
         return redirect()->route('admin.appointments.index')
             ->with('success', 'Appointment updated successfully!');
     }
 
-    /**
-     * Soft delete (cancel) the specified appointment.
-     */
-    public function cancel($id)
+    public function trashed(): View
     {
-        $appointment = Appointment::findOrFail($id);
-
-        if (Gate::denies('manage-appointments', $appointment)) {
+        if (Gate::denies('trashed', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
+        Gate::authorize('trashed', Appointment::class);
 
-        $appointment->delete();
-
-        return redirect()->route('employee.appointments.index')
-            ->with('success', 'Appointment canceled successfully!');
-    }
-
-    public function trashed()
-    {
-        $appointments = Appointment::onlyTrashed()
-            ->with(['pet', 'employee'])
-            ->paginate(10);
-
-        return view('pages.employee.appointments.trashed', compact('appointments'));
+        $trashedAppointments = Appointment::onlyTrashed()
+            ->with(['pet', 'pet.client'])
+            ->paginate(10);;
+        return view('pages.admin.appointments.trashed', compact('trashedAppointments'));
     }
 
     public function restore($id)
     {
         $appointment = Appointment::withTrashed()->findOrFail($id);
 
-        if (Gate::denies('manage-appointments', $appointment)) {
+        if (Gate::denies('restore', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
 
         $appointment->restore();
 
-        return redirect()->route('employee.appointments.trashed')
+        return redirect()->route('admin.appointments.trashed')
             ->with('success', 'Appointment restored successfully!');
+    }
+
+
+    public function cancel($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+
+        if (Gate::denies('cancel', $appointment)) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $appointment->delete();
+
+        return redirect()->route('admin.appointments.index')
+            ->with('success', 'Appointment canceled successfully!');
+    }
+
+    public function forceDelete($id)
+    {
+        $appointment = Appointment::withTrashed()->findOrFail($id);
+        if (Gate::denies('forceDelete', $appointment)) {
+            abort(403, 'Unauthorized action.');
+        }
+        $appointment->forceDelete();
+        return redirect()->route('admin.appointments.index')
+            ->with('success', 'Appointment permanently deleted successfully!');
     }
 
 }
