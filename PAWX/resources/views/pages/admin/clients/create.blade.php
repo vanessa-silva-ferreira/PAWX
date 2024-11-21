@@ -1,3 +1,10 @@
+@extends('layouts.dashboard')
+
+@section('sidebar')
+    @include('partials.dashboard.sidebar')
+@endsection
+
+
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>

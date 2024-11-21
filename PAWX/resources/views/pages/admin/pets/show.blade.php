@@ -1,3 +1,10 @@
+@extends('layouts.dashboard')
+
+@section('sidebar')
+    @include('partials.dashboard.sidebar')
+@endsection
+
+
 <div class="container">
     <h1 class="display-4 text-center">Pet Details: {{ $pet->name }}</h1>
     <div class="card">

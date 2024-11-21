@@ -41,10 +41,8 @@
                 <tr class="bg-white-100 text-stone-400">
                     <th>#</th>
                     <th>NOME</th>
-{{--                    <th>USERNAME</th>--}}
                     <th>EMAIL</th>
                     <th>CONTACTO</th>
-{{--                    <th>NIF</th>--}}
                     <th>MORADA</th>
                     <th></th>
                     <th></th>
@@ -56,10 +54,8 @@
                     <tr class="hover:bg-stone-100 text-stone-700">
                         <th>{{ $client->client->id }}</th>
                         <td>{{ $client->name }}</td>
-{{--                        <td>{{ $client->username }}</td>--}}
                         <td>{{ $client->email }}</td>
                         <td>{{ $client->phone_number }}</td>
-{{--                        <td>{{ $client->nif }}</td>--}}
                         <td>{{ $client->address }}</td>
                         <td class="px-2">
                             <a href="{{ route($rolePrefix . '.clients.edit', $client->client->id) }}" class="text-stone-400 hover:text-blue-800" title="View">

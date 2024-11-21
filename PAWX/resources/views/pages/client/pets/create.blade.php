@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('sidebar')
+    @include('partials.dashboard.sidebar')
+@endsection
+
 @section('content')
     <div class="container">
         <h1>Add a New Pet</h1>
