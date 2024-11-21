@@ -10,17 +10,21 @@
 
 <form action="{{ route('admin.employees.store') }}" method="POST">
     @csrf
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" value="{{ old('name') }}" required>
+    <x-form.label for="name">Name:</x-form.label>
+    <x-form.input type="text" id="name" name="name" value="{{ old('name') }}"
+           class="rounded ring-1 ring-grey-400 focus:sky-500" required/>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="{{ old('email') }}" required>
+    <x-form.label for="email">Email:</x-form.label>
+    <x-form.input type="email" id="email" name="email" value="{{ old('email') }}"
+           class="rounded ring-1 ring-grey-400 focus:sky-500" required/>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+    <x-form.label for="password">Password:</x-form.label>
+    <x-form.input type="password" id="password" name="password"
+           class="rounded ring-1 ring-grey-400 focus:sky-500" required/>
 
-    <label for="password_confirmation">Confirm Password:</label>
-    <input type="password" id="password_confirmation" name="password_confirmation" required>
+    <x-form.label for="password_confirmation">Confirm Password:</x-form.label>
+    <x-form.input type="password" id="password_confirmation" name="password_confirmation"
+           class="rounded ring-1 ring-grey-400 focus:sky-500" required/>
 
-    <button type="submit">Create Employee</button>
+    <x-form.button type="submit" class="text-white rounded bg-sky-500 hover:ring-1 hover:bg-white hover:ring-sky-500 hover:text-sky-500 font-semibold">Create Employee</x-form.button>
 </form>
