@@ -1,5 +1,10 @@
 @extends('layouts.dashboard')
 
+@section('sidebar')
+    @include('partials.dashboard.sidebar')
+@endsection
+
+
 @section('content')
     <div class="container">
         <h1>Client Details</h1>

@@ -55,7 +55,7 @@ class PetController extends Controller
         $client_id = $request->input('client_id');
 
         if (!Client::where('id', $client_id)->exists()) {
-            return back()->withErrors('Selected client does not exist.');
+            return back()->withErrors('O cliente selecionado não existe.');
         }
 
         Pet::create(array_merge(
@@ -66,7 +66,7 @@ class PetController extends Controller
             ['client_id' => $client_id]
         ));
 
-        return redirect()->route('admin.pets.index')->with('success', 'Pet created successfully!');
+        return redirect()->route('admin.pets.index')->with('success', 'Animal criado com sucesso.');
     }
 
     public function edit($id): View
@@ -84,7 +84,7 @@ class PetController extends Controller
 
         $pet->update($request->validated());
 
-        return redirect()->route('admin.pets.index')->with('success', 'Pet updated successfully!');
+        return redirect()->route('admin.pets.index')->with('success', 'Animal atualizado com sucesso!');
     }
 
 }

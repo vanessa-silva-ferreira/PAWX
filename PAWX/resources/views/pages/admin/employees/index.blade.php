@@ -55,7 +55,7 @@
                 <tbody>
                 @foreach ($employees as $employee)
                     <tr class="hover:bg-stone-100 text-stone-700">
-                        <th>{{ $loop->iteration }}</th>
+                        <th>{{ $employee->employee->id }}</th>
                         <td>{{ $employee->name }}</td>
                         <td>{{ $employee->username }}</td>
                         <td>{{ $employee->email }}</td>
