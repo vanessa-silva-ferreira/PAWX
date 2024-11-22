@@ -4,8 +4,11 @@
     @include('partials.dashboard.sidebar')
 @endsection
 
-
 @section('content')
+    <x-dashboard.forms-display.pet-edit :pet="$pet" :clients="$clients"/>
+@endsection
+
+{{--@section('content')
     <div class="container">
         <h1>Edit Pet</h1>
 
@@ -110,4 +113,4 @@
             <button type="submit" class="btn btn-primary">Update Pet</button>
         </form>
     </div>
-@endsection
+@endsection--}}
