@@ -31,20 +31,6 @@ Route::post('register', [RegisterController::class, 'register']);
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
-
-    Route::resource('appointments', AppointmentController::class);
-
-    // Additional routes
-    Route::prefix('appointments')->group(function () {
-        // List canceled appointments (soft-deleted)
-        Route::get('/trashed', [AppointmentController::class, 'trashed'])->name('appointments.trashed');
-
-        // Restore canceled appointment
-        Route::patch('/restore/{id}', [AppointmentController::class, 'restore'])->name('appointments.restore');
-
-        // Cancel appointments (soft delete)
-        Route::delete('/cancel/{id}', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
-    });
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -52,17 +38,44 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('employees', Admin\EmployeeController::class);
     Route::resource('clients', Admin\ClientController::class);
     Route::resource('pets', Admin\PetController::class);
+    Route::resource('appointments', Admin\AppointmentController::class);
+
+    Route::prefix('appointments')->group(function () {
+        // List canceled appointments (soft-deleted)
+        Route::get('/trashed', [Admin\AppointmentController::class, 'trashed'])->name('appointments.trashed');
+        // Restore canceled appointment
+        Route::patch('/restore/{id}', [Admin\AppointmentController::class, 'restore'])->name('appointments.restore');
+        // Cancel appointments (soft delete)
+        Route::delete('/cancel/{id}', [Admin\AppointmentController::class, 'cancel'])->name('appointments.cancel');
+        // Permanently delete appointment
+        Route::delete('/force-delete/{id}', [Admin\AppointmentController::class, 'forceDelete'])->name('appointments.forceDelete');
+    });
 });
 
 Route::middleware(['auth', 'role:employee'])->prefix('employee')->name('employee.')->group(function () {
     Route::get('dashboard', [Employee\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('clients', Employee\ClientController::class);
     Route::resource('pets', Employee\PetController::class);
+    Route::resource('appointments', Employee\AppointmentController::class);
+
+    Route::prefix('appointments')->group(function () {
+        // List canceled appointments (soft-deleted)
+        Route::get('/trashed', [AppointmentController::class, 'trashed'])->name('appointments.trashed');
+        // Restore canceled appointment
+        Route::patch('/restore/{id}', [AppointmentController::class, 'restore'])->name('appointments.restore');
+        // Cancel appointments (soft delete)
+        Route::delete('/cancel/{id}', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
+    });
 });
 
 Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->group(function () {
     Route::get('dashboard', [Client\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('pets', Client\PetController::class);
+    Route::resource('appointments', Client\AppointmentController::class);
+    Route::prefix('appointments')->group(function () {
+        // Cancel appointments (soft delete)
+        Route::delete('/cancel/{id}', [Client\AppointmentController::class, 'cancel'])->name('appointments.cancel');
+    });
 });
 
 
