@@ -2,16 +2,17 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\UserValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
 {
+    use UserValidationRules;
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-
         return true;
     }
 
@@ -22,25 +23,12 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                //Rule::unique('users')->ignore($this->route('id'))
-            ],
-            'password' => 'nullable|string|min:8',
-            'address' => 'nullable|string|max:255',
-            'phone_number' => 'nullable|string|size:9',
-            'nif' => 'nullable|string|size:9',
-            'username' => [
-                'nullable',
-                'string',
-                'max:50',
-                //Rule::unique('users')->ignore($this->route('id'))
-            ],
-        ];
+        return $this->userRules();
+    }
+
+    public function validated($key = null, $default = null): array
+    {
+        $validatedData = parent::validated();
+        return $this->extractUserData($validatedData);
     }
 }

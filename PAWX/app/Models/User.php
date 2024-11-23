@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\AdminController;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -24,8 +25,8 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
-
     use UserUtils;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -36,6 +37,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone_number',
+        'nif',
+        'username',
+        'address'
     ];
 
     /**
@@ -58,7 +63,7 @@ class User extends Authenticatable
         if ($this->admin()->exists()) return 'admin';
         if ($this->employee()->exists()) return 'employee';
         if ($this->client()->exists()) return 'client';
-        return 'user'; // default role
+        return 'user';
     }
 
     public function admin(): HasOne
@@ -100,4 +105,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            if (!$user->isForceDeleting()) {
+                $user->client()->delete();
+            }
+        });
+
+        static::restoring(function ($user) {
+            $user->client()->restore();
+        });
+    }
+
 }

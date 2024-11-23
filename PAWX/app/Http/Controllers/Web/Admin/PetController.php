@@ -86,5 +86,4 @@ class PetController extends Controller
 
         return redirect()->route('admin.pets.index')->with('success', 'Animal atualizado com sucesso!');
     }
-
 }
