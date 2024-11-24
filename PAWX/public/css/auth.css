@@ -1,0 +1,30 @@
+.toggle-container {
+    position: relative;
+    background-color: #ECECEC;
+    border-radius: 10px;
+    padding: 6px;
+}
+.toggle-bg {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    border-radius: 10px;
+
+    width: calc(50% - 7px);
+    height: calc(100% - 10px);
+    background-color: #DF6B2C;
+    border-radius: 6px;
+    transition: transform 0.3s ease;
+}
+.toggle-bg.signup {
+    transform: translateX(calc(100% + 4px));
+}
+.toggle-btn {
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+.social-btn {
+    width: 40px;
+    height: 40px;
+}
