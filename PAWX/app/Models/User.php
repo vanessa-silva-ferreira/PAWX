@@ -106,18 +106,41 @@ class User extends Authenticatable
         ];
     }
 
+//    protected static function boot()
+//    {
+//        parent::boot();
+//
+//        static::deleting(function ($user) {
+//            if (!$user->isForceDeleting()) {
+//                $user->client()->delete();
+//            }
+//        });
+//
+//        static::restoring(function ($user) {
+//            $user->client()->restore();
+//        });
+//    }
+
     protected static function boot()
     {
         parent::boot();
 
         static::deleting(function ($user) {
             if (!$user->isForceDeleting()) {
-                $user->client()->delete();
+                foreach (['client', 'employee'] as $type) {
+                    if ($user->$type()->exists()) {
+                        $user->$type()->delete();
+                    }
+                }
             }
         });
 
         static::restoring(function ($user) {
-            $user->client()->restore();
+            foreach (['client', 'employee'] as $type) {
+                if ($user->$type()->withTrashed()->exists()) {
+                    $user->$type()->restore();
+                }
+            }
         });
     }
 

@@ -74,13 +74,15 @@
                                 </svg>
                             </a>
                         </td>
-                        <td class="px-2">
-                            <form method="POST" action="{{ route($rolePrefix . '.clients.destroy', $client->client->id) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-800">Delete</button>
-                            </form>
-                        </td>
+                        @if(auth()->user()->hasRole('admin'))
+                            <td class="px-2">
+                                <form method="POST" action="{{ route($rolePrefix . '.clients.destroy', $client->client->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:text-red-800">Delete</button>
+                                </form>
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
                 </tbody>

@@ -91,7 +91,7 @@ class ClientController extends Controller
 
         Gate::authorize('manage-clients');
 
-        $client->user->delete(); // Soft-delete User, cascades to Client via events.
+        $client->user->delete();
 
         return redirect()->route('admin.clients.index')
             ->with('success', 'Cliente removido com sucesso.');

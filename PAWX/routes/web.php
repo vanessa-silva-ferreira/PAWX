@@ -22,11 +22,18 @@ Route::get('/', function () {
 Route::get('/services', function () {
     return view('services');
 })->name('services');
+//
+//Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+//Route::post('login', [LoginController::class, 'login']);
+//Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+//Route::post('register', [RegisterController::class, 'register']);
 
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [RegisterController::class, 'register']);
+Route::get('auth', function () {
+    return view('auth.auth');
+})->name('auth');
+
+Route::post('login', [LoginController::class, 'login'])->name('login');
+Route::post('register', [RegisterController::class, 'register'])->name('register');
 
 
 Route::middleware(['auth'])->group(function () {

@@ -76,6 +76,13 @@
                                 </svg>
                             </a>
                         </td>
+                        <td class="px-2">
+                            <form method="POST" action="{{ route('admin.employees.destroy', $employee->employee->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500 hover:text-red-800">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>

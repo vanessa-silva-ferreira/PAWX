@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Employee;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
@@ -14,66 +14,112 @@ class EmployeeController extends Controller
 {
     public function index(): View
     {
-        $user = auth()->user();
+        Gate::authorize('view-any-employees');
 
-        if (Gate::denies('view-any-employees')) {
-            abort(403, 'Unauthorized action.');
-        }
+        $employees = User::whereHas('employee')
+            ->with('employee')
+            ->orderByDesc(Employee::select('id')->whereColumn('users.id', 'employees.user_id'))
+            ->simplePaginate(5);
 
-        if ($user->getRole() === 'admin') {
-            $employees = User::whereHas('employee', function ($query) {
-                $query->select('id', 'user_id');
-            })
-                ->with('employee')
-                ->orderBy(Employee::select('id')->whereColumn('users.id', 'employees.user_id'))
-                ->simplePaginate(5);
-
-            return view('pages.admin.employees.index', compact('employees'));
-        }
-
-        abort(403, 'Unauthorized action.');
+        return view('pages.admin.employees.index', compact('employees'));
     }
 
     public function show($employeeId): View
     {
-        $employee = Employee::findOrFail($employeeId);
-        $user = $employee->user;
+        $employee = Employee::with('user')->findOrFail($employeeId);
 
-        if (Gate::denies('view-any-employees', $user)) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        if (!$employee) {
-            abort(404, 'Employee not found.');
-        }
+        Gate::authorize('view-any-employees', $employee->user);
 
         return view('pages.admin.employees.show', compact('employee'));
     }
 
     public function create()
     {
-        if (Gate::denies('manage-employees')) {
-            abort(403, 'Unauthorized action.');
-        }
+        Gate::authorize('manage-employees');
+
         return view('pages.admin.employees.create');
     }
 
-    public function store(StoreEmployeeRequest $request)
+    public function store(StoreUserRequest $request)
     {
-        if (Gate::denies('manage-employees')) {
-            abort(403, 'Unauthorized action.');
-        }
+        $userData = $request->validated();
+        $userData['password'] = bcrypt($userData['password']);
 
-        $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-        ]);
-//        \Log::info('Created User:', ['user' => $user]);
-        $employee = Employee::create([
+        $user = User::create($userData);
+        Employee::create([
             'user_id' => $user->id,
         ]);
+
+        return redirect()->route('admin.employees.index')->with('success', 'Colaborador criado com sucesso.');
+    }
+
+    public function edit($id)
+    {
+        $employee = Employee::with('user')->findOrFail($id);
+
+        Gate::authorize('manage-employees');
+
+        return view('pages.admin.employees.edit', compact('employee'));
+    }
+
+    public function update(UpdateUserRequest $request, $id)
+    {
+        $employee = Employee::with('user')->findOrFail($id);
+
+        Gate::authorize('manage-employees');
+
+        $userData = $request->validated();
+
+        if (!empty($userData['password'])) {
+            $userData['password'] = bcrypt($userData['password']);
+        } else {
+            unset($userData['password']);
+        }
+
+        $employee->user->update($userData);
+
+        return redirect()->route('admin.employees.show', $employee->id)
+            ->with('success', 'Colaborador atualizado com sucesso.');
+    }
+
+    public function destroy($id)
+    {
+        $employee = Employee::with('user')->findOrFail($id);
+
+        Gate::authorize('manage-employees');
+
+        $employee->user->delete();
+
         return redirect()->route('admin.employees.index')
-            ->with('success', 'Employee created successfully!');
+            ->with('success', 'Colaborador removido com sucesso.');
+    }
+    public function trashed()
+    {
+        $employees = Employee::onlyTrashed()->with('user')->paginate(5);
+        return view('pages.admin.employees.trashed', compact('employees'));
+    }
+
+    public function restore($id)
+    {
+        $employee = Employee::withTrashed()->with('user')->findOrFail($id);
+
+        Gate::authorize('manage-employees');
+
+        $employee->user->restore();
+
+        return redirect()->route('admin.employees.trashed')
+            ->with('success', 'Colaborador restaurado com sucesso.');
+    }
+
+    public function forceDelete($id)
+    {
+        $employee = Employee::withTrashed()->with('user')->findOrFail($id);
+
+        Gate::authorize('manage-employees');
+
+        $employee->user->forceDelete();
+
+        return redirect()->route('admin.employees.trashed')
+            ->with('success', 'Colaborador removido permanentemente.');
     }
 }

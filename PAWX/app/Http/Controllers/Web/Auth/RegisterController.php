@@ -22,11 +22,11 @@ class RegisterController extends Controller
         $user = $this->userManagement->createUser($request, 'client');
         Auth::login($user);
 
-        return redirect()->route('clients')->with('success', 'Registration successful!');
+        return redirect()->route('client.dashboard')->with('success', 'Registration successful!');
     }
 
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        return view('auth.auth');
     }
 }
