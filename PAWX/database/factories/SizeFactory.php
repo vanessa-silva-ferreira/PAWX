@@ -18,7 +18,12 @@ class SizeFactory extends Factory
     public function definition(): array
     {
         return [
-            'category' => $this->faker->randomElement(SizeCategory::cases())->value,
+            'name'  =>  $this->faker->randomElement([
+                SizeCategory::PORTE_GIGANTE->value,
+                SizeCategory::PORTE_GRANDE->value,
+                SizeCategory::PORTE_MEDIO->value,
+                SizeCategory::PORTE_PEQUENO->value,
+            ]),
         ];
     }
 }

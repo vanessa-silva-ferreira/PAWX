@@ -20,20 +20,9 @@ class PetFactory extends Factory
     public function definition(): array
     {
         return [
-//            'client_id' => rand(1,20),
-//            'name' => $this->faker->name(),
-//            'birthdate' => $this->faker->date('Y-m-d'),
-//            'gender' => $this->faker->randomElement(['male', 'female']),
-//            'medical_history' => $this->faker->text(),
-//            'spay_neuter_status' => $this->faker->boolean(),
-//            'status' => $this->faker->randomElement(['active', 'inactive']),
-//            'obs' => $this->faker->text(),
-//            'created_at' => now(),
-//            'updated_at' => now()
-            'client_id' => rand(1, 20), // Replace with Client::factory() if needed
-//            'species_id' => Breed::factory()->create()->species_id, // Link to Breed's Species
-            'size_id' => Size::factory()->create()->id,       // Link to Breed's Size
-            'breed_id' => Breed::factory()->create()->id,                        // Direct Breed link
+            'client_id' => rand(1, 20),
+            'size_id' => Size::inRandomOrder()->first()->id,
+            'breed_id' => Breed::factory()->create()->id,
             'name' => $this->faker->name(),
             'birthdate' => $this->faker->date('Y-m-d'),
             'gender' => $this->faker->randomElement(['male', 'female']),

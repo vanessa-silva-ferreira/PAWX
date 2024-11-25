@@ -4,107 +4,9 @@
     @include('partials.dashboard.sidebar')
 @endsection
 
-{{--@section('content')--}}
-{{--    <div class="container">--}}
-{{--        <h1>Create a New Pet</h1>--}}
-
-{{--        @if ($errors->any())--}}
-{{--            <div class="alert alert-danger">--}}
-{{--                <ul>--}}
-{{--                    @foreach ($errors->all() as $error)--}}
-{{--                        <li>{{ $error }}</li>--}}
-{{--                    @endforeach--}}
-{{--                </ul>--}}
-{{--            </div>--}}
-{{--        @endif--}}
-
-{{--        <form action="{{ route('admin.pets.store') }}" method="POST">--}}
-{{--            @csrf--}}
-
-{{--            <div class="form-group">--}}
-{{--                <label for="name">Pet Name</label>--}}
-{{--                <input--}}
-{{--                    type="text"--}}
-{{--                    id="name"--}}
-{{--                    name="name"--}}
-{{--                    class="form-control"--}}
-{{--                    value="{{ old('name') }}"--}}
-{{--                    required>--}}
-{{--            </div>--}}
-
-{{--            <div class="form-group">--}}
-{{--                <label for="birthdate">Birthdate</label>--}}
-{{--                <input--}}
-{{--                    type="date"--}}
-{{--                    id="birthdate"--}}
-{{--                    name="birthdate"--}}
-{{--                    class="form-control"--}}
-{{--                    value="{{ old('birthdate') }}"--}}
-{{--                    required>--}}
-{{--            </div>--}}
-
-{{--            <div class="form-group">--}}
-{{--                <label for="gender">Gender</label>--}}
-{{--                <select id="gender" name="gender" class="form-control" required>--}}
-{{--                    <option value="">Select Gender</option>--}}
-{{--                    <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>--}}
-{{--                    <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>--}}
-{{--                </select>--}}
-{{--            </div>--}}
-
-{{--            <div class="form-group">--}}
-{{--                <label for="medical_history">Medical History</label>--}}
-{{--                <textarea--}}
-{{--                    id="medical_history"--}}
-{{--                    name="medical_history"--}}
-{{--                    class="form-control">{{ old('medical_history') }}</textarea>--}}
-{{--            </div>--}}
-
-{{--            <div class="form-group">--}}
-{{--                <label>Spay/Neuter Status</label><br>--}}
-{{--                <div class="form-check">--}}
-{{--                    <input class="form-check-input" type="radio" name="spay_neuter_status" id="spayed" value="1" {{ old('spay_neuter_status') == '1' ? 'checked' : '' }}>--}}
-{{--                    <label class="form-check-label" for="spayed">--}}
-{{--                        Spayed/Neutered--}}
-{{--                    </label>--}}
-{{--                </div>--}}
-{{--                <div class="form-check">--}}
-{{--                    <input class="form-check-input" type="radio" name="spay_neuter_status" id="not_spayed" value="0" {{ old('spay_neuter_status') == '0' ? 'checked' : '' }}>--}}
-{{--                    <label class="form-check-label" for="not_spayed">--}}
-{{--                        Not Spayed/Neutered--}}
-{{--                    </label>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <div class="form-group">--}}
-{{--                <label for="status">Status</label>--}}
-{{--                <select id="status" name="status" class="form-control" required>--}}
-{{--                    <option value="">Select Status</option>--}}
-{{--                    <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>--}}
-{{--                    <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>--}}
-{{--                </select>--}}
-{{--            </div>--}}
-
-{{--            <div class="form-group">--}}
-{{--                <label for="obs">Observations</label>--}}
-{{--                <textarea--}}
-{{--                    id="obs"--}}
-{{--                    name="obs"--}}
-{{--                    class="form-control">{{ old('obs') }}</textarea>--}}
-{{--            </div>--}}
-
-
-
-
-{{--            <button type="submit" class="btn btn-primary">Create Pet</button>--}}
-{{--        </form>--}}
-{{--    </div>--}}
-{{--@extends('layouts.dashboard')--}}
-{{--@endsection--}}
-
 @section('content')
     <div class="mx-10 my-10 bg-white p-6 rounded-lg shadow">
-        <h1 class="text-2xl font-bold mb-6 uppercase" style="color: #81C784">Adicionar Novo Animal</h1>
+        <h1 class="text-2xl font-bold mb-6 uppercase" style="color: #81C784">Criar Animal</h1>
 
         @if ($errors->any())
             <div class="p-4 mb-4 text-red-700 bg-red-100 rounded-lg">
@@ -119,9 +21,51 @@
         <form action="{{ route('admin.pets.store') }}" method="POST" class="space-y-4">
             @csrf
 
+            <div class="form-group grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="species_id" class="block mb-2 font-medium text-gray-700">Espécie</label>
+                    <select id="species_id" name="species_id" class="w-full p-2 border border-pawx-grey rounded-md focus:outline-none focus:ring-2 focus:ring-pawx-orange/70 bg-white" required>
+                        <option value="">Selecione a Espécie</option>
+                        @foreach ($species as $specie)
+                            <option value="{{ $specie->id }}">{{ $specie->name }}</option>
+                        @endforeach
+                    </select>
+                    <x-form.validation-error name="species_id" />
+                </div>
+
+                <div>
+                    <label for="breed_id" class="block mb-2 font-medium text-gray-700">Raça</label>
+                    <select id="breed_id" name="breed_id" class="w-full p-2 border border-pawx-grey rounded-md focus:outline-none focus:ring-2 focus:ring-pawx-orange/70 bg-white" required>
+                        <option value="">Selecione a Raça</option>
+                        @foreach ($breeds as $breed)
+                            <option value="{{ $breed->id }}" data-species-id="{{ $breed->species_id }}" data-fur-type="{{ $breed->fur_type }}">
+                                {{ $breed->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <x-form.validation-error name="breed_id" />
+                </div>
+
+                <div>
+                    <label for="fur_type" class="block mb-2 font-medium text-gray-700">Tipo de Pelo</label>
+                    <input type="text" id="fur_type" name="fur_type" class="w-full p-2 border border-pawx-grey rounded-md focus:outline-none focus:ring-2 focus:ring-pawx-orange/70 bg-white" readonly>
+                </div>
+
+                <div>
+                    <label for="size_id" class="block mb-2 font-medium text-gray-700">Tamanho</label>
+                    <select id="size_id" name="size_id" class="w-full p-2 border border-pawx-grey rounded-md focus:outline-none focus:ring-2 focus:ring-pawx-orange/70 bg-white" required>
+                        <option value="">Selecione o Tamanho</option>
+                        @foreach ($sizes as $size)
+                            <option value="{{ $size->id }}">{{ $size->category }}</option>
+                        @endforeach
+                    </select>
+                    <x-form.validation-error name="size_id" />
+                </div>
+            </div>
+
             <x-form.input
                 name="name"
-                label="Nome do Animal"
+                label="Nome"
                 required
                 placeholder="Insira o nome do animal" />
 
@@ -193,12 +137,12 @@
             </div>
 
             <div class="form-group">
-                <label for="client_id">Client</label>
+                <label for="client_id">Cliente</label>
                 <select id="client_id" name="client_id" class="form-control" required>
-                    <option value="">Select a Client</option>
+                    <option value="">Selecione o Cliente</option>
                     @foreach ($clients as $client)
                         <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>
-                            {{ $client->id }}
+                            {{ $client->user->name }}
                         </option>
                     @endforeach
                 </select>
@@ -210,3 +154,33 @@
         </form>
     </div>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const allBreeds = [...document.querySelectorAll('#breed_id option[data-species-id]')]; // Grab all initial options
+
+        document.getElementById('species_id').addEventListener('change', function () {
+            const speciesId = this.value;
+            const breedSelect = document.getElementById('breed_id');
+
+            breedSelect.innerHTML = '<option value="">Selecione a Raça</option>';
+
+            allBreeds.forEach(breed => {
+                if (breed.getAttribute('data-species-id') === speciesId) {
+                    const newOption = document.createElement('option');
+                    newOption.value = breed.value;
+                    newOption.textContent = breed.textContent;
+                    newOption.setAttribute('data-fur-type', breed.getAttribute('data-fur-type'));
+                    breedSelect.appendChild(newOption);
+                }
+            });
+        });
+
+        document.getElementById('breed_id').addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const furType = selectedOption.getAttribute('data-fur-type') || '';
+
+            document.getElementById('fur_type').value = furType;
+        });
+    });
+</script>

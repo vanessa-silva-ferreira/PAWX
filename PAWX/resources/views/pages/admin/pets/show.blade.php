@@ -15,7 +15,7 @@
             <p class="card-text"><strong>Owner:</strong> {{ $pet->client->name }}</p>
             <p class="card-text"><strong>Added On:</strong> {{ $pet->created_at->format('F j, Y') }}</p>
             <p class="card-text"><strong>Description:</strong> {{ $pet->description ?? 'No description available.' }}</p>
-            <a href="{{ route('client.pets.index') }}" class="btn btn-primary">Back to Pets</a>
+            <a href="{{ route('admin.pets.index') }}" class="btn btn-primary">Back to Pets</a>
         </div>
     </div>
 </div>

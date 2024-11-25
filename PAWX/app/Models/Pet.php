@@ -31,11 +31,6 @@ class Pet extends Model
         return $this->belongsTo(Client::class);
     }
 
-//   public function species() : BelongsTo
-//   {
-//       return $this->belongsTo(Species::class);
-//   }
-
     public function size() : BelongsTo
     {
         return $this->belongsTo(Size::class);

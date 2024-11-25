@@ -12,11 +12,6 @@ class Species extends Model
 
     protected $fillable = ['name'];
 
-//    public function pets() : HasMany
-//    {
-//        return $this->hasMany(Pet::class);
-//    }
-
     public function breeds() : HasMany
     {
         return $this->hasMany(Breed::class);

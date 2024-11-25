@@ -20,8 +20,4 @@ class Size extends Model
     {
         return $this->hasMany(Breed::class);
     }
-//    public function breeds() : HasMany
-//    {
-//        return $this->hasMany(Breed::class);
-//    }
 }

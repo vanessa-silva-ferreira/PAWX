@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('breeds', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('species_id')->constrained('species')->onDelete('cascade');
+            $table->foreignId('species_id')->constrained('species');
             $table->foreignId('size_id')->constrained('sizes')->onDelete('cascade');
             $table->string('name');
-            $table->enum('fur_type', ['Curta', 'Longa']);
+            $table->string('fur_type');
             $table->string('obs')->nullable();
             $table->timestamps();
         });

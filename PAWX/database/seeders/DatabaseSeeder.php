@@ -38,31 +38,19 @@ class DatabaseSeeder extends Seeder
             'user_id' => $employeeUser->id
         ]);
 
+        $clientUser = User::factory()->create([
+            'name' => 'Client User',
+            'email' => 'client@example.com',
+            'password' => Hash::make('password')
+        ]);
+
+        Client::factory()->create([
+            'user_id' => $clientUser->id
+        ]);
+
         User::factory(50)->create();
         Employee::factory(20)->create();
         Client::factory(20)->create();
         $this->call(PetSeeder::class);
-
-
-
-
-////
-//        $clientUser = User::factory()->create([
-//            'name' => 'Client User',
-//            'email' => 'client@example.com',
-//            'password' => Hash::make('password')
-//        ]);
-//        Client::factory()->create([
-//            'user_id' => $clientUser->id
-//        ]);
-
-//        User::factory()->count(30)->create([
-//            'password' => Hash::make('password') // define a mesma password para todos, se desejar
-//        ])->each(function ($user) {
-//            Client::factory()->create([
-//                'user_id' => $user->id
-//            ]);
-//        });
-
     }
 }

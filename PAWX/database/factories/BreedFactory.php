@@ -20,8 +20,8 @@ class BreedFactory extends Factory
     public function definition(): array
     {
         return [
-            'species_id'    => Species::factory(),
-            'size_id'       => Size::factory(),
+            'species_id' => Species::inRandomOrder()->first()->id,
+            'size_id' => Size::inRandomOrder()->first()->id,
             'name'          => $this->faker->word,
             'fur_type'      => $this->faker->randomElement(FurType::cases())->value,
             'obs'           => $this->faker->sentence,

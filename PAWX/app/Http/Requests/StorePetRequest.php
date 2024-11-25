@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\PetValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePetRequest extends FormRequest
 {
+    use PetValidationRules;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -27,14 +29,17 @@ class StorePetRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string|max:255',
-            'birthdate' => 'required|date',
-            'gender' => 'required|in:male,female',
-            'medical_history' => 'required|string',
-            'spay_neuter_status' => 'required|boolean',
-            'status' => 'required|string|max:255',
-            'obs' => 'required|string|max:1000',
-        ];
+        return $this->petRules();
+//        return [
+//            'name' => 'required|string|max:255',
+//            'birthdate' => 'required|date',
+//            'gender' => 'required|in:male,female',
+//            'medical_history' => 'required|string',
+//            'spay_neuter_status' => 'required|boolean',
+//            'status' => 'required|string|max:255',
+//            'obs' => 'required|string|max:1000',
+//            'breed_id' => 'required|exists:breeds,id',
+//            'client_id' => 'required|exists:clients,id'
+//        ];
     }
 }
