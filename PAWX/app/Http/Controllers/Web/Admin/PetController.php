@@ -13,6 +13,7 @@ use App\Models\Species;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use App\Traits\PetValidationRules;
+use Illuminate\Support\Facades\Storage;
 
 class PetController extends Controller
 {
@@ -23,7 +24,7 @@ class PetController extends Controller
             abort(403, 'Unauthorized action.');
         }
         $pets = Pet::with('client')
-            ->orderBy('id')
+            ->orderByDesc('id')
             ->simplePaginate(5);
 
         return view('pages.admin.pets.index', compact('pets'));
@@ -45,7 +46,6 @@ class PetController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-
         $clients = Client::all();
         $sizes = Size::all();
         $species = Species::all();
@@ -54,42 +54,32 @@ class PetController extends Controller
         return view('pages.admin.pets.create', compact('clients', 'sizes', 'breeds', 'species'));
     }
 
-    public function store(StorePetRequest $request) {
-//        if (Gate::denies('create', Pet::class)) {
-//            abort(403, 'Unauthorized action.');
-//        }
-//
-//        Gate::authorize('create', Pet::class);
-//
-//        $client_id = $request->input('client_id');
-//
-//        if (!Client::where('id', $client_id)->exists()) {
-//            return back()->withErrors('O cliente selecionado não existe.');
-//        }
-//
-//        Pet::create(array_merge(
-//            $request->only([
-//                'name', 'birthdate', 'gender', 'medical_history', 'size_id',
-//                'spay_neuter_status', 'status', 'obs', 'breed_id', 'client_id'
-//            ]),
-//            ['client_id' => $client_id]
-//        ));
-//
-//        return redirect()->route('admin.pets.index')->with('success', 'Animal criado com sucesso.');
+    public function store(StorePetRequest $request)
+    {
         if (Gate::denies('create', Pet::class)) {
             abort(403, 'Unauthorized action.');
         }
 
         $client_id = $request->input('client_id');
-
         if (!Client::where('id', $client_id)->exists()) {
             return back()->withErrors('O cliente selecionado não existe.');
         }
 
         $petData = $this->extractPetData($request->all());
+        $pet = Pet::create($petData);
 
-        Pet::create($petData);
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = Storage::putFile('public/photos', $photo, 'public');
+                $photoUrl = Storage::url($path);
 
+                $pet->photos()->create([
+                    'photo_url' => $photoUrl,
+                    'description' => null,
+                    'uploaded_at' => now(),
+                ]);
+            }
+        }
         return redirect()->route('admin.pets.index')->with('success', 'Animal criado com sucesso.');
     }
 

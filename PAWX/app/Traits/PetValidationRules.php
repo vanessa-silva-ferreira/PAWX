@@ -16,8 +16,10 @@ trait PetValidationRules
             'obs' => 'nullable|string|max:1000',
             'client_id' => 'required|exists:clients,id',
             'size_id' => 'required|exists:sizes,id',
-            'breed_id' => 'required|exists:breeds,id'
-        ];
+            'breed_id' => 'required|exists:breeds,id',
+            'photos' => 'nullable|array',
+            'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ];
     }
 
     public function extractPetData(array $requestData): array

@@ -9,7 +9,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>ALTERAR</title>
+    <script src="{{ asset('js/tailwind-config.js') }}" defer></script>
+
+    <title>PAWX</title>
 </head>
 <body>
 <div class="flex h-screen">
