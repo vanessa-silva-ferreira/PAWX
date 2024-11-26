@@ -17,7 +17,13 @@ class AppointmentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'pet_id' => $this->faker->numberBetween(1, 2),
+            'employee_id' => $this->faker->numberBetween(1, 2),
+            'appointment_date' => $this->faker->date(),
+            'status' => $this->faker->sentence(),
+            'total_price' => $this->faker->randomFloat(2, 10, 100),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

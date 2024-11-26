@@ -13,7 +13,7 @@ class AppointmentPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return in_array($user->getRole(), ['admin', 'employee']);
     }
 
     /**
@@ -21,7 +21,12 @@ class AppointmentPolicy
      */
     public function view(User $user, Appointment $appointment): bool
     {
-        //
+        if(in_array($user->getRole(), ['admin', 'employee'])){
+            return true;
+        }
+        //$pet = Pet::findOrFail($appointment->pet_id);
+
+        return $user->getRole() === 'client' && $appointment->pet->client_id=== $user->client->id;
     }
 
     /**
@@ -29,7 +34,7 @@ class AppointmentPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return in_array($user->getRole(), ['admin', 'employee', 'client']);
     }
 
     /**
@@ -37,15 +42,21 @@ class AppointmentPolicy
      */
     public function update(User $user, Appointment $appointment): bool
     {
-        //
+        if ($user->hasRole('admin') || $user->hasRole('employee')) {
+            return true;
+        }
+        return $appointment->pet->client_id === $user->client->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Appointment $appointment): bool
+    public function cancel(User $user, Appointment $appointment): bool
     {
-        //
+        if ($user->hasRole('admin') || $user->hasRole('employee')) {
+            return true;
+        }
+        return $appointment->pet->client_id === $user->client->id;
     }
 
     /**
@@ -53,7 +64,7 @@ class AppointmentPolicy
      */
     public function restore(User $user, Appointment $appointment): bool
     {
-        //
+        return in_array($user->getRole(), ['admin', 'employee']);
     }
 
     /**
@@ -61,6 +72,14 @@ class AppointmentPolicy
      */
     public function forceDelete(User $user, Appointment $appointment): bool
     {
-        //
+        return $user->getRole() === 'admin';
+    }
+
+    /**
+     * Determine whether the user can view trashed models.
+     */
+    public function trashed(User $user): bool
+    {
+        return in_array($user->getRole(), ['admin', 'employee']);
     }
 }

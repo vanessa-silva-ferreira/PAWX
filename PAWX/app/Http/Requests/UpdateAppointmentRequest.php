@@ -3,16 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Traits\AppointmentValidationRules;
 
 class UpdateAppointmentRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
-    }
+    use AppointmentValidationRules;
 
     /**
      * Get the validation rules that apply to the request.
@@ -21,8 +16,11 @@ class UpdateAppointmentRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return $this->appointmentRules();
+    }
+
+    public function validated($key = null, $default = null)
+    {
+        return $this->extractAppointmentData(parent::validated());
     }
 }

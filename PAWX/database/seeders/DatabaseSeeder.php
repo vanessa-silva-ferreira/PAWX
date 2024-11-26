@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Appointment;
 use App\Models\Client;
 use App\Models\User;
 use App\Models\Admin;
@@ -52,5 +53,7 @@ class DatabaseSeeder extends Seeder
         Employee::factory(20)->create();
         Client::factory(20)->create();
         $this->call(PetSeeder::class);
+
+        Appointment::factory(20)->create();
     }
 }
