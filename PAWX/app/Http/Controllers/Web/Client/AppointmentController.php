@@ -18,8 +18,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-
-        if (Gate::denies('show', Appointment::class)) {
+        if (Gate::denies('view', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
         $appointments = Appointment::with(['pet', 'employee', 'pet.client'])
@@ -69,7 +68,7 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::findOrFail($appointmentId);
 
-        if (Gate::denies('manage-appointments', $appointment)) {
+        if (Gate::denies('update', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
 

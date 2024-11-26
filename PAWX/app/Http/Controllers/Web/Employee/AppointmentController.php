@@ -65,7 +65,7 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::findOrFail($appointmentId);
 
-        if (Gate::denies('manage-appointments', $appointment)) {
+        if (Gate::denies('update', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
 
