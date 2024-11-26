@@ -21,6 +21,9 @@ return new class extends Migration
             $table->boolean('spay_neuter_status');
             $table->enum('status', ['active', 'inactive']);
             $table->string('obs')->nullable();
+//            $table->foreignId('species_id')->constrained('species')->onDelete('cascade');
+            $table->foreignId('breed_id')->constrained('breeds')->onDelete('cascade');
+            $table->foreignId('size_id')->constrained('sizes')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

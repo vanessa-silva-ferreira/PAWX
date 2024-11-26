@@ -5,20 +5,26 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePetRequest;
 use App\Http\Requests\UpdatePetRequest;
+use App\Models\Breed;
 use App\Models\Client;
 use App\Models\Pet;
+use App\Models\Size;
+use App\Models\Species;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
+use App\Traits\PetValidationRules;
+use Illuminate\Support\Facades\Storage;
 
 class PetController extends Controller
 {
+    use PetValidationRules;
     public function index(): View
     {
         if(Gate::denies('viewAny', Pet::class)){
             abort(403, 'Unauthorized action.');
         }
         $pets = Pet::with('client')
-            ->orderBy('id')
+            ->orderByDesc('id')
             ->simplePaginate(5);
 
         return view('pages.admin.pets.index', compact('pets'));
@@ -41,31 +47,39 @@ class PetController extends Controller
         }
 
         $clients = Client::all();
+        $sizes = Size::all();
+        $species = Species::all();
+        $breeds = Breed::select('id', 'name', 'fur_type', 'species_id')->get();
 
-        return view('pages.admin.pets.create', compact('clients'));
+        return view('pages.admin.pets.create', compact('clients', 'sizes', 'breeds', 'species'));
     }
 
-    public function store(StorePetRequest $request) {
+    public function store(StorePetRequest $request)
+    {
         if (Gate::denies('create', Pet::class)) {
             abort(403, 'Unauthorized action.');
         }
 
-        Gate::authorize('create', Pet::class);
-
         $client_id = $request->input('client_id');
-
         if (!Client::where('id', $client_id)->exists()) {
             return back()->withErrors('O cliente selecionado não existe.');
         }
 
-        Pet::create(array_merge(
-            $request->only([
-                'name', 'birthdate', 'gender', 'medical_history',
-                'spay_neuter_status', 'status', 'obs',
-            ]),
-            ['client_id' => $client_id]
-        ));
+        $petData = $this->extractPetData($request->all());
+        $pet = Pet::create($petData);
 
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = Storage::putFile('public/photos', $photo, 'public');
+                $photoUrl = Storage::url($path);
+
+                $pet->photos()->create([
+                    'photo_url' => $photoUrl,
+                    'description' => null,
+                    'uploaded_at' => now(),
+                ]);
+            }
+        }
         return redirect()->route('admin.pets.index')->with('success', 'Animal criado com sucesso.');
     }
 

@@ -1,3 +1,5 @@
+<script src="{{ asset('js/tailwind-config.js') }}" defer></script>
+
 @php
     $rolePrefix = auth()->user()->getRole() === 'admin' ? 'admin' : 'employee';
     use Carbon\Carbon;
@@ -5,7 +7,7 @@
 
 <div class="mx-10 my-10 bg-white">
     <div class="container mx-auto p-6">
-        <h1 class="text-2xl font-bold mb-10 uppercase" style="color: #81C784">Animais</h1>
+        <h1 class="text-2xl font-bold mb-10 uppercase text-pawx-brown">Animais</h1>
 
         <div class="flex items-center justify-between mb-10 space-x-4">
             <form method="GET" action="{{ route($rolePrefix . '.pets.index') }}" class="flex w-full max-w-full">
@@ -14,7 +16,7 @@
                         type="text"
                         name="search"
                         placeholder="Procure por nome, tipo, raça, etc..."
-                        class="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        class="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pawx-orange"
                         value="{{ request('search') }}"
                     />
                     <button
@@ -32,8 +34,7 @@
 
             <a
                 href="{{ route($rolePrefix . '.pets.create') }}"
-                class="px-4 py-2 text-white font-semibold rounded-lg focus:ring-2 focus:ring-blue-400"
-                style="background-color: #81C784">
+                class="px-4 py-2 text-white font-semibold rounded-lg bg-pawx-orange">
                 Adicionar
             </a>
         </div>
@@ -44,7 +45,7 @@
                 <tr class="bg-white-100 text-stone-400">
                     <th>#</th>
                     <th>ANIMAL</th>
-                    <th>TAMANHO</th>
+                    <th>PORTE</th>
                     <th>IDADE</th>
                     <th>CLIENTE</th>
                     <th></th>
@@ -69,7 +70,7 @@
                                 <div>
                                     <div class="font-bold">{{ $pet->name }}</div>
                                     <div class="text-sm opacity-50 flex items-center gap-2">
-                                        <span>{{ $pet->type ?? 'N/A' }} - {{ $pet->breed ?? 'N/A' }}</span>
+                                        <span>{{ $pet->breed->species->name ?? 'N/A' }} - {{ $pet->breed->name ?? 'N/A' }}</span>
                                         @if($pet->gender === 'male')
                                             <span title="Macho" class="text-blue-500">&#9794;</span>
                                         @else
@@ -79,7 +80,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td>{{ $pet->size ?? 'N/A' }}</td>
+                        <td>{{ $pet->size->category ?? 'N/A' }}</td>
                         <td>
                             @if($pet->birthdate)
                                 {{ \Carbon\Carbon::parse($pet->birthdate)->age }} anos
