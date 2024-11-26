@@ -8,7 +8,6 @@
 </head>
 <body class="flex items-center justify-center min-h-screen bg-gray-100">
 <div class="bg-white rounded-lg shadow-md p-6 w-96">
-    <!-- Calendar Header -->
     <div class="flex justify-between items-center mb-4">
         <button id="prevMonth" class="text-gray-500 hover:text-gray-800">
             &#10094;
@@ -19,7 +18,6 @@
         </button>
     </div>
 
-    <!-- Weekdays -->
     <div class="grid grid-cols-7 gap-2 text-center text-gray-600 font-medium">
         <div>Mon</div>
         <div>Tue</div>
@@ -30,11 +28,9 @@
         <div>Sun</div>
     </div>
 
-    <!-- Days -->
     <div id="daysContainer" class="grid grid-cols-7 gap-2 mt-2 text-center text-gray-700"></div>
 </div>
 
-<!-- Pop-up -->
 <div id="popup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
     <div class="bg-white rounded-lg shadow-lg p-6 w-80 relative">
         <button id="closePopup" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
@@ -77,7 +73,7 @@
     // Initialize an empty notifications object
     const notifications = {};
 
-    // Render the calendar
+    // Render no calendário
     function renderCalendar() {
         const year = date.getFullYear();
         const month = date.getMonth();
@@ -89,14 +85,14 @@
         })} ${year}`;
 
         daysContainer.innerHTML = "";
-        const blanks = firstDay === 0 ? 6 : firstDay - 1; // Adjusting for Monday start
+        const blanks = firstDay === 0 ? 6 : firstDay - 1; // Começar na 2a feira
 
-        // Add blank days
+        // Dias em branco
         for (let i = 0; i < blanks; i++) {
             daysContainer.innerHTML += `<div></div>`;
         }
 
-        // Add days
+        // Adicionar dias
         for (let i = 1; i <= lastDate; i++) {
             const dayKey = `${year}-${String(month + 1).padStart(2, "0")}-${String(
                 i
@@ -116,7 +112,7 @@
         `;
         }
 
-        // Add click listeners for days
+        // Adicionar click listeners aos dias
         document.querySelectorAll("#daysContainer div[data-date]").forEach((day) => {
             day.addEventListener("click", (e) => {
                 const date = e.target.dataset.date;
@@ -125,7 +121,7 @@
         });
     }
 
-    // Show pop-up
+    // Mostrar pop-up
     function showPopup(date) {
         popupDate.textContent = `Notifications for ${date}`;
         popupNotifications.innerHTML = "";
@@ -141,11 +137,11 @@
         }
 
         popup.classList.remove("hidden");
-        newNotificationInput.value = ""; // Clear input field
+        newNotificationInput.value = ""; // Dar clear ao input
         newNotificationInput.dataset.date = date;
     }
 
-    // Add notification
+    // Adicionar notificação
     addNotificationButton.addEventListener("click", () => {
         const date = newNotificationInput.dataset.date;
         const text = newNotificationInput.value.trim();
@@ -155,25 +151,25 @@
         if (!notifications[date]) notifications[date] = [];
         notifications[date].push({
             text,
-            link: "show-appointment.html", // Placeholder link for the show appointment form
+            link: "show-appointment.html", // Aqui fica o link para o ficheiro show do appointment
         });
         showPopup(date);
-        renderCalendar(); // Re-render calendar to update notifications indicator
+        renderCalendar(); // Atualizar calendario para mostrar icone de notificação
     });
 
-    // Close pop-up
+    // Fechar pop-up
     closePopup.addEventListener("click", () => {
         popup.classList.add("hidden");
     });
 
-    // Close pop-up when clicking outside the content
+    // Fechar pop-up clickando em qualquer lado do ecrã
     popup.addEventListener("click", (e) => {
         if (!popupContent.contains(e.target)) {
             popup.classList.add("hidden");
         }
     });
 
-    // Navigate months
+    // Navegar meses
     prevMonth.addEventListener("click", () => {
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
@@ -184,7 +180,7 @@
         renderCalendar();
     });
 
-    // Initialize calendar
+    // Inicializar calendário
     renderCalendar();
 </script>
 </body>
