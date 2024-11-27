@@ -85,18 +85,28 @@ class PetController extends Controller
 
     public function edit($id): View
     {
-        $pet = Pet::findOrFail($id);
+        $pet = Pet::with(['size', 'breed', 'photos'])->findOrFail($id);
 
         Gate::authorize('update', $pet);
 
         $clients = Client::all();
+        $sizes = Size::all();
+        $species = Species::all();
+        $breeds = Breed::select('id', 'name', 'fur_type', 'species_id')->get();
 
-        return view('pages.admin.pets.edit', compact('pet', 'clients'));
+        return view('pages.admin.pets.edit', compact('pet', 'clients', 'sizes', 'species', 'breeds'));
     }
 
     public function update(UpdatePetRequest $request, Pet $pet) {
 
+        Gate::authorize('update', $pet);
+
         $pet->update($request->validated());
+
+        if (isset($request->validated()['photos'])) {
+            $pet->photos()->delete();
+            $pet->photos()->createMany($request->validated()['photos']);
+        }
 
         return redirect()->route('admin.pets.index')->with('success', 'Animal atualizado com sucesso!');
     }

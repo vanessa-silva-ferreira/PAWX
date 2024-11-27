@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="pl-20 pr-20">
-    <x-dashboard.form.create-pet :clients="$clients" :species="$species" :breeds="$breeds" :sizes="$sizes" />
+    <x-dashboard.forms-display.pet-create :clients="$clients" :species="$species" :breeds="$breeds" :sizes="$sizes" />
     </div>
 @endsection
 
@@ -20,6 +20,3 @@
 {{--    </div>--}}
 {{-- @endif--}}
 {{-- --}}
-{{-- @section('content')--}}
-{{-- <x-dashboard.forms-display.pet-create :clients="$clients"/> --}}
-{{-- @endsection --}}

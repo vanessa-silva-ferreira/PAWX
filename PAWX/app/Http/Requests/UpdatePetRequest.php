@@ -29,6 +29,11 @@ class UpdatePetRequest extends FormRequest
     public function validated($key = null, $default = null): array
     {
         $validatedData = parent::validated();
+
+        if ($this->hasFile('photos')) {
+            $validatedData['photos'] = $this->handlePhotos($this->file('photos'));
+        }
+
         return $this->extractPetData($validatedData);
     }
 }

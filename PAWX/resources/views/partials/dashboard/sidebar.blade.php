@@ -87,4 +87,6 @@
 
     </aside>
 {{--</div>--}}
-<script src="js/sidebar-toggle.js"></script>
+
+<script src="js/sidebar-toggle.js" defer></script>
+

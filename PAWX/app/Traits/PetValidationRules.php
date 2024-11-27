@@ -37,4 +37,19 @@ trait PetValidationRules
             'breed_id'
         ]));
     }
+
+    public function handlePhotos(array $photos): array
+    {
+        $uploadedPhotos = [];
+        foreach ($photos as $photo) {
+            $path = Storage::putFile('public/photos', $photo, 'public');
+            $uploadedPhotos[] = [
+                'photo_url' => Storage::url($path),
+                'description' => null,
+                'uploaded_at' => now(),
+            ];
+        }
+        return $uploadedPhotos;
+    }
+
 }
