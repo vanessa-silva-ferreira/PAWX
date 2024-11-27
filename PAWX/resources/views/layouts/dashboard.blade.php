@@ -23,7 +23,7 @@
     <main class="flex-grow bg-white dark:bg-gray-900 p-6">
         @yield('content')
     </main>
-    <aside id="notifications" class="w-64 bg-white dark:bg-gray-800 p-4">
+    <aside id="notifications" class="w-86 bg-white dark:bg-gray-800 p-4">
         @yield('notifications')
     </aside>
 </div>
