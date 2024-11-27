@@ -166,5 +166,3 @@
     // Inicializar calendário
     renderCalendar();
 </script>
-
-

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 use App\Models\Appointment;
 use App\Models\Pet;
@@ -18,8 +19,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-
-        if (Gate::denies('show', Appointment::class)) {
+        if (Gate::denies('viewAny', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
         $appointments = Appointment::with(['pet', 'employee', 'pet.client'])
@@ -31,7 +31,7 @@ class AppointmentController extends Controller
 
     public function show($id)
     {
-        if (Gate::denies('show', Appointment::class)) {
+        if (Gate::denies('view', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
         $appointment = Appointment::with(['pet', 'pet.client'])->findOrFail($id);
@@ -51,13 +51,11 @@ class AppointmentController extends Controller
         return view('pages.admin.appointments.create', compact('pets', 'employees'));
     }
 
-    public function store(Request $request)
+    public function store(StoreAppointmentRequest $request)
     {
         if (Gate::denies('create', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
-
-        Gate::authorize('create', Appointment::class);
 
         Appointment::create($request->all());
 
@@ -69,7 +67,7 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::findOrFail($appointmentId);
 
-        if (Gate::denies('manage-appointments', $appointment)) {
+        if (Gate::denies('update', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
 

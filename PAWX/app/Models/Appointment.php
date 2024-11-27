@@ -26,11 +26,9 @@ class Appointment extends Model
         return $this->belongsTo(Pet::class);
     }
 
-    /**
-     * Relacionamento com o modelo Employee.
-     */
     public function employee()
     {
         return $this->belongsTo(Employee::class);
     }
+
 }
