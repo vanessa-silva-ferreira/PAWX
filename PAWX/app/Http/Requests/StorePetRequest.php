@@ -30,16 +30,5 @@ class StorePetRequest extends FormRequest
     public function rules(): array
     {
         return $this->petRules();
-//        return [
-//            'name' => 'required|string|max:255',
-//            'birthdate' => 'required|date',
-//            'gender' => 'required|in:male,female',
-//            'medical_history' => 'required|string',
-//            'spay_neuter_status' => 'required|boolean',
-//            'status' => 'required|string|max:255',
-//            'obs' => 'required|string|max:1000',
-//            'breed_id' => 'required|exists:breeds,id',
-//            'client_id' => 'required|exists:clients,id'
-//        ];
     }
 }
