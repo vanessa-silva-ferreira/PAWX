@@ -11,9 +11,16 @@ class AppointmentPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+
+    public function viewAny(User $user)
     {
-        return in_array($user->getRole(), ['admin', 'employee']);
+        if ($user->isClient()) {
+            return true;
+        }
+        if(in_array($user->getRole(), ['admin', 'employee'])){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -26,7 +33,7 @@ class AppointmentPolicy
         }
         //$pet = Pet::findOrFail($appointment->pet_id);
 
-        return $user->getRole() === 'client' && $appointment->pet->client_id=== $user->client->id;
+        return $user->getRole() === 'client' && $appointment->pet->client_id === $user->client->id;
     }
 
     /**

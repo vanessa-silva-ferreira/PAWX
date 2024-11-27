@@ -3,9 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Http\Controllers\Web\AdminController;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -89,6 +89,21 @@ class User extends Authenticatable
     public function hasAnyRole(array $roles): bool
     {
         return in_array($this->getRole(), $roles);
+    }
+
+    public function isClient(): bool
+    {
+        return $this instanceof Client;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this instanceof Admin;
+    }
+
+    public function isEmployee(): bool
+    {
+        return $this instanceof Employee;
     }
 
 
