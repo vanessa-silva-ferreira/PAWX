@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateAppointmentRequest;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Models\Appointment;
+use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Pet;
-use Illuminate\Http\Request;
+use App\Notifications\AppointmentNotification;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
@@ -43,19 +44,43 @@ class AppointmentController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
+        $clients = Client::all();
         $pets = Pet::all();
         $employees = Employee::all();
 
-        return view('pages.employee.appointments.create', compact('pets', 'employees'));
+        return view('pages.employee.appointments.create', compact('pets', 'employees', 'clients'));
     }
 
-    public function store(Request $request)
+    public function store(StoreAppointmentRequest $request)
     {
         if (Gate::denies('create', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
 
-        Appointment::create($request->all());
+        $appointment = Appointment::create($request->all());
+
+        $appointment->load('pet.client', 'employee');
+
+        $client = $appointment->pet->client;
+        if ($client) {
+            $client->notify(new AppointmentNotification($appointment));
+        }
+
+        $employee = $appointment->employee;
+        if ($employee) {
+            $employee->notify(new AppointmentNotification($appointment));
+        }
+//        $pet = Pet::find($appointment->pet_id);
+//        $client = $pet->client;
+//
+//        if($client) {
+//            $client->notify(new AppointmentNotification([
+//                'id' => $appointment->id,
+//                'date' => $appointment->appointment_date,
+//                'time' => $appointment->appointment_date->format('H:i'),
+//                'status' => $appointment->status,
+//            ]));
+
 
         return redirect()->route('employee.dashboard')
             ->with('success', 'Appointment created successfully!');

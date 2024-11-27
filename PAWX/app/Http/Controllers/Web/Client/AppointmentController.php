@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Web\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 use App\Models\Appointment;
 use App\Models\Employee;
 use App\Models\Pet;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
@@ -18,22 +18,47 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        if (Gate::denies('view', Appointment::class)) {
+        if (Gate::denies('viewAny', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
-        $appointments = Appointment::with(['pet', 'employee', 'pet.client'])
+        $user = auth()->user()->load('client');
+
+        if (!$user || !$user->client) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $client = $user->client;
+
+//        $user = auth()->user();
+//
+//       if (isClient($user) {
+//            // Load the client relationship if the user is a Client
+//            $user->load('client');
+//            $client = $user->client;
+//        } else {
+//            // Handle the case where the user is not a Client
+//            abort(403, 'Unauthorized action.');
+//        }
+
+        $appointments = Appointment::with(['pet', 'employee'])
+            ->whereHas('pet', function ($query) use($client) {
+                $query->where('client_id', $client->id);
+            })
             ->orderBy('appointment_date', 'desc')
             ->paginate(10);
 
-        return view('pages.client.appointments.index', compact('appointments'));
+        return view('client.appointments.index', compact('appointments'));
     }
 
     public function show($id)
     {
-        if (Gate::denies('show', Appointment::class)) {
+        if (Gate::denies('view', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
         $appointment = Appointment::with(['pet', 'pet.client'])->findOrFail($id);
+        if ($appointment->pet->client_id !== auth()->user()->load('client')->client->id) {
+            abort(403, 'Unauthorized action.');
+        }
 
         return view('pages.client.appointments.show', compact('appointment'));
     }
@@ -43,20 +68,23 @@ class AppointmentController extends Controller
         if (Gate::denies('create', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
+        $user = auth()->user()->load('client');
 
-        $pets = Pet::all();
-        $employees = Employee::all();
 
-        return view('pages.client.appointments.create', compact('pets', 'employees'));
+        if (!$user || !$user->client) {
+            abort(403, 'Unauthorized action.');
+        }
+        $client = $user->client;
+        $pets = $client->pets;
+
+        return view('pages.client.appointments.create', compact('pets' , 'client'));
     }
 
-    public function store(Request $request)
+    public function store(StoreAppointmentRequest $request)
     {
         if (Gate::denies('create', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
-
-        Gate::authorize('create', Appointment::class);
 
         Appointment::create($request->all());
 
@@ -68,11 +96,15 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::findOrFail($appointmentId);
 
-        if (Gate::denies('update', $appointment)) {
+        $user = auth()->user()->load('client');
+
+        if (Gate::denies('update', $appointment) || $appointment->pet->client_id !== $user->client->id) {
             abort(403, 'Unauthorized action.');
         }
 
-        $pets = Pet::all();
+        $pets = Pet::whereHas('client', function ($query) use ($user) {
+            $query->where('id', $user->client->id);
+        })->get();
         $employees = Employee::all();
 
         return view('pages.client.appointments.edit', compact('appointment', 'pets', 'employees'));
@@ -91,7 +123,7 @@ class AppointmentController extends Controller
 
         $appointment->update($request->validated());
 
-        return redirect()->route('admin.appointments.index')
+        return redirect()->route('client.appointments.index')
             ->with('success', 'Appointment updated successfully!');
     }
 
@@ -99,7 +131,9 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::findOrFail($id);
 
-        if (Gate::denies('cancel', $appointment)) {
+        $user = auth()->user()->load('client');
+
+        if (Gate::denies('cancel', $appointment) || $appointment->pet->client_id !== $user->client->id) {
             abort(403, 'Unauthorized action.');
         }
 
