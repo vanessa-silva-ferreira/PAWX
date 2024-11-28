@@ -33,9 +33,9 @@ jobs:
           php artisan migrate --force
         env:
           APP_ENV: production
-          DB_CONNECTION: ${{ env.DB_CONNECTION }}
+          DB_CONNECTION: pgsql
           DB_HOST: ${{ env.DB_HOST }}
-          DB_PORT: ${{ env.DB_PORT }}
+          DB_PORT: 3306
           DB_DATABASE: ${{ env.DB_DATABASE }}
           DB_USERNAME: ${{ env.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
