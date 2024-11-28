@@ -5,7 +5,8 @@
         "node": "^18"
     },
     "scripts": {
-        "build": "npx tailwindcss -i ./resources/css/app.css -o ./public/css/app.css"
+
+        "tailwind:watch": "npx tailwindcss -i ./resources/css/app.css -o ./public/css/app.css --watch"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.20",
