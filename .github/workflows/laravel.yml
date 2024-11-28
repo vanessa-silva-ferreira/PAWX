@@ -29,11 +29,11 @@ jobs:
           php artisan migrate --force
         env:
           APP_ENV: production
-          DB_CONNECTION: ${{ env.DB_CONNECTION }}
-          DB_HOST: ${{ env.DB_HOST }}
-          DB_PORT: ${{ env.DB_PORT }}
-          DB_DATABASE: ${{ env.DB_DATABASE }}
-          DB_USERNAME: ${{ env.DB_USERNAME }}
+          DB_CONNECTION: pgsql
+          DB_HOST: aws-0-eu-west-3.pooler.supabase.com
+          DB_PORT: 6543
+          DB_DATABASE: postgres
+          DB_USERNAME: postgres.krsqwocgytnshkuwiefj
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
 #      - name: Deploy to Vercel
