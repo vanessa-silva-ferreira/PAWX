@@ -7,6 +7,7 @@ use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 use App\Models\Appointment;
 use App\Models\Pet;
+use App\Models\Client;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -47,8 +48,9 @@ class AppointmentController extends Controller
 
         $pets = Pet::all();
         $employees = Employee::all();
+        $clients = Client::with('pets')->get();
 
-        return view('pages.admin.appointments.create', compact('pets', 'employees'));
+        return view('pages.admin.appointments.create', compact('pets', 'employees', 'clients'));
     }
 
     public function store(StoreAppointmentRequest $request)
