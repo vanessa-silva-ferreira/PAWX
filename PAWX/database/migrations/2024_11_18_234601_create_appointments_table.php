@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pet_id')->constrained();
             $table->foreignId('employee_id')->constrained();
+            $table->foreignId('service_id')->constrained('services');
             $table->dateTime('appointment_date');
             $table->string('status');
             $table->double('total_price');

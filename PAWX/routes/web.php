@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Calendar;
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\LogoutController;
 use App\Http\Controllers\Web\Auth\RegisterController;
+use App\Http\Controllers\Web\Employee\AppointmentController;
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +69,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         // Permanently delete appointment
         Route::delete('/force-delete/{id}', [Admin\AppointmentController::class, 'forceDelete'])->name('appointments.forceDelete');
     });
+    Route::resource('services', Admin\ServiceController::class);
 });
 
 Route::middleware(['auth', 'role:employee'])->prefix('employee')->name('employee.')->group(function () {

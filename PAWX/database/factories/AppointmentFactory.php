@@ -20,6 +20,7 @@ class AppointmentFactory extends Factory
             'pet_id' => $this->faker->numberBetween(1, 2),
             'employee_id' => $this->faker->numberBetween(1, 2),
             'appointment_date' => $this->faker->date(),
+            'service_id' => $this->faker->numberBetween(1, 3),
             'status' => $this->faker->sentence(),
             'total_price' => $this->faker->randomFloat(2, 10, 100),
             'created_at' => now(),

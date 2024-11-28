@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
         Employee::factory(20)->create();
         Client::factory(20)->create();
         $this->call(PetSeeder::class);
-
+        $this->call(ServiceSeeder::class);
         Appointment::factory(20)->create();
     }
 }

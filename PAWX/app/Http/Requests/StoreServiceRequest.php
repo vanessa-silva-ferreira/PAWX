@@ -2,16 +2,19 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\ServiceValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreServiceRequest extends FormRequest
 {
+    use ServiceValidationRules;
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        $user = auth()->user();
+        return $user->hasRole('admin');
     }
 
     /**
@@ -21,8 +24,6 @@ class StoreServiceRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return $this->serviceRules();
     }
 }

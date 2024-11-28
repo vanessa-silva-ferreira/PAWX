@@ -3,17 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Traits\ServiceValidationRules;
 
 class UpdateServiceRequest extends FormRequest
 {
+    use ServiceValidationRules;
+
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return false;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -21,8 +19,11 @@ class UpdateServiceRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return $this->serviceRules();
+    }
+
+    public function validated($key = null, $default = null)
+    {
+        return $this->extractServiceData(parent::validated());
     }
 }
