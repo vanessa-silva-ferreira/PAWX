@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateAppointmentRequest;
 use App\Models\Appointment;
 use App\Models\Pet;
 use App\Models\Employee;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
@@ -22,7 +23,7 @@ class AppointmentController extends Controller
         if (Gate::denies('viewAny', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
-        $appointments = Appointment::with(['pet', 'employee', 'pet.client'])
+        $appointments = Appointment::with(['pet', 'employee', 'pet.client', 'service.name'])
             ->orderBy('appointment_date', 'desc')
             ->paginate(10);
 
@@ -34,7 +35,7 @@ class AppointmentController extends Controller
         if (Gate::denies('view', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
-        $appointment = Appointment::with(['pet', 'pet.client'])->findOrFail($id);
+        $appointment = Appointment::with(['pet', 'pet.client', 'employee.name', 'service.name'])->findOrFail($id);
 
         return view('pages.admin.appointments.show', compact('appointment'));
     }
@@ -47,8 +48,9 @@ class AppointmentController extends Controller
 
         $pets = Pet::all();
         $employees = Employee::all();
+        $services = Service::all();
 
-        return view('pages.admin.appointments.create', compact('pets', 'employees'));
+        return view('pages.admin.appointments.create', compact('pets', 'employees', 'services'));
     }
 
     public function store(StoreAppointmentRequest $request)
@@ -73,8 +75,9 @@ class AppointmentController extends Controller
 
         $pets = Pet::all();
         $employees = Employee::all();
+        $services = Service::all();
 
-        return view('pages.admin.appointments.edit', compact('appointment', 'pets', 'employees'));
+        return view('pages.admin.appointments.edit', compact('appointment', 'pets', 'employees', 'services'));
     }
 
     /**
@@ -102,7 +105,7 @@ class AppointmentController extends Controller
         Gate::authorize('trashed', Appointment::class);
 
         $trashedAppointments = Appointment::onlyTrashed()
-            ->with(['pet', 'pet.client'])
+            ->with(['pet', 'pet.client', 'employee.name', 'service.name'])
             ->paginate(10);;
         return view('pages.admin.appointments.trashed', compact('trashedAppointments'));
     }

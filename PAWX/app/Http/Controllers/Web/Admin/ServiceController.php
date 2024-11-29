@@ -100,13 +100,13 @@ class ServiceController extends Controller
             ->with('success', 'Service deleted successfully!');
     }
 
-    /**
-     * Return a list of services as JSON (useful for appointments).
-     */
-    public function list(): \Illuminate\Http\JsonResponse
-    {
-        $services = Service::select('id', 'name', 'cost', 'price', 'obs')->get();
-
-        return response()->json($services);
-    }
+//    /**
+//     * Return a list of services as JSON (useful for appointments).
+//     */
+//    public function list(): \Illuminate\Http\JsonResponse
+//    {
+//        $services = Service::select('id', 'name', 'cost', 'price', 'obs')->get();
+//
+//        return response()->json($services);
+//    }
 }

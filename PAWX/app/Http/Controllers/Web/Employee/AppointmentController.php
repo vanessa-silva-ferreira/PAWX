@@ -9,6 +9,7 @@ use App\Models\Appointment;
 use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Pet;
+use App\Models\Service;
 use App\Notifications\AppointmentNotification;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
@@ -33,7 +34,7 @@ class AppointmentController extends Controller
         if (Gate::denies('view', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
-        $appointment = Appointment::with(['pet', 'pet.client'])->findOrFail($id);
+        $appointment = Appointment::with(['pet', 'pet.client', 'service.name'])->findOrFail($id);
 
         return view('pages.employee.appointments.show', compact('appointment'));
     }
@@ -47,8 +48,9 @@ class AppointmentController extends Controller
         $clients = Client::all();
         $pets = Pet::all();
         $employees = Employee::all();
+        $services = Service::all();
 
-        return view('pages.employee.appointments.create', compact('pets', 'employees', 'clients'));
+        return view('pages.employee.appointments.create', compact('pets', 'employees', 'clients', 'services'));
     }
 
     public function store(StoreAppointmentRequest $request)
@@ -96,8 +98,9 @@ class AppointmentController extends Controller
 
         $pets = Pet::all();
         $employees = Employee::all();
+        $services = Service::all();
 
-        return view('pages.admin.appointments.edit', compact('appointment', 'pets', 'employees'));
+        return view('pages.admin.appointments.edit', compact('appointment', 'pets', 'employees', 'services'));
     }
 
     /**
@@ -124,7 +127,7 @@ class AppointmentController extends Controller
         }
 
         $trashedAppointments = Appointment::onlyTrashed()
-            ->with(['pet', 'pet.client'])
+            ->with(['pet', 'pet.client', 'employee', 'employee.name', 'service.name'])
             ->paginate(10);;
         return view('pages.employee.appointments.trashed', compact('trashedAppointments'));
     }

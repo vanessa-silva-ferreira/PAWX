@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateAppointmentRequest;
 use App\Models\Appointment;
 use App\Models\Employee;
 use App\Models\Pet;
+use App\Models\Service;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
@@ -40,7 +41,7 @@ class AppointmentController extends Controller
 //            abort(403, 'Unauthorized action.');
 //        }
 
-        $appointments = Appointment::with(['pet', 'employee'])
+        $appointments = Appointment::with(['pet', 'employee', 'service.name'])
             ->whereHas('pet', function ($query) use($client) {
                 $query->where('client_id', $client->id);
             })
@@ -55,7 +56,7 @@ class AppointmentController extends Controller
         if (Gate::denies('view', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
-        $appointment = Appointment::with(['pet', 'pet.client'])->findOrFail($id);
+        $appointment = Appointment::with(['pet', 'pet.client'. 'service.name'])->findOrFail($id);
         if ($appointment->pet->client_id !== auth()->user()->load('client')->client->id) {
             abort(403, 'Unauthorized action.');
         }
@@ -76,8 +77,9 @@ class AppointmentController extends Controller
         }
         $client = $user->client;
         $pets = $client->pets;
+        $services = Service::all();
 
-        return view('pages.client.appointments.create', compact('pets' , 'client'));
+        return view('pages.client.appointments.create', compact('pets' , 'client', 'services'));
     }
 
     public function store(StoreAppointmentRequest $request)
@@ -106,8 +108,9 @@ class AppointmentController extends Controller
             $query->where('id', $user->client->id);
         })->get();
         $employees = Employee::all();
+        $services = Service::all();
 
-        return view('pages.client.appointments.edit', compact('appointment', 'pets', 'employees'));
+        return view('pages.client.appointments.edit', compact('appointment', 'pets', 'employees', 'services'));
     }
 
     /**
