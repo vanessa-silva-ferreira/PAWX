@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAWX</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="{{ asset('css/auth.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/auth.js') }}" defer></script>
+    @vite('resources/js/app.js')
+    @vite('resources/css/app.css')
 </head>
 
 <body class="bg-white flex flex-col min-h-screen">
@@ -14,7 +14,7 @@
     <div
         class="w-full md:w-1/2 p-8 md:rounded-3xl md:mt-12 md:mb-12 md:ml-12 md:p-12 text-white flex flex-col justify-between relative"
         id="carousel-container">
-        <h1 class="text-6xl md:text-8xl font-bold mb-4 md:mb-0">pawX</h1>
+        <h1 class="text-6xl md:text-8xl font-bold mb-4 md:mb-0">PAWX</h1>
     </div>
 
 
@@ -130,5 +130,35 @@
         </div>
     </div>
 </div>
+<script>
+    setRandomBackgroundImage();
+
+    function toggleForm(type) {
+        const bg = document.querySelector('.toggle-bg');
+        const buttons = document.querySelectorAll('.toggle-btn');
+        const signupForm = document.getElementById('signup-form');
+        const signinForm = document.getElementById('signin-form');
+
+        if (type === 'signup') {
+            bg.classList.add('signup');
+            buttons[0].classList.remove('text-white');
+            buttons[0].classList.add('text-pawx-brown');
+            buttons[1].classList.remove('text-pawx-brown');
+            buttons[1].classList.add('text-white');
+            signinForm.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+        } else {
+            bg.classList.remove('signup');
+            buttons[0].classList.add('text-white');
+            buttons[0].classList.remove('text-pawx-brown');
+            buttons[1].classList.add('text-pawx-brown');
+            buttons[1].classList.remove('text-white');
+            signupForm.classList.add('hidden');
+            signinForm.classList.remove('hidden');
+        }
+    }
+
+    toggleForm('signin');
+</script>
 </body>
 </html>

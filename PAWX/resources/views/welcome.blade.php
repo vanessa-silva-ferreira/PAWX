@@ -34,12 +34,8 @@
     <!-- Actions Section -->
     <div class="flex items-center space-x-4">
         <button class="text-sm font-semibold hover:text-gray-500">PT | EUR</button>
-        <button id="theme-toggle" class="text-xl">
-            <span id="theme-icon" class="material-symbols-outlined">brightness_4</span>
-        </button>
-        <button class="text-xl">
-            <span class="material-symbols-outlined">account_circle</span>
-        </button>
+        <a href="/auth" class="hover:text-gray-500">Autenticação</a>
+
     </div>
 </header>
 
