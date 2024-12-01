@@ -3,7 +3,7 @@
     'name' => '',
     'label' => '',
     'options' => [],
-    'placeholder' => 'Select an option',
+    'placeholder' => null,
     'required' => false,
     'valueKey' => 'id',
     'labelKey' => 'name',
@@ -15,18 +15,19 @@
     <select
         id="{{ $id }}"
         name="{{ $name }}"
-        class="w-full p-2.5 mt-1 mb-2 border border-pawx-grey rounded-md focus:outline-none focus:ring-1 focus:ring-pawx-orange/70 bg-white text-pawx-brown/70"
-        {{ $required ? 'required' : '' }}>
+        class="w-full h-16 p-4 pt-6 pb-2 mt-1 mb-3 border border-stone-200 rounded-md focus:outline-none focus:ring-1 focus:ring-pawx-orange text-pawx-brown/70 bg-white"
+        {{ $required ? 'required' : '' }}
+    >
         @if ($placeholder)
-            <option>{{ $placeholder }}</option>
+            <option value="" disabled selected hidden>{{ $placeholder }}</option>
         @endif
-
-    @foreach ($options as $option)
+        {{ $slot }}
+        @foreach ($options as $option)
             <option
-                value="{{ $option[$valueKey] }}"
-            {{ $selected == $option[$valueKey] ? 'selected' : '' }}
+                value="{{ data_get($option, $valueKey) }}"
+            {{ $selected == data_get($option, $valueKey) ? 'selected' : '' }}
             @foreach ($extraAttributes as $attrKey => $attrValue)
-                {{ $attrKey }}="{{ $option[$attrValue] ?? '' }}"
+                {{ $attrKey }}="{{ data_get($option, $attrValue) }}"
             @endforeach
             >
             {{ data_get($option, $labelKey) }}

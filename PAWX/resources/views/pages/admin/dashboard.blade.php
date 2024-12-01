@@ -15,15 +15,3 @@
     @include('partials.dashboard.notification-bar')
     {{--    @include('partials.dashboard.notifications', ['notifications' => $notifications])--}}
 @endsection
-
-
-{{--@extends('layouts.dashboard')--}}
-
-{{--@include('partials.dashboard.sidebar')--}}
-
-{{--@section('content')--}}
-{{--    <div class="container">--}}
-{{--        <h1>Admin Dashboard</h1>--}}
-{{--    </div>--}}
-{{--@endsection--}}
-

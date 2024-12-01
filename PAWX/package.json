@@ -2,8 +2,9 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "npx tailwindcss -i ./resources/css/app.css -o ./public/css/app.css --watch",
-        "build": "npx tailwindcss -i ./resources/css/app.css -o ./public/css/app.css"
+        "dev": "vite",
+        "build": "vite build",
+        "tailwind-watch": "npx tailwindcss -i ./resources/css/app.css -o ./public/css/app.css --watch"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.20",

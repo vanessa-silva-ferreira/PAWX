@@ -22,16 +22,11 @@ class StoreUserRequest extends FormRequest
      */
     public function rules() : array
     {
-//        return [
-//            'name' => 'required|string|max:255',
-//            'email' => 'required|string|email|max:255|unique:users',
-//            'password' => 'required|string|min:8',
-//            'type' => 'sometimes|string|in:admin,employee,client',
-//        ];
         return array_merge($this->userRules(), [
-            'password' => 'required|string|min:8|confirmed', // Ensure password is required
-            'email' => 'required|email|unique:users,email', // Ensure email is unique
-            'username' => 'nullable|string|max:50|unique:users,username', // Ensure username is unique
+            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|email|unique:users,email',
+            'username' => 'nullable|string|max:50|unique:users,username',
+            // 'type' => 'sometimes|string|in:admin,employee,client',
         ]);
     }
 

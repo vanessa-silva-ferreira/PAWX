@@ -18,9 +18,18 @@ class ClientController extends Controller
         // $user = auth()->user();
         Gate::authorize('view-any-clients');
 
+        // PROBLEM: "Subquery returns more than 1 row"
+        // $clients = User::whereHas('client')
+        // ->with('client')
+        // ->orderByDesc(Client::select('id')->whereColumn('users.id', 'clients.user_id'))
+        // ->simplePaginate(5);
+
         $clients = User::whereHas('client')
             ->with('client')
-            ->orderByDesc(Client::select('id')->whereColumn('users.id', 'clients.user_id'))
+            ->orderByDesc(
+                Client::selectRaw('MAX(id)')
+                    ->whereColumn('users.id', 'clients.user_id')
+            )
             ->simplePaginate(5);
 
         return view('pages.admin.clients.index', compact('clients'));

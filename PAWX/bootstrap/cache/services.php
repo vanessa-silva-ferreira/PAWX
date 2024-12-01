@@ -32,9 +32,10 @@
     28 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     29 => 'Termwind\\Laravel\\TermwindServiceProvider',
     30 => 'Pest\\Laravel\\PestServiceProvider',
-    31 => 'App\\Providers\\AppServiceProvider',
-    32 => 'App\\Providers\\AuthServiceProvider',
-    33 => 'App\\Providers\\ViewServiceProvider',
+    31 => 'Spatie\\GoogleFonts\\GoogleFontsServiceProvider',
+    32 => 'App\\Providers\\AppServiceProvider',
+    33 => 'App\\Providers\\AuthServiceProvider',
+    34 => 'App\\Providers\\ViewServiceProvider',
   ),
   'eager' => 
   array (
@@ -54,9 +55,10 @@
     13 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     14 => 'Termwind\\Laravel\\TermwindServiceProvider',
     15 => 'Pest\\Laravel\\PestServiceProvider',
-    16 => 'App\\Providers\\AppServiceProvider',
-    17 => 'App\\Providers\\AuthServiceProvider',
-    18 => 'App\\Providers\\ViewServiceProvider',
+    16 => 'Spatie\\GoogleFonts\\GoogleFontsServiceProvider',
+    17 => 'App\\Providers\\AppServiceProvider',
+    18 => 'App\\Providers\\AuthServiceProvider',
+    19 => 'App\\Providers\\ViewServiceProvider',
   ),
   'deferred' => 
   array (

@@ -55,4 +55,15 @@
       0 => 'Pest\\Laravel\\PestServiceProvider',
     ),
   ),
+  'spatie/laravel-google-fonts' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\GoogleFonts\\GoogleFontsServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'GoogleFonts' => 'Spatie\\GoogleFonts\\GoogleFontsFacade',
+    ),
+  ),
 );
