@@ -9,6 +9,7 @@ trait AppointmentValidationRules
         return[
             'pet_id' => 'required|exists:pets,id',
             'employee_id' => 'required|exists:employees,id',
+            'service_id' => 'required|exists:services,id',
             'appointment_date' => 'required|date|after:now',
             'status' => 'required|string|max:255',
             'total_price' => 'required|numeric|min:0',
