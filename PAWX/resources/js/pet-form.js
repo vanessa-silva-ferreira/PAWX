@@ -6,13 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const furTypeSelect = document.getElementById('fur_type');
 
     const initialSpeciesId = speciesSelect.value;
-    const initialBreedId = breedSelect.value;
     const initialFurType = furTypeSelect.value;
 
     function updateBreeds(speciesId = null, furType = null) {
-        const previousSelectedBreed = breedSelect.value;
-
-        breedSelect.innerHTML = '<option value="">Selecione a Raça</option>';
+        breedSelect.innerHTML = '<option value="" disabled hidden> </option>';
 
         const matchingBreeds = allBreeds.filter(breed => {
             const matchesSpecies = !speciesId || breed.getAttribute('data-species-id') === speciesId;
@@ -29,67 +26,71 @@ document.addEventListener('DOMContentLoaded', function () {
             breedSelect.appendChild(newOption);
         });
 
-        if (matchingBreeds.some(breed => breed.value === previousSelectedBreed)) {
-            breedSelect.value = previousSelectedBreed;
-        } else {
-            breedSelect.value = '';
-        }
+        breedSelect.value = '';
     }
 
-    function syncFurTypeWithBreed(selectedOption) {
-        if (selectedOption && selectedOption.getAttribute('data-fur-type')) {
-            furTypeSelect.value = selectedOption.getAttribute('data-fur-type');
-        } else {
-            furTypeSelect.value = '';
-        }
-    }
+    function updateFurTypes(speciesId = null) {
+        furTypeSelect.innerHTML = '<option value="" disabled hidden> </option>';
 
-    function initializeFurTypes() {
-        // Add the placeholder first
-        furTypeSelect.innerHTML = '<option value="">Selecione a Pelagem</option>';
-
-        const allFurTypes = new Set();
+        const matchingFurTypes = new Set();
         allBreeds.forEach(breed => {
-            allFurTypes.add(breed.getAttribute('data-fur-type'));
+            if (!speciesId || breed.getAttribute('data-species-id') === speciesId) {
+                matchingFurTypes.add(breed.getAttribute('data-fur-type'));
+            }
         });
 
-        allFurTypes.forEach(furType => {
-            const newOption = document.createElement('option');
-            newOption.value = furType;
-            newOption.textContent = furType;
-            furTypeSelect.appendChild(newOption);
+        matchingFurTypes.forEach(furType => {
+            if (furType) {
+                const newOption = document.createElement('option');
+                newOption.value = furType;
+                newOption.textContent = furType;
+                furTypeSelect.appendChild(newOption);
+            }
         });
 
-        if (initialFurType) {
-            furTypeSelect.value = initialFurType;
+        furTypeSelect.value = '';
+    }
+
+    function syncSpeciesWithBreed(selectedBreed) {
+        if (selectedBreed) {
+            const speciesId = selectedBreed.getAttribute('data-species-id');
+            if (speciesId) {
+                speciesSelect.value = speciesId;
+                updateFurTypes(speciesId);
+            }
         }
+    }
 
-        if (!furTypeSelect.value) {
+    function syncFurTypeWithBreed(selectedBreed) {
+        if (selectedBreed && selectedBreed.getAttribute('data-fur-type')) {
+            furTypeSelect.value = selectedBreed.getAttribute('data-fur-type');
+        } else {
             furTypeSelect.value = '';
         }
     }
 
-    function resetFieldsOnSpeciesChange(speciesId) {
+    function handleSpeciesChange() {
+        const speciesId = speciesSelect.value;
+        updateFurTypes(speciesId);
         updateBreeds(speciesId, furTypeSelect.value);
     }
 
-    speciesSelect.addEventListener('change', function () {
-        const speciesId = this.value;
-        resetFieldsOnSpeciesChange(speciesId);
-    });
-
-    breedSelect.addEventListener('change', function () {
-        const selectedOption = this.options[this.selectedIndex];
-        if (selectedOption) {
-            syncFurTypeWithBreed(selectedOption);
-        }
-    });
-
-    furTypeSelect.addEventListener('change', function () {
-        const furType = this.value;
+    function handleFurTypeChange() {
+        const furType = furTypeSelect.value;
+        breedSelect.value = '';
         updateBreeds(speciesSelect.value, furType);
-    });
+    }
 
-    initializeFurTypes();
+    function handleBreedChange() {
+        const selectedBreed = breedSelect.options[breedSelect.selectedIndex];
+        syncSpeciesWithBreed(selectedBreed);
+        syncFurTypeWithBreed(selectedBreed);
+    }
+
+    speciesSelect.addEventListener('change', handleSpeciesChange);
+    furTypeSelect.addEventListener('change', handleFurTypeChange);
+    breedSelect.addEventListener('change', handleBreedChange);
+
+    updateFurTypes(initialSpeciesId);
     updateBreeds(initialSpeciesId, initialFurType);
 });

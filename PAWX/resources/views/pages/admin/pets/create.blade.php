@@ -10,13 +10,7 @@
     </div>
 @endsection
 
-{{--@if ($errors->any())--}}
-{{--    <div class="alert alert-danger">--}}
-{{--        <ul>--}}
-{{--            @foreach ($errors->all() as $error)--}}
-{{--                <li>{{ $error }}</li>--}}
-{{--            @endforeach--}}
-{{--        </ul>--}}
-{{--    </div>--}}
-{{-- @endif--}}
-{{-- --}}
+@section('notifications')
+    @include('partials.dashboard.notification-bar')
+    {{--    @include('partials.dashboard.notifications', ['notifications' => $notifications])--}}
+@endsection
