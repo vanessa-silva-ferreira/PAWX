@@ -1,5 +1,5 @@
 @props([
-   'type' => 'text',
+    'type' => 'text',
     'name',
     'label' => null,
     'value' => '',
@@ -10,20 +10,22 @@
 ])
 
 <div class="form-group">
-    @if($label)
-        <label for="{{ $id ?? $name }}">{{ $label }}</label>
+    @if ($label)
+        <label for="{{ $id ?? $name }}" class="block text-sm font-medium text-gray-700">
+            {{ $label }}
+        </label>
     @endif
+
     <input
         type="{{ $type }}"
         id="{{ $id ?? $name }}"
         name="{{ $name }}"
         value="{{ old($name, $value) }}"
         placeholder="{{ $placeholder }}"
-        @class([$class, 'is-invalid' => $errors->has($name)])
-        @if($required) required @endif
+        class="w-full h-16 p-4 pt-6 pb-2 mt-1 mb-3 border border-stone-200 rounded-md focus:outline-none focus:ring-1 focus:ring-pawx-orange text-pawx-brown/70
+      placeholder:text-pawx-brown/30"
+
+        {{ $required ? 'required' : '' }}
         {{ $attributes }}
-    >
-    @error($name)
-    <div class="invalid-feedback">{{ $message }}</div>
-    @enderror
+    />
 </div>
