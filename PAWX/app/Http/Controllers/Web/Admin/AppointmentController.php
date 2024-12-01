@@ -7,6 +7,7 @@ use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 use App\Models\Appointment;
 use App\Models\Pet;
+use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -51,6 +52,11 @@ class AppointmentController extends Controller
         $services = Service::all();
 
         return view('pages.admin.appointments.create', compact('pets', 'employees', 'services'));
+
+        //$clients = Client::with('pets')->get();
+
+        //return view('pages.admin.appointments.create', compact('pets', 'employees', 'clients'));
+
     }
 
     public function store(StoreAppointmentRequest $request)
