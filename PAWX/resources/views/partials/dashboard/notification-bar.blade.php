@@ -34,12 +34,13 @@
             class="flex-grow border border-gray-300 rounded px-2 py-1"
             placeholder="Add a new notification"
         />
-        <button
+        <a
+            href="{{ route('admin.appointments.create') }}"
             id="addNotification"
             class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
         >
             Add
-        </button>
+        </a>
     </div>
 </div>
 

@@ -14,25 +14,25 @@
 
 <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-indigo-950 py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <form class="space-y-6" action="" method="POST">
+        <form class="space-y-6" action="{{ route('employee.appointments.store') }}" method="POST">
             @csrf
             <div>
-                <label for="pet" class="block text-sm font-medium text-gray-300">
+                <label for="pet" class="block text-sm font-medium text-gray-700">
                     Selecione o animal
                 </label>
                 <div class="mt-1">
-                    <select id="pet" name="pet_id" required class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <select id="pet" name="pet_id" required class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="" disabled selected>Select a pet</option>
                         <!--pets associados ao cliente-->
                     </select>
                 </div>
             </div>
             <div>
-                <label for="service" class="block text-sm font-medium text-gray-300">
+                <label for="service" class="block text-sm font-medium text-gray-700">
                     Selecione o serviço
                 </label>
                 <div class="mt-1">
-                    <select id="service" name="service" required class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <select id="service" name="service" required class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="" disabled selected>Selecione uma opção</option>
                         <option value="banho">Banho</option>
                         <option value="shear">Tosquia</option>
@@ -41,19 +41,19 @@
                 </div>
             </div>
             <div>
-                <label for="date" class="block text-sm font-medium text-gray-300">
+                <label for="date" class="block text-sm font-medium text-gray-700">
                     Select Date
                 </label>
                 <div class="mt-1">
-                    <input id="date" name="date" type="date" required class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <input id="date" name="date" type="date" required class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
             </div>
             <div>
-                <label for="time" class="block text-sm font-medium text-gray-300">
+                <label for="time" class="block text-sm font-medium text-gray-700">
                     Selecione a hora
                 </label>
                 <div class="mt-1">
-                    <select id="time" name="time" required class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <select id="time" name="time" required class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="" disabled selected>Selecione uma opção</option>
                     </select>
                 </div>
