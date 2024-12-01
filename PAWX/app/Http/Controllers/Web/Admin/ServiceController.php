@@ -25,6 +25,16 @@ class ServiceController extends Controller
         return view('pages.admin.services.index', compact('services'));
     }
 
+    public function show($id)
+    {
+        $service = Service::findOrFail($id);
+
+        Gate::authorize('view', $service);
+
+        return view('pages.admin.services.show', compact('service'));
+    }
+
+
     /**
      * Show the form for creating a new service.
      */
