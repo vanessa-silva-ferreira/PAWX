@@ -142,6 +142,10 @@
       <excludeFolder url="file://$MODULE_DIR$/PAWX/vendor/paragonie/random_compat" />
       <excludeFolder url="file://$MODULE_DIR$/PAWX/vendor/phpseclib/phpseclib" />
       <excludeFolder url="file://$MODULE_DIR$/PAWX/vendor/symfony/psr-http-message-bridge" />
+      <excludeFolder url="file://$MODULE_DIR$/PAWX/storage/app" />
+      <excludeFolder url="file://$MODULE_DIR$/PAWX/storage/framework" />
+      <excludeFolder url="file://$MODULE_DIR$/PAWX/vendor/spatie/laravel-google-fonts" />
+      <excludeFolder url="file://$MODULE_DIR$/PAWX/vendor/spatie/laravel-package-tools" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
