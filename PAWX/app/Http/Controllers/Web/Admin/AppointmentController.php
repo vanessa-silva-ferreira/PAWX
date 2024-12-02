@@ -27,7 +27,6 @@ class AppointmentController extends Controller
         $appointments = Appointment::with(['pet', 'employee', 'pet.client', 'service.name'])
             ->orderBy('appointment_date', 'desc')
             ->paginate(10);
-
         return view('pages.admin.appointments.index', compact('appointments'));
     }
 
