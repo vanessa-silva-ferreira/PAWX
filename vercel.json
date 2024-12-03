@@ -8,10 +8,13 @@
     },
     "outputDirectory": "public",
     "routes": [
-
         {
             "src": "/build/(.*)",
-            "dest": "public/"
+            "dest": "/public/build/$1"
+        },
+        {
+            "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|otf|eot|json|txt|html))",
+            "dest": "/public/$1"
         },
         {
             "src": "/(.*)",
@@ -21,7 +24,6 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "http://localhost",
 
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
