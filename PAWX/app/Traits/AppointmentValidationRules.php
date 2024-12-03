@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+
+
 trait AppointmentValidationRules
 {
     public function appointmentRules()
@@ -19,7 +21,7 @@ trait AppointmentValidationRules
     public function extractAppointmentData(array $requestData): array
     {
         return array_intersect_key($requestData, array_flip([
-            'pet_id', 'employee_id', 'appointment_date', 'status', 'total_price'
+            'pet_id', 'employee_id', 'service_id', 'appointment_date', 'status', 'total_price'
         ]));
     }
 }

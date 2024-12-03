@@ -10,12 +10,13 @@ use App\Models\Pet;
 use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Service;
-use Illuminate\Http\Request;
+use App\Traits\AppointmentValidationRules;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class AppointmentController extends Controller
 {
+    use AppointmentValidationRules;
     /**
      * Display a listing of appointments with pets and employees.
      */
@@ -48,23 +49,21 @@ class AppointmentController extends Controller
 
         $pets = Pet::all();
         $employees = Employee::all();
+        $clients = Client::with('pets')->get();
         $services = Service::all();
 
-        return view('pages.admin.appointments.create', compact('pets', 'employees', 'services'));
-
-        //$clients = Client::with('pets')->get();
-
-        //return view('pages.admin.appointments.create', compact('pets', 'employees', 'clients'));
-
+        // Include 'clients' in the compact array
+        return view('pages.admin.appointments.create', compact('pets', 'employees', 'clients', 'services'));
     }
 
-    public function store(StoreAppointmentRequest $request)
+    public function store(StoreAppointmentRequest $request): \Illuminate\Http\RedirectResponse
     {
         if (Gate::denies('create', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
 
-        Appointment::create($request->all());
+        $appointmentData = $this->extractAppointmentData($request->all());
+        Appointment::create($appointmentData);
 
         return redirect()->route('admin.dashboard')
             ->with('success', 'Appointment created successfully!');
