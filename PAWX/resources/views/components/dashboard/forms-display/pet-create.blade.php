@@ -20,7 +20,8 @@
     @endif
 
     <form action="{{ route('admin.pets.store') }}" method="POST" class="space-y-6 mt-16"
-          enctype="multipart/form-data">    @csrf
+          enctype="multipart/form-data">
+        @csrf
 
         <div class="form-group grid grid-cols-1 md:grid-cols-4 gap-6">
             <div class="relative w-full md:col-span-3">

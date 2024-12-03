@@ -1,9 +1,8 @@
 {{--<div class="flex h-screen">--}}
     <aside id="sidebar" class="bg-white dark:bg-gray-800 p-4 transition-all duration-300" data-collapsed="false">
-        {{--        w-64--}}
         <!-- Toggle Button -->
         <button onclick="toggleSidebar()" class="p-2 focus:outline-none dark:text-gray-100">
-            <span id="toggle-icon" class="material-symbols-outlined">..</span>
+            <span id="toggle-icon" class="material-symbols-outlined">+</span>
         </button>
 
         <div class="px-3">
@@ -86,7 +85,36 @@
         {{--        @include('')--}}
 
     </aside>
-{{--</div>--}}
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const toggleIcon = document.getElementById('toggle-icon');
+        const menuTexts = document.querySelectorAll('#menu-text');
+        const searchSection = document.getElementById('search-section');
 
-<script src="js/sidebar-toggle.js" defer></script>
+        if (!sidebar || !toggleIcon) {
+            console.error('Sidebar or Toggle Icon element is missing!');
+            return;
+        }
+
+        // Toggle collapsed state
+        const attrName = "data-collapsed";
+        const isCollapsed = sidebar.getAttribute(attrName) === "true";
+        sidebar.setAttribute(attrName, `${!isCollapsed}`);
+
+        // Update classes for width adjustment
+        sidebar.classList.toggle('max-w-[6.7rem]');
+        sidebar.classList.toggle('max-w-64');
+
+        // Toggle visibility of menu texts and search section
+        menuTexts?.forEach(text => text.classList.toggle('hidden'));
+        searchSection?.classList.toggle('hidden');
+
+        // Update toggle icon
+        toggleIcon.innerText = isCollapsed ? '+' : '-';
+
+        console.table({ isCollapsed, sidebar });
+    }
+</script>
+
 
