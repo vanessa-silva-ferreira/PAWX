@@ -12,7 +12,7 @@
         <form action="{{ route('admin.employees.store') }}" method="POST" class="space-y-6">
             @csrf
 
-            <div class="form-group grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="form-group grid grid-cols-1 md:grid-cols-3 md:gap-6">
                 <div class="relative w-full md:col-span-2">
                     <x-form.input
                         type="text"
@@ -35,7 +35,7 @@
                     />
                     <x-form.label
                         for="nif">
-                        Número de Identificação Fiscal
+                        NIF
                     </x-form.label>
                     <x-form.validation-error name="nif"/>
                 </div>
@@ -52,7 +52,7 @@
                 <x-form.validation-error name="address"/>
             </div>
 
-            <div class="form-group grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="form-group grid grid-cols-1 md:grid-cols-3 md:gap-6">
                 <div class="relative w-full md:col-span-2">
                     <x-form.input
                         type="email"
@@ -73,12 +73,12 @@
                         value="{{ old('phone_number') }}"
                         maxlength="9"
                     />
-                    <x-form.label for="phone_number">Contacto Telefónico</x-form.label>
+                    <x-form.label for="phone_number">Contacto</x-form.label>
                     <x-form.validation-error name="phone_number"/>
                 </div>
             </div>
 
-            <div class="form-group grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="form-group grid grid-cols-1 md:grid-cols-2 md:gap-6">
                 <div class="relative w-full">
                     <x-form.input
                         type="password"
