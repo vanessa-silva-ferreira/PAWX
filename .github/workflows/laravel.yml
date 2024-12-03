@@ -38,8 +38,8 @@ jobs:
       - name: 'Copy .env'
         run: cp PAWX/.env.sample PAWX/.env
 
-      - name: Clear Config Cache
-        run: php artisan config:clear
+      #- name: Clear Config Cache
+        #run: php artisan config:clear
 
 
       - name: Migrate DB
