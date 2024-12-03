@@ -36,30 +36,52 @@
                     </div>
                     <div>
                         <x-form.label for="service" class="text-gray-700 font-semibold">Selecione o serviço:</x-form.label>
-                        <select as="select" id="service" name="service"
+                        <select as="select" id="service_id" name="service"
                                       class="rounded h-8 bg-white text-gray-700 w-full ring-1 ring-gray-600 focus:ring-indigo-500" required>
                             <option value="" disabled selected>Selecione uma opção</option>
                             <option value="banho">Banho</option>
-                            <option value="shear">Tosquia</option>
-                            <option value="both">Ambos</option>
+                            <option value="tosquia">Tosquia</option>
+                            <option value="ambos">Ambos</option>
                         </select>
                     </div>
                 </div>
-
                 <div class="flex space-x-4">
                     <div class="flex-1">
                         <x-form.label for="date" class="text-gray-700 font-semibold">Select Date:</x-form.label>
                         <input type="date" id="date" name="date"
-                                      class="rounded h-8 bg-white text-gray-700 w-full ring-1 ring-gray-600 focus:ring-indigo-500" required />
+                               class="rounded h-8 bg-white text-gray-700 w-full ring-1 ring-gray-600 focus:ring-indigo-500" required
+                               onchange="updateAppointmentDate()" />
                     </div>
                     <div class="flex-1">
                         <x-form.label for="time" class="text-gray-700 font-semibold">Selecione a hora:</x-form.label>
                         <select as="select" id="time" name="time"
-                                      class="rounded h-8 bg-white text-gray-700 w-full ring-1 ring-gray-600 focus:ring-indigo-500" required>
+                                class="rounded h-8 bg-white text-gray-700 w-full ring-1 ring-gray-600 focus:ring-indigo-500" required
+                                onchange="updateAppointmentDate()">
                             <option value="" disabled selected>Selecione uma opção</option>
                         </select>
                     </div>
                 </div>
+                <input type="hidden" id="appointment_date" name="appointment_date">
+
+                <div class="flex space-x-4">
+                    <div class="flex-1">
+                        <x-form.label for="value" class="text-gray-700 font-semibold">Valor a pagar:</x-form.label>
+                        <input type="number" id="total_price" name="value"
+                               class="rounded h-8 bg-white text-gray-700 w-full ring-1 ring-gray-600 focus:ring-indigo-500" required />
+                    </div>
+                    <div class="flex-1">
+                        <x-form.label for="time" class="text-gray-700 font-semibold">Selecione o funcionário:</x-form.label>
+                        <select as="select" id="employee_id" name="employee_id"
+                                class="rounded h-8 bg-white text-gray-700 w-full ring-1 ring-gray-600 focus:ring-indigo-500" required>
+                            <option value="" disabled selected>Selecionar funionário</option>
+                            @foreach ($employees as $employee)
+                                <option value="{{ $employee->id }}">{{ $employee->id }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <input type="hidden" id="status" name="status" value="Marcado">
 
                 <div class="space-y-4">
                     <x-form.button type="submit"
@@ -98,7 +120,7 @@
             }
         });
         document.addEventListener('DOMContentLoaded', function () {
-            const serviceSelect = document.getElementById('service');
+            const serviceSelect = document.getElementById('service_id');
             const timeSelect = document.getElementById('time');
 
             serviceSelect.addEventListener('change', function () {
@@ -107,14 +129,14 @@
                 // Clear previous options
                 timeSelect.innerHTML = '<option value="" disabled selected>Select a time</option>';
 
-                if (selectedService === 'banho' || selectedService === 'shear') {
+                if (selectedService === 'banho' || selectedService === 'tosquia') {
                     for (let hour = 9; hour <= 17; hour++) {
                         timeSelect.innerHTML += `
                         <option value="${hour}:00-${hour}:30">${hour}:00 - ${hour}:30</option>
                         <option value="${hour}:30-${hour + 1}:00">${hour}:30 - ${hour + 1}:00</option>
                     `;
                     }
-                } else if (selectedService === 'both') {
+                } else if (selectedService === 'ambos') {
                     for (let hour = 9; hour <= 17; hour++) {
                         timeSelect.innerHTML += `
                         <option value="${hour}:00-${hour + 1}:00">${hour}:00 - ${hour + 1}:00</option>
@@ -124,6 +146,17 @@
                 }
             });
         });
+        function updateAppointmentDate() {
+            const dateInput = document.getElementById('date').value;
+            const timeInput = document.getElementById('time').value;
+
+            // Combine date and time into the format 'YYYY-MM-DD HH:MM:SS'
+            if (dateInput && timeInput) {
+                const appointmentDate = `${dateInput} ${timeInput}`;
+                document.getElementById('appointment_date').value = appointmentDate;
+            }
+        }
+
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
 @endsection
