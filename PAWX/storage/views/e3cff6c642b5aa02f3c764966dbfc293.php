@@ -1,2 +1,0 @@
-<h3 id="menu-text"  class="px-4 text-xs font-semibold text-gray-400 uppercase mb-2"><?php echo e($title); ?></h3>
-<?php /**PATH /home/vanessa-ferreira/Desktop/M-/PAWX/resources/views/components/dashboard/sidebar/title.blade.php ENDPATH**/ ?>
