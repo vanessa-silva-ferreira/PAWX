@@ -14,8 +14,8 @@
         "APP_ENV": "production",
         "APP_DEBUG": "true",
         "APP_URL": "https://your.url.from.vercel.app",
-        "APP_KEY": add API key here from your .env file",
 
+        "APP_KEY": "base64:dkL5uwLKiXl5U6SdBESgZ/jo+wBQDtR+7KsUJRt2Sq0=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
@@ -25,6 +25,16 @@
 
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie"
+        "SESSION_DRIVER": "cookie",
+
+        "DB_CONNECTION": "pgsql",
+        "DB_HOST": "aws-0-eu-west-3.pooler.supabase.com",
+        "DB_PORT": "6543",
+        "DB_DATABASE": "postgres",
+        "DB_USERNAME": "postgres.krsqwocgytnshkuwiefj",
+        "DB_PASSWORD": "patinhas123!",
+
+
+        "CACHE_DRIVER": "array"
     }
 }
