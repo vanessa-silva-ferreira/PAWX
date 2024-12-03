@@ -61,5 +61,3 @@ jobs:
       #    VERCEL_ORG_ID: ${{ env.VERCEL_ORG_ID }}
       #    VERCEL_PROJECT_ID: ${{ env.VERCEL_PROJECT_ID }}
 
-      - name: Build Project
-        run: npm run build
