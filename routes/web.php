@@ -23,7 +23,6 @@ Route::get('/services', function () {
     return view('services');
 })->name('services');
 
-
 Route::get('auth', function () {
     return view('auth.auth');
 })->name('auth');
