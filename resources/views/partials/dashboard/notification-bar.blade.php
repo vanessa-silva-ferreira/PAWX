@@ -1,4 +1,3 @@
-<script src="https://cdn.tailwindcss.com"></script>
 <div class="bg-white rounded-lg shadow-md p-6 w-full">
     <div class="flex justify-between items-center mb-4">
         <button id="prevMonth" class="text-gray-500 hover:text-gray-800">

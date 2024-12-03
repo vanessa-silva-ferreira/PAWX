@@ -2,7 +2,9 @@
     "version": 2,
     "framework": null,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.6.1" }
+        "api/*.php": {
+            "runtime": "vercel-php@0.7.2"
+        }
     },
     "outputDirectory": "public",
     "routes": [
@@ -19,22 +21,23 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "p-pawx.vercel.app",
+        "APP_URL": "http://localhost",
 
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
 
+        "DB_CONNECTION": "pgsql",
         "APP_KEY": "base64:ojfMLDpnQrMUl2d5/2gMPy6gDfZbseYUuqb5HH03HxU=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
         "APP_ROUTES_CACHE": "/tmp/routes.php",
         "APP_SERVICES_CACHE": "/tmp/services.php",
-        "VIEW_COMPILED_PATH": "/tmp",
 
-        "DB_CONNECTION": "pgsql",
-        "DB_PORT": "6543",
-
+        "NODE_PATH": "node",
+        "VERCEL_DEMO_MODE": "true",
+        "VIEW_COMPILED_PATH": "/tmp/views",
+        "SSR_TEMP_PATH": "/tmp/ssr",
         "CACHE_DRIVER": "array"
     }
 }
