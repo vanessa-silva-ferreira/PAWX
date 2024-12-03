@@ -1,0 +1,2 @@
+<h1 class="text-xl font-bold mb-12 uppercase text-pawx-orange"><?php echo e($slot); ?></h1>
+<?php /**PATH /home/vanessa-ferreira/Desktop/M-/PAWX/resources/views/components/dashboard/title.blade.php ENDPATH**/ ?>
