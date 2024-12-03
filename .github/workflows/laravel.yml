@@ -16,7 +16,8 @@ jobs:
 
       # move entire folder to repo src
       - name: Move contents to repo root
-        run: mv PAWX/* .
+        run: mv PAWX/* . || echo "No PAWX directory, skipping."
+
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -30,7 +31,7 @@ jobs:
         run: composer install
 
       - name: 'Copy .env'
-        run: cp .env.sample .env
+        run: cp PAWX/.env.sample PAWX/.env
 
       - name: Migrate DB
         run: |
@@ -39,7 +40,7 @@ jobs:
           APP_ENV: production
           DB_CONNECTION: pgsql
           DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: 6543
+          DB_PORT: ${{ secrets.DB_PORT }}
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -50,3 +51,6 @@ jobs:
       #  env:
       #    VERCEL_ORG_ID: ${{ env.VERCEL_ORG_ID }}
       #    VERCEL_PROJECT_ID: ${{ env.VERCEL_PROJECT_ID }}
+
+      - name: Build Project
+        run: npm run build
