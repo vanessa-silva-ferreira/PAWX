@@ -1,0 +1,45 @@
+{
+    "version": 2,
+    "framework": null,
+    "functions": {
+        "api/*.php": {
+            "runtime": "vercel-php@0.7.2"
+        }
+    },
+    "outputDirectory": "public",
+    "routes": [
+        {
+            "src": "/build/(.*)",
+            "dest": "/public/build/$1"
+        },
+        {
+            "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|otf|eot|json|txt|html))",
+            "dest": "/public/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
+    ],
+    "env": {
+        "APP_ENV": "production",
+        "APP_DEBUG": "true",
+
+        "LOG_CHANNEL": "stderr",
+        "SESSION_DRIVER": "cookie",
+
+        "DB_CONNECTION": "pgsql",
+        "APP_KEY": "base64:ojfMLDpnQrMUl2d5/2gMPy6gDfZbseYUuqb5HH03HxU=",
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "APP_EVENTS_CACHE": "/tmp/events.php",
+        "APP_PACKAGES_CACHE": "/tmp/packages.php",
+        "APP_ROUTES_CACHE": "/tmp/routes.php",
+        "APP_SERVICES_CACHE": "/tmp/services.php",
+
+        "NODE_PATH": "node",
+        "VERCEL_DEMO_MODE": "true",
+        "VIEW_COMPILED_PATH": "/tmp/views",
+        "SSR_TEMP_PATH": "/tmp/ssr",
+        "CACHE_DRIVER": "array"
+    }
+}
