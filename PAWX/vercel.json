@@ -15,7 +15,7 @@
         "APP_DEBUG": "true",
         "APP_URL": "https://your.url.from.vercel.app",
 
-        "APP_KEY": "base64:dkL5uwLKiXl5U6SdBESgZ/jo+wBQDtR+7KsUJRt2Sq0=",
+        "APP_KEY": "base64:ojfMLDpnQrMUl2d5/2gMPy6gDfZbseYUuqb5HH03HxU=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
