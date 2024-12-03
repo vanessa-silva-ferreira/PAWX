@@ -24,6 +24,7 @@
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
 
+        "APP_KEY": "base64:ojfMLDpnQrMUl2d5/2gMPy6gDfZbseYUuqb5HH03HxU=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
