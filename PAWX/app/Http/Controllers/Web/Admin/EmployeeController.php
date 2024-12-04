@@ -7,19 +7,31 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Employee;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class EmployeeController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('view-any-employees');
 
-        $employees = User::whereHas('employee')
+        $search = $request->input('search');
+
+        $query = User::whereHas('employee')
             ->with('employee')
-            ->orderByDesc(Employee::select('id')->whereColumn('users.id', 'employees.user_id'))
-            ->simplePaginate(5);
+            ->orderByDesc(Employee::select('id')->whereColumn('users.id', 'employees.user_id'));
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                    ->orWhere('email', 'like', "%$search%")
+                    ->orWhere('phone_number', 'like', "%$search%");
+            });
+        }
+
+        $employees = $query->simplePaginate(5);
 
         return view('pages.admin.employees.index', compact('employees'));
     }

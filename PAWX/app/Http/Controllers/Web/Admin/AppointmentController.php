@@ -11,6 +11,7 @@ use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Service;
 use App\Traits\AppointmentValidationRules;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
@@ -20,14 +21,27 @@ class AppointmentController extends Controller
     /**
      * Display a listing of appointments with pets and employees.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (Gate::denies('viewAny', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
-        $appointments = Appointment::with(['pet', 'employee', 'pet.client', 'service.name'])
-            ->orderBy('appointment_date', 'desc')
-            ->paginate(10);
+
+        $search = $request->input('search');
+
+        $query = Appointment::with(['pet', 'employee', 'pet.client', 'service.name'])
+            ->orderBy('appointment_date', 'desc');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('appointment_date', 'like', "%$search%")
+                    ->orWhereHas('pet', fn($q) => $q->where('name', 'like', "%$search%"))
+                    ->orWhereHas('employee', fn($q) => $q->where('name', 'like', "%$search%"));
+            });
+        }
+
+        $appointments = $query->paginate(10);
+
         return view('pages.admin.appointments.index', compact('appointments'));
     }
 

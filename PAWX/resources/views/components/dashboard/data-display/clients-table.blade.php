@@ -14,7 +14,7 @@
                         name="search"
                         placeholder="Procure por nome, username, email, contacto, nif, morada..."
                         class="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        value="{{ request('search') }}"
+                        value="{{request()->input('search') ? request()->input('search') : ''}}"
                     />
                     <button
                         type="submit"
@@ -50,7 +50,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($clients as $client)
+                @forelse ($clients as $client)
                     <tr class="hover:bg-stone-100 text-stone-700">
                         <th>{{ $client->client->id }}</th>
                         <td>{{ $client->name }}</td>
@@ -84,11 +84,17 @@
                             </td>
                         @endif
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No data found
+                        </td>
+                    </tr>
+                @endforelse
                 </tbody>
             </table>
             <div class="mt-4">
-                {{ $clients->links() }}
+                {{ $clients->appends(['search' => request('search')])->links() }}
             </div>
         </div>
     </div>
