@@ -12,7 +12,7 @@ use Illuminate\View\View;
 
 class EmployeeController extends Controller
 {
-    public function index(): View
+    public function index()
     {
         Gate::authorize('view-any-employees');
 
