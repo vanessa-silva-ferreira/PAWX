@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
@@ -20,23 +21,41 @@ class AppointmentController extends Controller
     /**
      * Display a listing of appointments with pets and employees.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (Gate::denies('viewAny', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
-        $appointments = Appointment::with(['pet', 'employee', 'pet.client', 'service.name'])
-            ->orderBy('appointment_date', 'desc')
+
+        $query = Appointment::with(['pet.client', 'service'])
+            ->orderBy('appointment_date', 'desc');
+
+        if ($request->has('search') && $request->search) {
+            $query->whereHas('pet.client', function($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%');
+            })
+                ->orWhereHas('pet', function($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->search . '%');
+                })
+                ->orWhereHas('service', function($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->search . '%');
+                });
+        }
+
+        $appointments = Appointment::with(['pet.client', 'service'])
+            ->orderBy('id', 'desc')
             ->paginate(10);
+
         return view('pages.admin.appointments.index', compact('appointments'));
     }
 
     public function show($id)
     {
-        if (Gate::denies('view', Appointment::class)) {
+        $appointment = Appointment::with(['pet', 'pet.client', 'employee', 'service'])->findOrFail($id);
+        if (Gate::denies('view', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
-        $appointment = Appointment::with(['pet', 'pet.client', 'employee.name', 'service.name'])->findOrFail($id);
+
 
         return view('pages.admin.appointments.show', compact('appointment'));
     }
