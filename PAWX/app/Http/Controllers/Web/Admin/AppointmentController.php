@@ -48,7 +48,7 @@ class AppointmentController extends Controller
         }
 
         $pets = Pet::all();
-        $employees = Employee::all();
+        $employees = Employee::with('user')->get();
         $clients = Client::with('pets')->get();
         $services = Service::all();
 
@@ -64,6 +64,8 @@ class AppointmentController extends Controller
 
         $appointmentData = $this->extractAppointmentData($request->all());
         Appointment::create($appointmentData);
+
+        \Log::info('Form submitted', $request->all());
 
         return redirect()->route('admin.dashboard')
             ->with('success', 'Appointment created successfully!');
