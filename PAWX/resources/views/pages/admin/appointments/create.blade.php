@@ -163,7 +163,6 @@
 {{--            console.log('Form submitted');--}}
 {{--        });--}}
 {{--    </script>--}}
-{{--    <script src="https://cdn.tailwindcss.com"></script>--}}
 {{--@endsection--}}
 
 @extends('layouts.dashboard')

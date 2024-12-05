@@ -8,7 +8,7 @@
     }
 </style>
 <div class="mx-10 my-10 bg-white p-6">
-    <x-dashboard.title>Animal</x-dashboard.title>
+{{--    <x-dashboard.title>Animal</x-dashboard.title>--}}
     @if ($errors->any())
         <div class="p-4 mb-4 text-red-700 bg-red-100 rounded-lg">
             <ul>
