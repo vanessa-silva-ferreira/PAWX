@@ -55,6 +55,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::patch('{client}/restore', [Admin\ClientController::class, 'restore'])->name('clients.restore');
         Route::delete('{client}/forceDelete', [Admin\ClientController::class, 'forceDelete'])->name('clients.forceDelete');
     });
+
     Route::resource('clients', Admin\ClientController::class);
     Route::resource('pets', Admin\PetController::class);
     Route::resource('appointments', Admin\AppointmentController::class);

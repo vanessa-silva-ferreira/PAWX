@@ -12,6 +12,7 @@ use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Service;
 use App\Traits\AppointmentValidationRules;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
@@ -27,24 +28,21 @@ class AppointmentController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $query = Appointment::with(['pet.client', 'service'])
+        $search = $request->input('search');
+
+        $query = Appointment::with(['pet', 'employee', 'pet.client', 'service.name'])
             ->orderBy('appointment_date', 'desc');
 
-        if ($request->has('search') && $request->search) {
-            $query->whereHas('pet.client', function($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%');
-            })
-                ->orWhereHas('pet', function($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->search . '%');
-                })
-                ->orWhereHas('service', function($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->search . '%');
-                });
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('appointment_date', 'like', "%$search%")
+                    ->orWhereHas('pet', fn($q) => $q->where('name', 'like', "%$search%"))
+                    ->orWhereHas('employee', fn($q) => $q->where('name', 'like', "%$search%"));
+            });
         }
 
-        $appointments = Appointment::with(['pet.client', 'service'])
-            ->orderBy('id', 'desc')
-            ->paginate(10);
+        $appointments = $query->paginate(10);
+
 
         return view('pages.admin.appointments.index', compact('appointments'));
     }

@@ -8,19 +8,29 @@ use App\Http\Requests\UpdateServiceRequest;
 use App\Models\Service;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+
 
 class ServiceController extends Controller
 {
     /**
      * Display a listing of services.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         if (Gate::denies('viewAny', Service::class)) {
             abort(403, 'Unauthorized action.');
         }
 
-        $services = Service::orderBy('name', 'asc')->paginate(10);
+        $search = $request->input('search');
+
+        $query = Service::orderBy('name', 'asc');
+
+        if ($search) {
+            $query->where('name', 'like', "%$search%");
+        }
+
+        $services = $query->paginate(10);
 
         return view('pages.admin.services.index', compact('services'));
     }
