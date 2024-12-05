@@ -30,7 +30,7 @@ class PetFactory extends Factory
             'spay_neuter_status' => $this->faker->boolean(),
             'status' => $this->faker->randomElement(['active', 'inactive']),
             'obs' => $this->faker->text(),
-            'created_at' => now(),
+            'created_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
             'updated_at' => now(),
         ];
     }

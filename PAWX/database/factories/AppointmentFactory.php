@@ -23,7 +23,7 @@ class AppointmentFactory extends Factory
             'service_id' => $this->faker->numberBetween(1, 3),
             'status' => $this->faker->sentence(),
             'total_price' => $this->faker->randomFloat(2, 10, 100),
-            'created_at' => now(),
+            'created_at' => $this->faker->dateTimeBetween('-90 days', 'now'),
             'updated_at' => now(),
         ];
     }
