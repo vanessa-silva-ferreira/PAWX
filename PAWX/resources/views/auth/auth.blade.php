@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAWX</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    @vite('resources/js/app.js')
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/auth.js'])
 </head>
 
 <body class="bg-white flex flex-col min-h-screen">
+
 <div class="flex-grow flex flex-col md:flex-row w-full max-w-6xl mx-auto">
     <div
         class="w-full md:w-1/2 p-8 md:rounded-3xl md:mt-12 md:mb-12 md:ml-12 md:p-12 text-white flex flex-col justify-between relative"
@@ -24,11 +23,9 @@
                 <div class="toggle-container mb-8">
                     <div class="toggle-bg"></div>
                     <div class="flex">
-                        <button class="toggle-btn flex-1 py-2 px-6 text-center font-semibold text-sm"
-                                onclick="toggleForm('signin')">Iniciar Sessão
+                        <button id="signin-btn" class="toggle-btn flex-1 py-2 px-6 text-center font-semibold text-sm">Iniciar Sessão
                         </button>
-                        <button class="toggle-btn flex-1 py-2 px-6 text-center font-semibold text-sm"
-                                onclick="toggleForm('signup')">Registar
+                        <button id="signup-btn" class="toggle-btn flex-1 py-2 px-6 text-center font-semibold text-sm">Registar
                         </button>
                     </div>
                 </div>
@@ -130,35 +127,5 @@
         </div>
     </div>
 </div>
-<script>
-    setRandomBackgroundImage();
-
-    function toggleForm(type) {
-        const bg = document.querySelector('.toggle-bg');
-        const buttons = document.querySelectorAll('.toggle-btn');
-        const signupForm = document.getElementById('signup-form');
-        const signinForm = document.getElementById('signin-form');
-
-        if (type === 'signup') {
-            bg.classList.add('signup');
-            buttons[0].classList.remove('text-white');
-            buttons[0].classList.add('text-pawx-brown');
-            buttons[1].classList.remove('text-pawx-brown');
-            buttons[1].classList.add('text-white');
-            signinForm.classList.add('hidden');
-            signupForm.classList.remove('hidden');
-        } else {
-            bg.classList.remove('signup');
-            buttons[0].classList.add('text-white');
-            buttons[0].classList.remove('text-pawx-brown');
-            buttons[1].classList.add('text-pawx-brown');
-            buttons[1].classList.remove('text-white');
-            signupForm.classList.add('hidden');
-            signinForm.classList.remove('hidden');
-        }
-    }
-
-    toggleForm('signin');
-</script>
 </body>
 </html>

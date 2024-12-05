@@ -1,5 +1,3 @@
-<script src="{{ asset('js/tailwind-config.js') }}" defer></script>
-
 @php
     $rolePrefix = auth()->user()->getRole() === 'admin' ? 'admin' : 'employee';
     use Carbon\Carbon;

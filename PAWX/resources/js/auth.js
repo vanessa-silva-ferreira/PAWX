@@ -1,18 +1,5 @@
-tailwind.config = {
-    theme: {
-        extend: {
-            colors: {
-                'pawx-orange': '#DF6B2C',
-                'pawx-grey': '#ECECEC',
-                'pawx-brown': '#322C28',
-            }
-        }
-    }
-}
-
-
 const images = [
-    'https://images.pexels.com/photos/2623968/pexels-photo-2623968.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+'https://images.pexels.com/photos/2623968/pexels-photo-2623968.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     'https://images.pexels.com/photos/16609385/pexels-photo-16609385/free-photo-of-a-cat-holding-its-paw-up.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     'https://cdn.pixabay.com/photo/2018/03/31/06/31/dog-3277414_960_720.jpg'
 ];
@@ -26,8 +13,8 @@ function setRandomBackgroundImage() {
     carouselContainer.style.backgroundPosition = 'center';
     carouselContainer.style.backgroundRepeat = 'no-repeat';
 }
-
 setRandomBackgroundImage();
+
 
 function toggleForm(type) {
     const bg = document.querySelector('.toggle-bg');
@@ -55,3 +42,9 @@ function toggleForm(type) {
 }
 
 toggleForm('signin');
+
+
+const signinBtn = document.getElementById('signin-btn');
+const signupBtn = document.getElementById('signup-btn');
+signinBtn.addEventListener('click', () => toggleForm('signin'));
+signupBtn.addEventListener('click', () => toggleForm('signup'));
