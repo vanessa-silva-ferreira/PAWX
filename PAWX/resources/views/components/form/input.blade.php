@@ -22,9 +22,8 @@
         name="{{ $name }}"
         value="{{ old($name, $value) }}"
         placeholder="{{ $placeholder }}"
-        class="w-full h-16 p-4 pt-6 pb-2 mt-1 mb-3 border border-stone-200 rounded-md focus:outline-none focus:ring-1 focus:ring-pawx-orange text-pawx-brown/70
-      placeholder:text-pawx-brown/30"
-
+        class="w-full h-16 p-4 pt-6 pb-2 mt-1 mb-3 min-w-fit md:min-w-[12ch] border border-stone-400 rounded-md focus:outline-none focus:ring-1
+        focus:ring-pawx-orange text-pawx-brown/70 placeholder:text-pawx-brown/30"
         {{ $required ? 'required' : '' }}
         {{ $attributes }}
     />

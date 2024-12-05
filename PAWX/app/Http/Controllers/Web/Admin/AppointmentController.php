@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
@@ -42,15 +43,17 @@ class AppointmentController extends Controller
 
         $appointments = $query->paginate(10);
 
+
         return view('pages.admin.appointments.index', compact('appointments'));
     }
 
     public function show($id)
     {
-        if (Gate::denies('view', Appointment::class)) {
+        $appointment = Appointment::with(['pet', 'pet.client', 'employee', 'service'])->findOrFail($id);
+        if (Gate::denies('view', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
-        $appointment = Appointment::with(['pet', 'pet.client', 'employee.name', 'service.name'])->findOrFail($id);
+
 
         return view('pages.admin.appointments.show', compact('appointment'));
     }
@@ -62,7 +65,7 @@ class AppointmentController extends Controller
         }
 
         $pets = Pet::all();
-        $employees = Employee::all();
+        $employees = Employee::with('user')->get();
         $clients = Client::with('pets')->get();
         $services = Service::all();
 
@@ -78,6 +81,8 @@ class AppointmentController extends Controller
 
         $appointmentData = $this->extractAppointmentData($request->all());
         Appointment::create($appointmentData);
+
+        \Log::info('Form submitted', $request->all());
 
         return redirect()->route('admin.dashboard')
             ->with('success', 'Appointment created successfully!');
