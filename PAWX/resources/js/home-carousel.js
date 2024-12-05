@@ -1,39 +1,59 @@
+import pet1 from '../images/pet1.jpg';
+import pet2 from '../images/pet2.jpg';
+import pet3 from '../images/pet3.jpg';
+import pet4 from '../images/pet4.jpg';
+import pet5 from '../images/pet5.jpg';
+import pet6 from '../images/pet6.jpg';
+import pet7 from '../images/pet7.jpg';
+import pet8 from '../images/pet8.jpg';
+import pet9 from '../images/pet9.jpg';
+import pet10 from '../images/pet10.jpg';
+
 document.addEventListener('DOMContentLoaded', () => {
+    const carouselContainer = document.querySelector('.carousel-container');
     const carouselImages = document.querySelector('.carousel-images');
-    const images = document.querySelectorAll('.carousel-images img');
-    const totalImages = images.length;
-    const imageWidth = carouselImages.parentElement.offsetWidth; // largura do contêiner visível
-    let offset = 0;
 
-    // Duplicamos o conjunto de imagens para criar o efeito de rolagem contínua
-    carouselImages.innerHTML += carouselImages.innerHTML;
-
-    function continuousScroll() {
-        offset -= 1; // Ajuste a velocidade de rolagem conforme necessário
-        carouselImages.style.transform = `translateX(${offset}px)`;
-
-        // Quando o offset atinge o final do primeiro conjunto de imagens, redefinimos para zero
-        // mas como temos uma duplicação das imagens, isso é imperceptível
-        if (Math.abs(offset) >= imageWidth * totalImages) {
-            offset = 0;
-            carouselImages.style.transition = 'none'; // Desativa a transição para evitar "saltos" perceptíveis
-            carouselImages.style.transform = `translateX(${offset}px)`;
-            // Força o reflow para aplicar instantaneamente o novo offset
-            carouselImages.offsetHeight; // Trigger reflow
-            carouselImages.style.transition = 'transform 0.1s linear'; // Habilita a transição de volta
-        }
-
-        requestAnimationFrame(continuousScroll); // Chama continuamente para uma animação suave
+    if (!carouselContainer || !carouselImages) {
+        console.error('Carousel elements not found!');
+        return;
     }
 
-    // Inicializa o carrossel contínuo
+    const images = [pet1, pet2, pet3, pet4, pet5, pet6, pet7, pet8, pet9, pet10];
+    images.forEach((src) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = 'Carousel Image';
+        carouselImages.appendChild(img);
+    });
+
+    let offset = 0;
+    const totalImages = images.length;
+    const imageWidth = carouselContainer.offsetWidth;
+
+    carouselImages.style.display = 'flex';
+    carouselImages.style.transition = 'transform 0.5s ease-in-out';
+
+    function continuousScroll() {
+        offset -= 1;
+        carouselImages.style.transform = `translateX(${offset}px)`;
+
+        if (Math.abs(offset) >= imageWidth * totalImages) {
+            offset = 0;
+            carouselImages.style.transition = 'none';
+            carouselImages.style.transform = `translateX(${offset}px)`;
+            carouselImages.offsetHeight; // Trigger reflow
+            carouselImages.style.transition = 'transform 0.5s ease-in-out';
+        }
+
+        requestAnimationFrame(continuousScroll);
+    }
+
     continuousScroll();
 
-    // Reajusta a largura no redimensionamento
     window.addEventListener('resize', () => {
-        offset = 0; // Resetar o offset ao redimensionar para evitar problemas de cálculo
-        carouselImages.style.transition = 'none'; // Desabilita a transição momentaneamente
-        carouselImages.offsetHeight; // Força o reflow
-        carouselImages.style.transition = ''; // Habilita a transição novamente
+        offset = 0;
+        carouselImages.style.transition = 'none';
+        carouselImages.offsetHeight;
+        carouselImages.style.transition = '';
     });
 });
