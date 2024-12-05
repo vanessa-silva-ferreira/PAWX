@@ -9,6 +9,7 @@ use App\Models\Appointment;
 use App\Models\Employee;
 use App\Models\Pet;
 use App\Models\Service;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
@@ -17,11 +18,12 @@ class AppointmentController extends Controller
     /**
      * Display a listing of appointments related to the client's pets.
      */
-    public function index()
+    public function index(Request $request): View
     {
         if (Gate::denies('viewAny', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
+
         $user = auth()->user()->load('client');
 
         if (!$user || !$user->client) {
@@ -30,26 +32,36 @@ class AppointmentController extends Controller
 
         $client = $user->client;
 
-//        $user = auth()->user();
-//
-//       if (isClient($user) {
-//            // Load the client relationship if the user is a Client
-//            $user->load('client');
-//            $client = $user->client;
-//        } else {
-//            // Handle the case where the user is not a Client
-//            abort(403, 'Unauthorized action.');
-//        }
+        $search = $request->input('search');
 
-        $appointments = Appointment::with(['pet', 'employee', 'service.name'])
-            ->whereHas('pet', function ($query) use($client) {
-                $query->where('client_id', $client->id);
+        $query = Appointment::with(['pet', 'employee', 'service.name'])
+            ->whereHas('pet', function ($q) use ($client) {
+                $q->where('client_id', $client->id);
             })
-            ->orderBy('appointment_date', 'desc')
-            ->paginate(10);
+            ->orderBy('appointment_date', 'desc');
 
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('appointment_date', 'like', "%$search%")
+                ->orWhereHas('pet', function ($q) use ($search) {
+                    $q->where('name', 'like', "%$search%");
+                })
+                    ->orWhereHas('employee', function ($q) use ($search) {
+                        $q->where('name', 'like', "%$search%");
+                    })
+                    ->orWhereHas('service', function ($q) use ($search) {
+                        $q->where('name', 'like', "%$search%");
+                    });
+            });
+        }
+
+        // Paginando os resultados
+        $appointments = $query->paginate(10);
+
+        // Retorna a vista com os dados filtrados
         return view('client.appointments.index', compact('appointments'));
     }
+
 
     public function show($id)
     {

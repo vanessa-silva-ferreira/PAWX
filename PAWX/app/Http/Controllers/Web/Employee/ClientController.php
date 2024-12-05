@@ -7,19 +7,37 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Client;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class ClientController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('view-any-clients');
 
-        $clients = User::whereHas('client')
+        $search = $request->input('search');
+
+        $query = User::whereHas('client')
             ->with('client')
-            ->orderByDesc(Client::select('id')->whereColumn('users.id', 'clients.user_id'))
-            ->simplePaginate(5);
+            ->orderByDesc(
+                Client::selectRaw('MAX(id)')
+                    ->whereColumn('users.id', 'clients.user_id')
+            );
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                    ->orWhere('email', 'like', "%$search%")
+                    ->orWhere('phone_number', 'like', "%$search%")
+                    ->orWhere('nif', 'like', "%$search%")
+                    ->orWhere('address', 'like', "%$search%")
+                    ->orWhere('username', 'like', "%$search%");
+            });
+        }
+
+        $clients = $query->simplePaginate(5);
 
         return view('pages.employee.clients.index', compact('clients'));
     }
