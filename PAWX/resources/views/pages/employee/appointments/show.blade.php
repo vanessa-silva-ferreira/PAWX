@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <x-dashboard.forms-display.client-create/>
+    <x-dashboard.forms-display.appointment-show :appointment="$appointment" />
 @endsection
 
 @section('notifications')

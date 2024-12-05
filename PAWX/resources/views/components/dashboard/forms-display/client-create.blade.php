@@ -4,7 +4,15 @@
 
 <div class="mx-24 my-16 bg-white p-6">
     <x-dashboard.title>Cliente</x-dashboard.title>
-
+    @if ($errors->any())
+        <div class="p-4 mb-4 text-red-700 bg-red-100 rounded-lg">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form action="{{ route('admin.clients.store') }}" method="POST" class="space-y-6">
         @csrf
         <div class="form-group grid grid-cols-1 md:grid-cols-3 md:gap-6">
