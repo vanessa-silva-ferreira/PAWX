@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Pet;
 use App\Models\Size;
 use App\Models\Species;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use App\Traits\PetValidationRules;
@@ -18,14 +19,27 @@ use Illuminate\Support\Facades\Storage;
 class PetController extends Controller
 {
     use PetValidationRules;
-    public function index(): View
+    public function index(Request $request): View
     {
-        if(Gate::denies('viewAny', Pet::class)){
+        if (Gate::denies('viewAny', Pet::class)) {
             abort(403, 'Unauthorized action.');
         }
-        $pets = Pet::with('client')
-            ->orderByDesc('id')
-            ->simplePaginate(5);
+
+        $search = $request->input('search');
+
+        $query = Pet::with('client')
+            ->orderByDesc('id');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                    ->orWhere('species', 'like', "%$search%")
+                    ->orWhere('breed', 'like', "%$search%")
+                    ->orWhereHas('client', fn($q) => $q->where('name', 'like', "%$search%"));
+            });
+        }
+
+        $pets = $query->simplePaginate(5);
 
         return view('pages.admin.pets.index', compact('pets'));
     }

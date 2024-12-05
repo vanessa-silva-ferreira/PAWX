@@ -12,9 +12,15 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    // build: {
-    //     outDir: 'public/js',
-    // },
+
+//    build: {
+//        outDir: 'public/build',
+//        rollupOptions: {
+//            output: {
+//                assetFileNames: 'images/[name][extname]',
+//            },
+//        },
+//    },
     server: {
         watch: {
             ignored: ['**/vendor/**', '**/node_modules/**']

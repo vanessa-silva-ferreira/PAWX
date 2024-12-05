@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
@@ -20,23 +21,38 @@ class AppointmentController extends Controller
     /**
      * Display a listing of appointments with pets and employees.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (Gate::denies('viewAny', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
-        $appointments = Appointment::with(['pet', 'employee', 'pet.client', 'service.name'])
-            ->orderBy('appointment_date', 'desc')
-            ->paginate(10);
+
+        $search = $request->input('search');
+
+        // Fix: Only eager load the relationships, not specific attributes
+        $query = Appointment::with(['pet', 'employee', 'pet.client', 'service'])
+            ->orderBy('id', 'desc');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('appointment_date', 'like', "%$search%")
+                    ->orWhereHas('pet', fn($q) => $q->where('name', 'like', "%$search%"))
+                    ->orWhereHas('employee', fn($q) => $q->where('name', 'like', "%$search%"));
+            });
+        }
+
+        $appointments = $query->paginate(10);
+
         return view('pages.admin.appointments.index', compact('appointments'));
     }
 
     public function show($id)
     {
-        if (Gate::denies('view', Appointment::class)) {
+        $appointment = Appointment::with(['pet.client.user', 'employee', 'service'])->findOrFail($id);
+        if (Gate::denies('view', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
-        $appointment = Appointment::with(['pet', 'pet.client', 'employee.name', 'service.name'])->findOrFail($id);
+
 
         return view('pages.admin.appointments.show', compact('appointment'));
     }
@@ -73,17 +89,20 @@ class AppointmentController extends Controller
 
     public function edit($appointmentId): View
     {
-        $appointment = Appointment::findOrFail($appointmentId);
+        $appointment = Appointment::with(['pet.client.user', 'service'])->findOrFail($appointmentId);
 
+        // Authorization check
         if (Gate::denies('update', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
 
+        // Fetch related data
         $pets = Pet::all();
         $employees = Employee::all();
         $services = Service::all();
+        $clients = Client::with('user')->get(); // Fetch all clients with their users
 
-        return view('pages.admin.appointments.edit', compact('appointment', 'pets', 'employees', 'services'));
+        return view('pages.admin.appointments.edit', compact('appointment', 'pets', 'employees', 'services', 'clients'));
     }
 
     /**

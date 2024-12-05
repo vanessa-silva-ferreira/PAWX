@@ -1,13 +1,8 @@
-
 @vite('resources/js/calendar.js')
 
 <div class="bg-white rounded-lg p-6 w-full">
 
-
-
     <div class="flex justify-end items-center w-full mb-8">
-
-
 
         <div class="flex items-center justify-end">
             <div class="relative inline-block text-right">
