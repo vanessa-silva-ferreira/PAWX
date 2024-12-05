@@ -11,24 +11,10 @@
                 <div class="flex items-center justify-between mb-16">
                     <x-dashboard.title>Appointments</x-dashboard.title>
                     <div class="flex items-center space-x-4 w-1/2">
-                        <form method="GET" action="{{ route('admin.appointments.index') }}" class="relative flex-grow">
-                            <input
-                                type="text"
-                                name="search"
-                                placeholder="Search by client name, pet name, service, etc."
-                                class="text-sm w-full px-4 py-2 border border-pawx-grey rounded-lg focus:outline-none focus:ring-2 focus:ring-pawx-orange"
-                                value="{{ request('search') }}"
-                            />
-                            <button
-                                type="submit"
-                                class="absolute right-2 top-1/2 transform -translate-y-1/2 text-stone-400 hover:text-blue-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search">
-                                    <circle cx="11" cy="11" r="8"/>
-                                    <line x1="21" x2="16.65" y1="21" y2="16.65"/>
-                                </svg>
-                            </button>
-                        </form>
-
+                        <x-utilities.search-bar
+                            :action="route('admin.appointments.index')"
+                            placeholder="Search by client name, pet name, service, etc."
+                        />
                         <a
                             href="{{ route('admin.appointments.create') }}"
                             class="px-4 py-2 text-white rounded-lg bg-pawx-orange">

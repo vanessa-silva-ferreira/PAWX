@@ -12,7 +12,6 @@ use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Service;
 use App\Traits\AppointmentValidationRules;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
@@ -22,27 +21,41 @@ class AppointmentController extends Controller
     /**
      * Display a listing of appointments with pets and employees.
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         if (Gate::denies('viewAny', Appointment::class)) {
             abort(403, 'Unauthorized action.');
         }
 
+        // Retrieve the search term (if any)
         $search = $request->input('search');
 
-        $query = Appointment::with(['pet', 'employee', 'pet.client', 'service.name'])
-            ->orderBy('appointment_date', 'desc');
+        // Build the base query
+        $query = Appointment::with(['pet', 'employee.user', 'service'])
+            ->orderByDesc(
+                Pet::selectRaw('MAX(id)')
+                    ->whereColumn('appointments.pet_id', 'pets.id')
+            );
 
+        // Apply the search filter if there's a search term
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('appointment_date', 'like', "%$search%")
-                    ->orWhereHas('pet', fn($q) => $q->where('name', 'like', "%$search%"))
-                    ->orWhereHas('employee', fn($q) => $q->where('name', 'like', "%$search%"));
+                    ->orWhereHas('pet', function ($subQuery) use ($search) {
+                        $subQuery->where('name', 'like', "%$search%");
+                    })
+                    ->orWhereHas('service', function ($subQuery) use ($search) {
+                        $subQuery->where('name', 'like', "%$search%");
+                    })
+                    ->orWhereHas('employee.user', function ($subQuery) use ($search) {
+                        $subQuery->where('name', 'like', "%$search%")
+                            ->orWhere('email', 'like', "%$search%");
+                    });
             });
         }
 
-        $appointments = $query->paginate(10);
-
+        // Paginate the results
+        $appointments = $query->simplePaginate(10);
 
         return view('pages.admin.appointments.index', compact('appointments'));
     }
