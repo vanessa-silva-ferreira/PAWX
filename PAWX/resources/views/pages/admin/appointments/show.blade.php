@@ -17,7 +17,7 @@
                 <div>
                     <x-form.label for="client_id" class="text-gray-700 font-semibold">Cliente:</x-form.label>
                     <p class="rounded h-8 bg-gray-100 text-gray-700 w-full ring-1 ring-gray-600 p-2">
-                        {{ $appointment->client->name }}
+                        {{ $appointment->client->user->name }}
                     </p>
                 </div>
                 <div>
