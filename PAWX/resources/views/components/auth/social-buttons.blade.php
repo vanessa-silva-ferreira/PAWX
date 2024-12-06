@@ -7,10 +7,11 @@
 
     <div class="flex space-x-4">
         @foreach ($buttons as $button)
-            <button
-                class="flex items-center justify-center w-12 h-12 border rounded-md border-pawx-gray">
-                <img src="{{ $button['src'] }}" alt="{{ $button['alt'] }}" class="h-[50%]" />
-            </button>
+{{--            <a href="{{ $button['link'] }}">--}}
+                <button
+                    class="flex items-center justify-center w-12 h-12 border rounded-md border-pawx-gray">
+                    <img src="{{ $button['src'] }}" alt="{{ $button['alt'] }}" class="h-[50%]" />
+                </button>
         @endforeach
     </div>
 </div>

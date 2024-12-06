@@ -12,7 +12,6 @@ use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Service;
 use App\Traits\AppointmentValidationRules;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
