@@ -75,15 +75,17 @@
 
 <!-- Secção de Notificações -->
 <div id="notificationSection" class="bg-white rounded-lg p-6 w-full mt-4 hidden">
-    <h3 id="notificationDate" class="text-lg font-bold mb-4 text-stone-800"></h3>
-    <ul id="notificationList" class="list-disc list-inside text-stone-700 mb-4"></ul>
+    <h3 id="notificationDate" class="text-lg font-bold mb-4 text-stone-800">Notifications for {{ $formattedDate }}</h3>
+    <ul id="notificationList" class="list-disc list-inside text-stone-700 mb-4">
+        @foreach($notifications as $notification)
+            <li>
+                <strong>{{ $notification['pet_name'] }}</strong> -
+                {{ $notification['service_name'] }} at
+                {{ $notification['appointment_time'] }}
+            </li>
+        @endforeach
+    </ul>
     <div class="flex items-center space-x-2">
-        <input
-            type="text"
-            id="newNotification"
-            class="flex-grow border border-stone-300 rounded px-2 py-1"
-            placeholder="Add a new notification"
-        />
         <a
             href="{{ route('admin.appointments.create') }}"
             id="addNotification"

@@ -9,7 +9,7 @@
         <div class="flex-grow">
             <div class="container mx-auto p-6">
                 <div class="flex items-center justify-between mb-16">
-                    <x-dashboard.title>Appointments</x-dashboard.title>
+                    <h1>Appointments</h1>
                     <div class="flex items-center space-x-4 w-1/2">
                         <form method="GET" action="{{ route('admin.appointments.index') }}" class="relative flex-grow">
                             <input

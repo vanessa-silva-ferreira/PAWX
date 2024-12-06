@@ -175,4 +175,28 @@ class AppointmentController extends Controller
             ->with('success', 'Appointment permanently deleted successfully!');
     }
 
+    // Method to show notifications for appointments on a specific date
+    public function showNotifications($date)
+    {
+        // Ensure the date is correctly formatted
+        $formattedDate = Carbon::parse($date)->format('Y-m-d');
+
+        // Retrieve all appointments for the selected date
+        $appointments = Appointment::whereDate('appointment_date', $formattedDate)
+            ->with(['pet', 'service'])  // Eager load the pet and service relationships
+            ->get();
+
+        // Format notifications
+        $notifications = $appointments->map(function($appointment) {
+            return [
+                'pet_name' => $appointment->pet->name,  // Assuming 'name' is a field in the Pet model
+                'service_name' => $appointment->service->name,  // Assuming 'name' is a field in the Service model
+                'appointment_time' => Carbon::parse($appointment->appointment_date)->format('H:i'),  // Extract only the time
+            ];
+        });
+
+        // Pass the notifications and date to the view
+        return view('admin.notifications', ['notifications' => $notifications, 'formattedDate' => $formattedDate]);
+    }
+
 }
