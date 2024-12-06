@@ -57,3 +57,26 @@ document.addEventListener('DOMContentLoaded', () => {
         carouselImages.style.transition = '';
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const feedbackCarousel = document.getElementById('feedbackCarousel');
+    const prevFeedback = document.getElementById('prevFeedback');
+    const nextFeedback = document.getElementById('nextFeedback');
+
+    const scrollAmount = 300; // Distância de rolagem
+
+    prevFeedback.addEventListener('click', () => {
+        feedbackCarousel.scrollBy({
+            left: -scrollAmount,
+            behavior: 'smooth',
+        });
+    });
+
+    nextFeedback.addEventListener('click', () => {
+        feedbackCarousel.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth',
+        });
+    });
+});
+
