@@ -1,32 +1,6 @@
 <div class="flex flex-col space-y-4 mt-16">
     <div class="overflow-x-auto">
         <div class="container mx-auto">
-{{--            <div class="mb-4">--}}
-{{--                <form method="GET" action="{{ route('admin.appointments.index') }}" class="flex items-center space-x-4">--}}
-{{--                    <div class="relative flex-grow text-pawx-brown/50">--}}
-{{--                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-2 top-1/2 transform -translate-y-1/2 text-stone-400">--}}
-{{--                            <circle cx="11" cy="11" r="8"/>--}}
-{{--                            <line x1="21" x2="16.65" y1="21" y2="16.65"/>--}}
-{{--                        </svg>--}}
-{{--                        <input--}}
-{{--                            type="text"--}}
-{{--                            name="search"--}}
-{{--                            placeholder="Procure por serviço, estado de marcação, animal, cliente, colaborador"--}}
-{{--                            class="text-sm w-full pl-10 pr-4 py-3 border border-pawx-grey rounded-lg focus:outline-none "--}}
-{{--                        focus:border-pawx-orange/30"--}}
-
-{{--                        value="{{ request('search') }}"--}}
-{{--                        />--}}
-{{--                    </div>--}}
-
-{{--                    <a--}}
-{{--                        href="{{ route('admin.appointments.create') }}"--}}
-{{--                        class="px-4 py-2 text-white rounded-lg bg-pawx-orange">--}}
-{{--                        Nova Marcação--}}
-{{--                    </a>--}}
-{{--                </form>--}}
-{{--            </div>--}}
-
 
             <div class="mb-4">
                 <div class="flex items-center justify-between">
