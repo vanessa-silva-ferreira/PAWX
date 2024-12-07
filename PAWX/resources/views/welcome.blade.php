@@ -17,7 +17,7 @@
 </div>
 
 <section class="bg-gray-100 p-6 relative -mb-4">
-    <!-- Botões de navegação -->
+
     <button id="prevFeedback" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 text-white w-8 h-8 rounded-full flex items-center justify-center z-10">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-3 h-3">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -29,7 +29,7 @@
         </svg>
     </button>
 
-    <!-- Container do carousel -->
+
     <div id="feedbackCarousel" class="flex gap-6 overflow-hidden scroll-smooth">
         <!-- Card 1 -->
         <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
@@ -44,7 +44,7 @@
             <p class="text-gray-700 mt-3 text-sm">Excelente atendimento ao meu gato! Serviço simpático e cuidadoso. Recomendo muito.</p>
         </div>
 
-        <!-- Card 2 -->
+
         <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
             <div class="flex items-center space-x-4">
                 <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Ana B." class="w-10 h-10 rounded-full">
@@ -57,7 +57,7 @@
             <p class="text-gray-700 mt-3 text-sm">O meu cão adorou o corte e ficou muito mais calmo. Ambiente limpo e organizado.</p>
         </div>
 
-        <!-- Card 3 -->
+
         <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
             <div class="flex items-center space-x-4">
                 <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="João C." class="w-10 h-10 rounded-full">
@@ -70,7 +70,7 @@
             <p class="text-gray-700 mt-3 text-sm">Ótimo corte e tratamento para o meu cão. Preço justo e ótimo atendimento.</p>
         </div>
 
-        <!-- Card 4 -->
+
         <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
             <div class="flex items-center space-x-4">
                 <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="Sara D." class="w-10 h-10 rounded-full">
@@ -83,7 +83,7 @@
             <p class="text-gray-700 mt-3 text-sm">Nota 10 para o atendimento e serviços. Minha gata foi muito bem tratada.</p>
         </div>
 
-        <!-- Card 5 -->
+
         <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
             <div class="flex items-center space-x-4">
                 <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="Miguel P." class="w-10 h-10 rounded-full">
@@ -96,7 +96,7 @@
             <p class="text-gray-700 mt-3 text-sm">Sempre bem atendido, recomendo! Excelente para banho e corte de unhas.</p>
         </div>
 
-        <!-- Card 6 -->
+
         <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
             <div class="flex items-center space-x-4">
                 <img src="https://randomuser.me/api/portraits/women/6.jpg" alt="Joana F." class="w-10 h-10 rounded-full">
@@ -109,7 +109,7 @@
             <p class="text-gray-700 mt-3 text-sm">O Meu gato adorou o banho! Muito obrigado por cuidarem tão bem dele.</p>
         </div>
 
-        <!-- Card 7 -->
+
         <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
             <div class="flex items-center space-x-4">
                 <img src="https://randomuser.me/api/portraits/men/7.jpg" alt="Manuel R." class="w-10 h-10 rounded-full">
@@ -124,7 +124,7 @@
             </p>
         </div>
 
-        <!-- Card 8 -->
+
         <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
             <div class="flex items-center space-x-4">
                 <img src="https://randomuser.me/api/portraits/women/7.jpg" alt="Sofia T." class="w-10 h-10 rounded-full">

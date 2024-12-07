@@ -7,7 +7,7 @@
         <a href="{{ route('welcome-feedback') }}" class="hover:text-gray-500">Feedback</a>
         <a href="{{ route('welcome-about') }}" class="hover:text-gray-500">Sobre Nós</a>
         <a href="{{ route('welcome-contact') }}" class="hover:text-gray-500">Contato</a>
-        <a href="{{ route('welcome-remember') }}" class="hover:text-gray-500">Remember</a>
+        <a href="{{ route('welcome-remember') }}" class="hover:text-gray-500">RememberMe</a>
     </nav>
     <div class="flex items-center space-x-2">
         <a href="/auth" class="flex items-center hover:text-gray-500">

@@ -19,7 +19,7 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Feedback Card -->
+
         <div class="bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition duration-300">
             <div class="flex items-center space-x-4 mb-4">
                 <img src="https://placedog.net/80/80?random=1" alt="Cliente" class="w-16 h-16 object-cover rounded-full">
@@ -33,7 +33,7 @@
             </p>
         </div>
 
-        <!-- Feedback Card -->
+
         <div class="bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition duration-300">
             <div class="flex items-center space-x-4 mb-4">
                 <img src="https://placedog.net/80/80?random=2" alt="Cliente" class="w-16 h-16 object-cover rounded-full">
@@ -47,7 +47,7 @@
             </p>
         </div>
 
-        <!-- Feedback Card -->
+
         <div class="bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition duration-300">
             <div class="flex items-center space-x-4 mb-4">
                 <img src="https://placedog.net/80/80?random=3" alt="Cliente" class="w-16 h-16 object-cover rounded-full">
@@ -61,7 +61,7 @@
             </p>
         </div>
 
-        <!-- Feedback Card -->
+
         <div class="bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition duration-300">
             <div class="flex items-center space-x-4 mb-4">
                 <img src="https://placedog.net/80/80?random=4" alt="Cliente" class="w-16 h-16 object-cover rounded-full">
@@ -75,7 +75,7 @@
             </p>
         </div>
 
-        <!-- Feedback Card -->
+
         <div class="bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition duration-300">
             <div class="flex items-center space-x-4 mb-4">
                 <img src="https://placedog.net/80/80?random=5" alt="Cliente" class="w-16 h-16 object-cover rounded-full">
@@ -89,7 +89,7 @@
             </p>
         </div>
 
-        <!-- Feedback Card -->
+
         <div class="bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition duration-300">
             <div class="flex items-center space-x-4 mb-4">
                 <img src="https://placedog.net/80/80?random=6" alt="Cliente" class="w-16 h-16 object-cover rounded-full">
