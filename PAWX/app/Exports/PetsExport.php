@@ -14,8 +14,9 @@ class PetsExport implements FromQuery, WithHeadings, ShouldAutoSize
     protected $user;
     protected $role;
 
-    public function __contruct($user, $role)
+    public function __construct($user, $role)
     {
+        logger()->info('PetsExport initialized', ['user' => $user->id, 'role' => $role]);
         $this->user = $user;
         $this->role = $role;
     }
@@ -66,12 +67,4 @@ class PetsExport implements FromQuery, WithHeadings, ShouldAutoSize
             $pet->obs ?? 'N/A',
         ];
     }
-
-//    /**
-//    * @return \Illuminate\Support\Collection
-//    */
-//    public function collection()
-//    {
-//        return Pet::all();
-//    }
 }

@@ -41,9 +41,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::resource('clients', Admin\ClientController::class);
 
+    Route::get('pets/export', [ExportController::class, 'exportPets'])->name('pets.export');
     Route::resource('pets', \App\Http\Controllers\Web\Admin\PetController::class);
-    Route::get('pets/export', [ExportController::class, 'export'])->name('pets.export');
-    //    Route::resource('pets', Admin\PetController::class);
+
 
     Route::prefix('appointments')->group(function () {
         Route::get('/trashed', [Admin\AppointmentController::class, 'trashed'])->name('appointments.trashed');
