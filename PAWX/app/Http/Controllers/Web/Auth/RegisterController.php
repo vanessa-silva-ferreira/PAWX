@@ -24,9 +24,4 @@ class RegisterController extends Controller
 
         return redirect()->route('client.dashboard')->with('success', 'Registado com sucesso!');
     }
-
-    public function showRegistrationForm()
-    {
-        return view('auth.auth');
-    }
 }
