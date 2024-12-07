@@ -15,11 +15,11 @@
             <div class="mb-20">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-end mb-6">
                     <div class="flex items-center md:justify-end space-x-2">
-                        <h2 class="text-md mb-0">Nos últimos</h2>
-                        <button
-                            class="time-button w-10 h-10 flex items-center justify-center rounded-full text-pawx-brown bg-transparent hover:bg-stone-200 text-sm"
-                            data-days="7">7
-                        </button>
+                        <h2 class="text-md mb-0">Últimos</h2>
+{{--                        <button--}}
+{{--                            class="time-button w-10 h-10 flex items-center justify-center rounded-full text-pawx-brown bg-transparent hover:bg-stone-200 text-sm"--}}
+{{--                            data-days="7">7--}}
+{{--                        </button>--}}
                         <button
                             class="time-button w-10 h-10 flex items-center justify-center rounded-full text-pawx-brown bg-transparent hover:bg-stone-200 text-sm"
                             data-days="15">15
@@ -47,7 +47,7 @@
                 <div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 auto-rows-min">
                         <div
-                            class="flex flex-col sm:flex-row items-center sm:items-start p-6 bg-stone-100  rounded-lg border border-stone-200 hover:bg-stone-200 min-w-[250px]">
+                            class="flex flex-col sm:flex-row items-center sm:items-start p-6 bg-pawx-orange/5  rounded-lg border border-pawx-orange/20 hover:bg-pawx-orange/10 min-w-[250px]">
                             <div class="flex-1">
                                 <h2 class="text-2xl font-medium uppercase text-stone-400">Marcações</h2>
                                 <p class="text-2xl text-pawx-orange" id="appointment-count">{{$appointmentCount}}</p>
@@ -67,7 +67,7 @@
                         </div>
 
                         <div
-                            class="flex flex-col sm:flex-row items-center sm:items-start p-6 bg-stone-100  rounded-lg border border-stone-200 hover:bg-stone-200 min-w-[250px]">
+                            class="flex flex-col sm:flex-row items-center sm:items-start p-6 bg-pawx-orange/5  rounded-lg border border-pawx-orange/20 hover:bg-pawx-orange/10 min-w-[250px]">
                             <div class="flex-1">
                                 <h2 class="text-2xl font-medium uppercase text-stone-400">Animais</h2>
                                 <p class="text-2xl text-pawx-orange" id="pet-count">{{$petCount}}</p>
@@ -87,7 +87,7 @@
                         </div>
 
                         <div
-                            class="flex flex-col sm:flex-row items-center sm:items-start p-6 bg-stone-100  rounded-lg border border-stone-200 hover:bg-stone-200 min-w-[250px]">
+                            class="flex flex-col sm:flex-row items-center sm:items-start p-6 bg-pawx-orange/5  rounded-lg border border-pawx-orange/20 hover:bg-pawx-orange/10 min-w-[250px]">
                             <div class="flex-1">
                                 <h2 class="text-2xl font-medium uppercase text-stone-400">Receita</h2>
                                 <p class="text-2xl text-pawx-orange" id="total-revenue">{{$totalRevenue}}€</p>
@@ -106,41 +106,42 @@
                     </div>
                 </div>
 
+                    <x-dashboard.data-display.appointments-table :appointments="$appointments"/>
 
-                <div class="bg-white rounded-lg mt-10">
-                    <h2 class="text-xl font-bold uppercase uppercase mb-4">Marcações</h2>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full border-collapse">
-                            <thead>
-                            <tr class="bg-stone-100 text-left">
-                                <th class="px-6 py-3 text-sm font-medium text-stone-600 whitespace-nowrap">Animal</th>
-                                <th class="px-6 py-3 text-sm font-medium text-stone-600 whitespace-nowrap">Status</th>
-                                <th class="px-6 py-3 text-sm font-medium text-stone-600 whitespace-nowrap">Ratings</th>
-                                <th class="px-6 py-3 text-sm font-medium text-stone-600 whitespace-nowrap">Data</th>
-                                <th class="px-6 py-3 text-sm font-medium text-stone-600 whitespace-nowrap">Horário</th>
-                                <th class="px-6 py-3 text-sm font-medium text-stone-600 whitespace-nowrap">Preço</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
+{{--                <div class="bg-white rounded-lg mt-10">--}}
+{{--                    <h2 class="text-xl font-bold uppercase uppercase mb-4">Marcações</h2>--}}
+{{--                    <div class="overflow-x-auto">--}}
+{{--                        <table class="min-w-full border-collapse">--}}
+{{--                            <thead>--}}
+{{--                            <tr class="bg-stone-100 text-left">--}}
+{{--                                <th class="px-6 py-3 text-sm font-medium text-stone-600 whitespace-nowrap">Animal</th>--}}
+{{--                                <th class="px-6 py-3 text-sm font-medium text-stone-600 whitespace-nowrap">Status</th>--}}
+{{--                                <th class="px-6 py-3 text-sm font-medium text-stone-600 whitespace-nowrap">Ratings</th>--}}
+{{--                                <th class="px-6 py-3 text-sm font-medium text-stone-600 whitespace-nowrap">Data</th>--}}
+{{--                                <th class="px-6 py-3 text-sm font-medium text-stone-600 whitespace-nowrap">Horário</th>--}}
+{{--                                <th class="px-6 py-3 text-sm font-medium text-stone-600 whitespace-nowrap">Preço</th>--}}
+{{--                            </tr>--}}
+{{--                            </thead>--}}
+{{--                            <tbody>--}}
+{{--                            </tbody>--}}
+{{--                        </table>--}}
+{{--                    </div>--}}
 
-                    <div class="mt-6 flex flex-col sm:flex-row justify-between items-center">
-                        <button class="text-stone-600 hover:text-stone-800 mb-4 sm:mb-0">&laquo; Página anterior
-                        </button>
-                        <div class="flex space-x-2">
-                            <button class="px-3 py-1 rounded-full bg-stone-200 text-stone-700">1</button>
-                            <button class="px-3 py-1 rounded-full bg-stone-200 text-stone-700">2</button>
-                            <button class="px-3 py-1 rounded-full bg-stone-200 text-stone-700">3</button>
-                        </div>
-                        <button class="text-stone-600 hover:text-stone-800 mt-4 sm:mt-0">Página seguinte &raquo;
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{{--                    <div class="mt-6 flex flex-col sm:flex-row justify-between items-center">--}}
+{{--                        <button class="text-stone-600 hover:text-stone-800 mb-4 sm:mb-0">&laquo; Página anterior--}}
+{{--                        </button>--}}
+{{--                        <div class="flex space-x-2">--}}
+{{--                            <button class="px-3 py-1 rounded-full bg-stone-200 text-stone-700">1</button>--}}
+{{--                            <button class="px-3 py-1 rounded-full bg-stone-200 text-stone-700">2</button>--}}
+{{--                            <button class="px-3 py-1 rounded-full bg-stone-200 text-stone-700">3</button>--}}
+{{--                        </div>--}}
+{{--                        <button class="text-stone-600 hover:text-stone-800 mt-4 sm:mt-0">Página seguinte &raquo;--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 @endsection
 
 @section('notifications')

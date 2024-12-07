@@ -33,9 +33,9 @@
                 <form method="POST" id="signin-form" action="{{ route('login') }}" class="space-y-4">
                     @csrf
                     <div>
-                        <x-auth.label for="email">E-mail</x-auth.label>
-                        <x-auth.input id="email" type="email" name="email" placeholder="Insira o seu E-mail"
-                                      value="{{ old('email') }}" required autofocus/>
+                        <x-auth.label for="login">E-mail ou Contacto</x-auth.label>
+                        <x-auth.input id="login" type="text" name="login" placeholder="Insira o seu E-mail ou Contacto"
+                                      value="{{ old('login') }}" required autofocus />
                     </div>
                     <div>
                         <x-auth.label for="password">Palavra-passe</x-auth.label>
@@ -72,6 +72,12 @@
                         <x-auth.input id="email" type="email" name="email" placeholder="Insira o seu E-mail"
                                       value="{{ old('email') }}" required autofocus/>
                         <x-form.validation-error name="email"/>
+                    </div>
+                    <div>
+                        <x-auth.label for="phone_number">Contacto</x-auth.label>
+                        <x-auth.input id="phone_number" type="phone_number" name="phone_number" placeholder="Insira o seu Contacto"
+                                      value="{{ old('phone_number') }}" required autofocus/>
+                        <x-form.validation-error name="phone_number"/>
                     </div>
                     <div>
                         <x-auth.label for="name">Nome</x-auth.label>
@@ -111,19 +117,6 @@
 
                 </form>
             </div>
-
-
-            {{--                        <div class="flex justify-between mt-1">--}}
-            {{--                            <span class="text-xs text-gray-500">Password Strength: Weak</span>--}}
-            {{--                            <a href="#" class="text-xs text-pawx-orange">Forgot Password?</a>--}}
-            {{--                        </div>--}}
-
-            {{--                    <ul class="text-xs text-gray-500 space-y-1">--}}
-            {{--                        <li class="flex items-center"><svg class="w-4 h-4 mr-1 text-pawx-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Cannot contain your name or email address</li>--}}
-            {{--                        <li class="flex items-center"><svg class="w-4 h-4 mr-1 text-pawx-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>At least 8 characters</li>--}}
-            {{--                        <li class="flex items-center"><svg class="w-4 h-4 mr-1 text-pawx-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Contains a number or symbol</li>--}}
-            {{--                    </ul>--}}
-
         </div>
     </div>
 </div>
