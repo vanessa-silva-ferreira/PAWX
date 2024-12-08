@@ -31,6 +31,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::patch('{employee}/restore', [Admin\EmployeeController::class, 'restore'])->name('employees.restore');
         Route::delete('{employee}/forceDelete', [Admin\EmployeeController::class, 'forceDelete'])->name('employees.forceDelete');
     });
+    Route::get('employees/export', [Admin\ExportController::class, 'exportEmployees'])->name('employees.export');
     Route::resource('employees', Admin\EmployeeController::class);
 
     Route::prefix('clients')->group(function () {
@@ -38,7 +39,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::patch('{client}/restore', [Admin\ClientController::class, 'restore'])->name('clients.restore');
         Route::delete('{client}/forceDelete', [Admin\ClientController::class, 'forceDelete'])->name('clients.forceDelete');
     });
-
+    Route::get('clients/export', [ExportController::class, 'exportClients'])->name('clients.export');
     Route::resource('clients', Admin\ClientController::class);
 
     Route::get('pets/export', [ExportController::class, 'exportPets'])->name('pets.export');
@@ -55,7 +56,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::resource('services', Admin\ServiceController::class);
 });
-
 // ADMIN ---------------------------------------------------------------------------------------------------------------------------------
 
 // EMPLOYEE ------------------------------------------------------------------------------------------------------------------------------

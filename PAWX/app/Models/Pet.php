@@ -27,6 +27,10 @@ class Pet extends Model
         'obs'
     ];
 
+    protected $casts = [
+        'birthdate' => 'date',
+   ];
+
     public function client(){
         return $this->belongsTo(Client::class);
     }

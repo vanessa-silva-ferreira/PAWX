@@ -6,7 +6,7 @@ enum AppointmentStatus : string
 {
     case PENDING = 'Pendente';
     case CONFIRMED = 'Confirmada';
-    case COMPLETED = 'Completa';
+    case COMPLETED = 'Completada';
     case CANCELLED = 'Cancelada';
     case NO_SHOW = 'Faltou';
 }

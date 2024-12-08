@@ -79,7 +79,7 @@
                     </thead>
 
                     <tbody>
-                    @foreach ($pets as $pet)
+                    @forelse ($pets as $pet)
                         <tr class="hover:bg-pawx-brown/5 text-pawx-brown/80 cursor-pointer text-sm"
                             onclick="window.location='{{ route($rolePrefix . '.pets.show', $pet->id) }}';">
                             <th class="py-6">{{ $pet->id }}</th>
@@ -148,10 +148,14 @@
                                 </a>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                Não há informação disponível
+                            </td>
+                        </tr>
+                    @endforelse
                     </tbody>
-
-
                 </table>
                 <div class="mt-4">
                     {{ $pets->links() }}
