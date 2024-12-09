@@ -107,7 +107,6 @@ class User extends Authenticatable
     }
 
 
-
     /**
      * Get the attributes that should be cast.
      *
@@ -120,21 +119,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-//    protected static function boot()
-//    {
-//        parent::boot();
-//
-//        static::deleting(function ($user) {
-//            if (!$user->isForceDeleting()) {
-//                $user->client()->delete();
-//            }
-//        });
-//
-//        static::restoring(function ($user) {
-//            $user->client()->restore();
-//        });
-//    }
 
     protected static function boot()
     {
@@ -158,5 +142,4 @@ class User extends Authenticatable
             }
         });
     }
-
 }

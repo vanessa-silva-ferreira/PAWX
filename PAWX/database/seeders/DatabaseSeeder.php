@@ -55,5 +55,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PetSeeder::class);
         $this->call(ServiceSeeder::class);
         Appointment::factory(20)->create();
+        $this->call(FinancialReportSeeder::class);
     }
 }

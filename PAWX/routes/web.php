@@ -37,6 +37,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::patch('{employee}/restore', [Admin\EmployeeController::class, 'restore'])->name('employees.restore');
         Route::delete('{employee}/forceDelete', [Admin\EmployeeController::class, 'forceDelete'])->name('employees.forceDelete');
     });
+    Route::get('employees/export', [Admin\ExportController::class, 'exportEmployees'])->name('employees.export');
     Route::resource('employees', Admin\EmployeeController::class);
 
     Route::prefix('clients')->group(function () {
@@ -44,12 +45,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::patch('{client}/restore', [Admin\ClientController::class, 'restore'])->name('clients.restore');
         Route::delete('{client}/forceDelete', [Admin\ClientController::class, 'forceDelete'])->name('clients.forceDelete');
     });
-
+    Route::get('clients/export', [ExportController::class, 'exportClients'])->name('clients.export');
     Route::resource('clients', Admin\ClientController::class);
 
+    Route::get('pets/export', [ExportController::class, 'exportPets'])->name('pets.export');
     Route::resource('pets', \App\Http\Controllers\Web\Admin\PetController::class);
-    Route::get('pets/export', [ExportController::class, 'export'])->name('pets.export');
-    //    Route::resource('pets', Admin\PetController::class);
 
     Route::prefix('appointments')->group(function () {
         Route::get('/trashed', [Admin\AppointmentController::class, 'trashed'])->name('appointments.trashed');
@@ -57,11 +57,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::delete('/cancel/{id}', [Admin\AppointmentController::class, 'cancel'])->name('appointments.cancel');
         Route::delete('/force-delete/{id}', [Admin\AppointmentController::class, 'forceDelete'])->name('appointments.forceDelete');
     });
+    Route::get('appointments/export', [ExportController::class, 'exportAppointments'])->name('appointments.export');
     Route::resource('appointments', Admin\AppointmentController::class);
 
+    Route::get('services/export', [Admin\ExportController::class, 'exportServices'])->name('services.export');
     Route::resource('services', Admin\ServiceController::class);
-});
 
+    Route::get('financial-reports/export', [Admin\ExportController::class, 'exportFinancialReports'])->name('financial-reports.export');
+    Route::get('/financial-reports', [Admin\FinancialReportController::class, 'index'])->name('financial-reports.index');
+});
 // ADMIN ---------------------------------------------------------------------------------------------------------------------------------
 
 // EMPLOYEE ------------------------------------------------------------------------------------------------------------------------------
