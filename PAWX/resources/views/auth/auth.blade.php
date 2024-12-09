@@ -58,6 +58,8 @@
                         ['src' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/512px-Apple_logo_black.svg.png', 'alt' => 'Apple'],
                         ['src' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/512px-Microsoft_logo.svg.png', 'alt' => 'Microsoft']
                     ]" dividerText="OU"></x-auth.social-buttons>
+                    <a href="{{ route('google.redirect') }}" class="btn btn-primary"> Login with Google </a>
+
 
 
                     <div class="h-6">
