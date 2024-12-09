@@ -37,7 +37,10 @@ class AppointmentController extends Controller
                     ->whereColumn('appointments.pet_id', 'pets.id')
             );
 
-        // Apply the search filter if there's a search term
+        // Fix: Only eager load the relationships, not specific attributes
+        //$query = Appointment::with(['pet', 'employee', 'pet.client', 'service'])
+        //    ->orderBy('id', 'desc');
+
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('appointment_date', 'like', "%$search%")
@@ -62,7 +65,7 @@ class AppointmentController extends Controller
 
     public function show($id)
     {
-        $appointment = Appointment::with(['pet', 'pet.client', 'employee', 'service'])->findOrFail($id);
+        $appointment = Appointment::with(['pet.client.user', 'employee', 'service'])->findOrFail($id);
         if (Gate::denies('view', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
@@ -103,17 +106,20 @@ class AppointmentController extends Controller
 
     public function edit($appointmentId): View
     {
-        $appointment = Appointment::findOrFail($appointmentId);
+        $appointment = Appointment::with(['pet.client.user', 'service'])->findOrFail($appointmentId);
 
+        // Authorization check
         if (Gate::denies('update', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
 
+        // Fetch related data
         $pets = Pet::all();
         $employees = Employee::all();
         $services = Service::all();
+        $clients = Client::with('user')->get(); // Fetch all clients with their users
 
-        return view('pages.admin.appointments.edit', compact('appointment', 'pets', 'employees', 'services'));
+        return view('pages.admin.appointments.edit', compact('appointment', 'pets', 'employees', 'services', 'clients'));
     }
 
     /**

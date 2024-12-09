@@ -3,6 +3,7 @@ module.exports = {
         './resources/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.vue',
+        './storage/framework/views/*.php',
     ],
     theme: {
         extend: {
@@ -13,7 +14,11 @@ module.exports = {
             },
         },
     },
-    plugins: [],
+
+
+    plugins: [
+        require('tailwind-scrollbar'),
+    ],
 };
 
 

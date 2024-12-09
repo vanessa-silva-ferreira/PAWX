@@ -30,17 +30,6 @@ class AppointmentController extends Controller
 
         $client = $user->client;
 
-//        $user = auth()->user();
-//
-//       if (isClient($user) {
-//            // Load the client relationship if the user is a Client
-//            $user->load('client');
-//            $client = $user->client;
-//        } else {
-//            // Handle the case where the user is not a Client
-//            abort(403, 'Unauthorized action.');
-//        }
-
         $appointments = Appointment::with(['pet', 'employee', 'service.name'])
             ->whereHas('pet', function ($query) use($client) {
                 $query->where('client_id', $client->id);

@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAWX</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    @vite('resources/js/app.js')
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/auth.js'])
 </head>
 
 <body class="bg-white flex flex-col min-h-screen">
+
 <div class="flex-grow flex flex-col md:flex-row w-full max-w-6xl mx-auto">
     <div
         class="w-full md:w-1/2 p-8 md:rounded-3xl md:mt-12 md:mb-12 md:ml-12 md:p-12 text-white flex flex-col justify-between relative"
@@ -24,11 +23,9 @@
                 <div class="toggle-container mb-8">
                     <div class="toggle-bg"></div>
                     <div class="flex">
-                        <button class="toggle-btn flex-1 py-2 px-6 text-center font-semibold text-sm"
-                                onclick="toggleForm('signin')">Iniciar Sessão
+                        <button id="signin-btn" class="toggle-btn flex-1 py-2 px-6 text-center font-semibold text-sm">Iniciar Sessão
                         </button>
-                        <button class="toggle-btn flex-1 py-2 px-6 text-center font-semibold text-sm"
-                                onclick="toggleForm('signup')">Registar
+                        <button id="signup-btn" class="toggle-btn flex-1 py-2 px-6 text-center font-semibold text-sm">Registar
                         </button>
                     </div>
                 </div>
@@ -36,9 +33,9 @@
                 <form method="POST" id="signin-form" action="{{ route('login') }}" class="space-y-4">
                     @csrf
                     <div>
-                        <x-auth.label for="email">E-mail</x-auth.label>
-                        <x-auth.input id="email" type="email" name="email" placeholder="Insira o seu E-mail"
-                                      value="{{ old('email') }}" required autofocus/>
+                        <x-auth.label for="login">E-mail ou Contacto</x-auth.label>
+                        <x-auth.input id="login" type="text" name="login" placeholder="Insira o seu E-mail ou Contacto"
+                                      value="{{ old('login') }}" required autofocus />
                     </div>
                     <div>
                         <x-auth.label for="password">Palavra-passe</x-auth.label>
@@ -75,6 +72,12 @@
                         <x-auth.input id="email" type="email" name="email" placeholder="Insira o seu E-mail"
                                       value="{{ old('email') }}" required autofocus/>
                         <x-form.validation-error name="email"/>
+                    </div>
+                    <div>
+                        <x-auth.label for="phone_number">Contacto</x-auth.label>
+                        <x-auth.input id="phone_number" type="phone_number" name="phone_number" placeholder="Insira o seu Contacto"
+                                      value="{{ old('phone_number') }}" required autofocus/>
+                        <x-form.validation-error name="phone_number"/>
                     </div>
                     <div>
                         <x-auth.label for="name">Nome</x-auth.label>
@@ -114,51 +117,8 @@
 
                 </form>
             </div>
-
-
-            {{--                        <div class="flex justify-between mt-1">--}}
-            {{--                            <span class="text-xs text-gray-500">Password Strength: Weak</span>--}}
-            {{--                            <a href="#" class="text-xs text-pawx-orange">Forgot Password?</a>--}}
-            {{--                        </div>--}}
-
-            {{--                    <ul class="text-xs text-gray-500 space-y-1">--}}
-            {{--                        <li class="flex items-center"><svg class="w-4 h-4 mr-1 text-pawx-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Cannot contain your name or email address</li>--}}
-            {{--                        <li class="flex items-center"><svg class="w-4 h-4 mr-1 text-pawx-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>At least 8 characters</li>--}}
-            {{--                        <li class="flex items-center"><svg class="w-4 h-4 mr-1 text-pawx-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Contains a number or symbol</li>--}}
-            {{--                    </ul>--}}
-
         </div>
     </div>
 </div>
-<script>
-    setRandomBackgroundImage();
-
-    function toggleForm(type) {
-        const bg = document.querySelector('.toggle-bg');
-        const buttons = document.querySelectorAll('.toggle-btn');
-        const signupForm = document.getElementById('signup-form');
-        const signinForm = document.getElementById('signin-form');
-
-        if (type === 'signup') {
-            bg.classList.add('signup');
-            buttons[0].classList.remove('text-white');
-            buttons[0].classList.add('text-pawx-brown');
-            buttons[1].classList.remove('text-pawx-brown');
-            buttons[1].classList.add('text-white');
-            signinForm.classList.add('hidden');
-            signupForm.classList.remove('hidden');
-        } else {
-            bg.classList.remove('signup');
-            buttons[0].classList.add('text-white');
-            buttons[0].classList.remove('text-pawx-brown');
-            buttons[1].classList.add('text-pawx-brown');
-            buttons[1].classList.remove('text-white');
-            signupForm.classList.add('hidden');
-            signinForm.classList.remove('hidden');
-        }
-    }
-
-    toggleForm('signin');
-</script>
 </body>
 </html>
