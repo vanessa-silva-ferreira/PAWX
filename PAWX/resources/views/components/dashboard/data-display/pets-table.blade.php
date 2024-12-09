@@ -80,7 +80,7 @@
 
                     <tbody>
                     @forelse ($pets as $pet)
-                        <tr class="hover:bg-pawx-brown/5 text-pawx-brown/80 cursor-pointer text-sm"
+                        <tr class="hover:bg-pawx-brown/5 text-pawx-brown/80  text-left cursor-pointer text-sm text-left"
                             onclick="window.location='{{ route($rolePrefix . '.pets.show', $pet->id) }}';">
                             <th class="py-6">{{ $pet->id }}</th>
                             <td class="py-6">

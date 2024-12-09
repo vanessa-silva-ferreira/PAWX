@@ -68,11 +68,11 @@
                     <table class="table w-full mt-10">
                         <thead>
                         <tr class="text-stone-400 uppercase text-sm text-left">
-                            <th class="py-6">#</th>
-                            <th class="py-6">Nome</th>
-                            <th class="py-6">Email</th>
-                            <th class="py-6">Contacto</th>
-                            <th class="py-6">Morada</th>
+                            <th class="py-6 px-6">#</th>
+                            <th class="py-6 px-6">Nome</th>
+                            <th class="py-6 px-6">Email</th>
+                            <th class="py-6 px-6">Contacto</th>
+                            <th class="py-6 px-6">Morada</th>
                             <th></th>
                             <th></th>
 
@@ -80,14 +80,14 @@
                         </thead>
                         <tbody>
                         @forelse ($employees as $employee)
-                            <tr class="hover:bg-pawx-brown/5 text-pawx-brown/80 cursor-pointer text-sm"
+                            <tr class="hover:bg-pawx-brown/5 text-pawx-brown/80 cursor-pointer text-sm text-left"
                                 onclick="window.location='{{ route('admin.employees.show', $employee->id) }}';">
 
-                                <th class="py-6">{{ $employee->employee->id }}</th>
-                                <td class="py-6">{{ $employee->name }}</td>
-                                <td class="py-6">{{ $employee->email }}</td>
-                                <td class="py-6">{{ $employee->phone_number }}</td>
-                                <td class="py-6">{{ $employee->address }}</td>
+                                <th class="py-6 px-6">{{ $employee->employee->id }}</th>
+                                <td class="py-6 px-6">{{ $employee->name }}</td>
+                                <td class="py-6 px-6">{{ $employee->email }}</td>
+                                <td class="py-6 px-6">{{ $employee->phone_number }}</td>
+                                <td class="py-6 px-6">{{ $employee->address }}</td>
                                 <td class="px-2 py-6">
                                     <a href="{{ route('admin.employees.edit', $employee->employee->id) }}"
                                        class="text-stone-400 hover:text-blue-800" title="View">

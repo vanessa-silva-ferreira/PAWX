@@ -45,16 +45,20 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('pets/export', [ExportController::class, 'exportPets'])->name('pets.export');
     Route::resource('pets', \App\Http\Controllers\Web\Admin\PetController::class);
 
-
     Route::prefix('appointments')->group(function () {
         Route::get('/trashed', [Admin\AppointmentController::class, 'trashed'])->name('appointments.trashed');
         Route::patch('/restore/{id}', [Admin\AppointmentController::class, 'restore'])->name('appointments.restore');
         Route::delete('/cancel/{id}', [Admin\AppointmentController::class, 'cancel'])->name('appointments.cancel');
         Route::delete('/force-delete/{id}', [Admin\AppointmentController::class, 'forceDelete'])->name('appointments.forceDelete');
     });
+    Route::get('appointments/export', [ExportController::class, 'exportAppointments'])->name('appointments.export');
     Route::resource('appointments', Admin\AppointmentController::class);
 
+    Route::get('services/export', [Admin\ExportController::class, 'exportServices'])->name('services.export');
     Route::resource('services', Admin\ServiceController::class);
+
+    Route::get('financial-reports/export', [Admin\ExportController::class, 'exportFinancialReports'])->name('financial-reports.export');
+    Route::get('/financial-reports', [Admin\FinancialReportController::class, 'index'])->name('financial-reports.index');
 });
 // ADMIN ---------------------------------------------------------------------------------------------------------------------------------
 

@@ -64,11 +64,11 @@
                 <table class="table w-full mt-10">
                     <thead>
                     <tr class="text-stone-400 uppercase text-sm text-left">
-                        <th class="py-6">#</th>
-                        <th class="py-6">Nome</th>
-                        <th class="py-6">Email</th>
-                        <th class="py-6">Contacto</th>
-                        <th class="py-6">Morada</th>
+                        <th class="py-6 px-6">#</th>
+                        <th class="py-6 px-6">Nome</th>
+                        <th class="py-6 px-6">Email</th>
+                        <th class="py-6 px-6">Contacto</th>
+                        <th class="py-6 px-6">Morada</th>
                         <th></th>
                         <th></th>
 
@@ -76,14 +76,14 @@
                     </thead>
                     <tbody>
                     @forelse ($clients as $client)
-                        <tr class="hover:bg-pawx-brown/5 text-pawx-brown/80 cursor-pointer text-sm"
+                        <tr class="hover:bg-pawx-brown/5 text-pawx-brown/80 cursor-pointer text-sm  text-left"
                             onclick="window.location='{{ route($rolePrefix . '.clients.show', $client->id) }}';">
 
-                            <th class="py-6">{{ $client->client->id }}</th>
-                            <td class="py-6">{{ $client->name }}</td>
-                            <td class="py-6">{{ $client->email }}</td>
-                            <td class="py-6">{{ $client->phone_number }}</td>
-                            <td class="py-6">{{ $client->address }}</td>
+                            <th class="py-6 px-6">{{ $client->client->id }}</th>
+                            <td class="py-6 px-6">{{ $client->name }}</td>
+                            <td class="py-6 px-6">{{ $client->email }}</td>
+                            <td class="py-6 px-6">{{ $client->phone_number }}</td>
+                            <td class="py-6 px-6">{{ $client->address }}</td>
                             <td class="px-2 py-6">
                                 <a href="{{ route($rolePrefix . '.clients.edit', $client->client->id) }}"
                                    class="text-stone-400 hover:text-blue-800" title="View">

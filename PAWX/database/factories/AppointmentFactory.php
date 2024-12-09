@@ -20,7 +20,7 @@ class AppointmentFactory extends Factory
         return [
             'pet_id' => $this->faker->numberBetween(1, 2),
             'employee_id' => $this->faker->numberBetween(1, 2),
-            'appointment_date' => $this->faker->date(),
+            'appointment_date' => $this->faker->dateTimeBetween('-1 year', '+3 months')->format('Y-m-d'),
             'service_id' => $this->faker->numberBetween(1, 3),
             'status'  =>  $this->faker->randomElement([
                 AppointmentStatus::PENDING->value,
