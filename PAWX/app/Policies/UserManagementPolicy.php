@@ -20,8 +20,6 @@ class UserManagementPolicy
 
     public function manageEmployees(User $user)
     {
-        Log::debug("manage-employees", ['role' => $user->getRole(), 'ok' => $user->getRole() === 'admin']);
-
         return $user->getRole() === 'admin';
     }
 

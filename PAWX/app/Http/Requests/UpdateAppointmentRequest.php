@@ -14,10 +14,18 @@ class UpdateAppointmentRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
-        return $this->appointmentRules();
+        return [
+            'pet_id' => 'required|exists:pets,id',
+            'service_id' => 'required|exists:services,id',
+            'employee_id' => 'nullable|exists:employees,id',
+            'appointment_date' => 'required|date',
+            'status' => 'required|string',
+            'total_price' => 'nullable|numeric',
+        ];
     }
+
 
     public function validated($key = null, $default = null)
     {

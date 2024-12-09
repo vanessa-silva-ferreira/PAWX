@@ -11,6 +11,10 @@ class Appointment extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $casts = [
+        'appointment_date' => 'date',
+    ];
+
     protected $fillable = [
         'pet_id',
         'employee_id',
