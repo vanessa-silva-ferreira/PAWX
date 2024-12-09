@@ -2,6 +2,8 @@
 @import './auth.css';
 @import 'home-carousel.css';
 @import 'home-footer.css';
+@import 'home-header.css';
+@import 'home-feedback.css';
 
 @tailwind base;
 @tailwind components;

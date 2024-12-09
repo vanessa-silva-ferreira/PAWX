@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAWX - Cuidados para Animais</title>
-    @vite(['resources/css/app.css', 'resources/css/home-footer.css', 'resources/js/app.js'])
+    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-white font-sans text-gray-800">
 
@@ -18,13 +19,13 @@
 
 <section class="bg-gray-100 p-6 relative -mb-4">
 
-    <button id="prevFeedback" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 text-white w-8 h-8 rounded-full flex items-center justify-center z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-3 h-3">
+    <button id="prevFeedback" class="absolute left-0 top-1/2 transform -translate-y-1/2">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
         </svg>
     </button>
-    <button id="nextFeedback" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 text-white w-8 h-8 rounded-full flex items-center justify-center z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-3 h-3">
+    <button id="nextFeedback" class="absolute right-0 top-1/2 transform -translate-y-1/2">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
     </button>
