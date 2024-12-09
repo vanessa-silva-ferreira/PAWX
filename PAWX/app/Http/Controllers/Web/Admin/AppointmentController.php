@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAppointmentRequest;
@@ -29,10 +30,11 @@ class AppointmentController extends Controller
 
         $search = $request->input('search');
 
-        // Fix: Only eager load the relationships, not specific attributes
+        // Base query for all appointments
         $query = Appointment::with(['pet', 'employee', 'pet.client', 'service'])
-            ->orderBy('id', 'desc');
+            ->orderBy('appointment_date', 'desc');
 
+        // Apply search filter if provided
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('appointment_date', 'like', "%$search%")
@@ -41,9 +43,16 @@ class AppointmentController extends Controller
             });
         }
 
+        // Paginate appointments for general list
         $appointments = $query->paginate(10);
 
-        return view('pages.admin.appointments.index', compact('appointments'));
+        // Today's appointments: Filter by today's date
+        $todaysAppointments = Appointment::with(['pet', 'employee', 'pet.client', 'service'])
+            ->whereDate('appointment_date', Carbon::today()) // Filter only today's date
+            ->get();
+
+        // Pass both variables to the view
+        return view('pages.admin.appointments.index', compact('appointments', 'todaysAppointments'));
     }
 
     public function show($id)
@@ -174,29 +183,4 @@ class AppointmentController extends Controller
         return redirect()->route('admin.appointments.index')
             ->with('success', 'Appointment permanently deleted successfully!');
     }
-
-    // Method to show notifications for appointments on a specific date
-    public function showNotifications($date)
-    {
-        // Ensure the date is correctly formatted
-        $formattedDate = Carbon::parse($date)->format('Y-m-d');
-
-        // Retrieve all appointments for the selected date
-        $appointments = Appointment::whereDate('appointment_date', $formattedDate)
-            ->with(['pet', 'service'])  // Eager load the pet and service relationships
-            ->get();
-
-        // Format notifications
-        $notifications = $appointments->map(function($appointment) {
-            return [
-                'pet_name' => $appointment->pet->name,  // Assuming 'name' is a field in the Pet model
-                'service_name' => $appointment->service->name,  // Assuming 'name' is a field in the Service model
-                'appointment_time' => Carbon::parse($appointment->appointment_date)->format('H:i'),  // Extract only the time
-            ];
-        });
-
-        // Pass the notifications and date to the view
-        return view('admin.notifications', ['notifications' => $notifications, 'formattedDate' => $formattedDate]);
-    }
-
 }
