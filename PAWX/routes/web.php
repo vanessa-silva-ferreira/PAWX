@@ -10,8 +10,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::aliasMiddleware('role', CheckRole::class);
 
+// Public routes
 Route::view('/', 'welcome')->name('welcome');
-Route::view('/services', 'services')->name('services');
+Route::view('/services', 'welcome-services')->name('welcome-services');
+Route::view('/gallery', 'welcome-gallery')->name('welcome-gallery');
+Route::view('/feedback', 'welcome-feedback')->name('welcome-feedback');
+Route::view('/about', 'welcome-about')->name('welcome-about');
+Route::view('/contact', 'welcome-contact')->name('welcome-contact');
+Route::view('/remember', 'welcome-remember')->name('welcome-remember');
 Route::view('/auth', 'auth.auth')->name('auth');
 
 Route::post('login', [LoginController::class, 'login'])->name('login');
