@@ -1,6 +1,6 @@
 <footer class="bg-gray-100 text-center py-4 text-gray-700">
     <div class="container mx-auto space-y-2">
-        <h3 class="font-semibold text-lg">Contatos</h3>
+        <h3 class="font-semibold text-lg">Contactos</h3>
         <div class="flex justify-center flex-wrap mt-2 gap-4">
             <!-- Website -->
             <a href="#" class="bg-white py-2 px-4 rounded shadow hover:bg-gray-200 text-sm flex items-center space-x-2">

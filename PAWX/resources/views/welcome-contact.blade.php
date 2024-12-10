@@ -13,7 +13,7 @@
 
 <section class="p-8 lg:p-16 bg-white">
     <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl lg:text-5xl font-bold text-gray-700">Entre em Contato</h2>
+        <h2 class="text-3xl lg:text-5xl font-bold text-gray-700">Entre em Contacto</h2>
         <p class="mt-4 text-lg text-gray-600">
             Gostaria de saber mais sobre os nossos serviços ou agendar uma consulta? Envie-nos uma mensagem ou visite-nos!
         </p>
