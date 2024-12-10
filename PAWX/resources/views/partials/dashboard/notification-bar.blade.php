@@ -1,4 +1,3 @@
-@vite('resources/js/calendar.js')
 
 @php
     $rolePrefix = auth()->user()->getRole();

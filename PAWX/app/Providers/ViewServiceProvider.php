@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use app\View\Composers\NotificationBarComposer;
+use App\View\Composers\NotificationBarComposer;
 use App\View\Composers\SidebarComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
