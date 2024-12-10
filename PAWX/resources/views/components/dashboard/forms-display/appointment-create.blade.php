@@ -3,7 +3,7 @@
 @endphp
 
 <div class="mx-10 my-10 bg-white p-6">
-    <x-dashboard.title>New Appointment</x-dashboard.title>
+    <x-utilities.title>Marcação</x-utilities.title>
 
     @if ($errors->any())
         <div class="p-4 mb-4 text-red-700 bg-red-100 rounded-lg">

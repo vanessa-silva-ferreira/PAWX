@@ -2,6 +2,7 @@
 
 @php
     $rolePrefix = auth()->user()->getRole();
+        $date = $date ?? now()->toDateString();
 @endphp
 
 <div class="bg-white rounded-lg p-6 w-full">
@@ -31,6 +32,8 @@
                 </div>
             </div>
         </div>
+
+
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -77,7 +80,6 @@
     <div id="daysContainer" class="grid grid-cols-7 gap-2 mt-2 text-center text-stone-700"></div>
 </div>
 
-<!-- Secção de Notificações -->
 <div id="notificationSection" class="bg-white rounded-lg p-6 w-full mt-4 hidden">
     <h3 id="notificationDate" class="text-lg font-bold mb-4 text-stone-800"></h3>
     <ul id="notificationList" class="list-disc list-inside text-stone-700 mb-4"></ul>
@@ -97,3 +99,34 @@
         </a>
     </div>
 </div>
+
+
+<div class="bg-white rounded-lg p-6 w-full">
+    <h2 class="text-lg font-bold mb-4">Appointments</h2>
+
+    <div class="flex justify-between mb-4">
+        <a href="{{ route('admin.notifications.by-date', ['date' => \Carbon\Carbon::parse($date)->subDay()->toDateString()]) }}"
+           class="text-blue-500 hover:underline">
+            Previous Day
+        </a>
+
+        <span class="font-bold">{{ \Carbon\Carbon::parse($date)->format('d/m/Y') }}</span>
+
+        <a href="{{ route('admin.notifications.by-date', ['date' => \Carbon\Carbon::parse($date)->addDay()->toDateString()]) }}"
+           class="text-blue-500 hover:underline">
+            Next Day
+        </a>
+    </div>
+
+    <ul>
+        @forelse ($appointments as $appointment)
+            <li class="mb-2">
+                <p><strong>Service:</strong> {{ $appointment->service->name }}</p>
+                <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d/m/Y H:i') }}</p>
+            </li>
+        @empty
+            <li>No appointments for this day.</li>
+        @endforelse
+    </ul>
+</div>
+

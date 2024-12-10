@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use app\View\Composers\NotificationBarComposer;
 use App\View\Composers\SidebarComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -14,5 +15,6 @@ class ViewServiceProvider extends ServiceProvider
         View::composer('client.*', SidebarComposer::class);
 
         View::composer('partials.dashboard.sidebar', SidebarComposer::class);
+        View::composer('partials.dashboard.notification-bar', NotificationBarComposer::class);
     }
 }

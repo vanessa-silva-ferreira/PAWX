@@ -66,6 +66,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::get('financial-reports/export', [Admin\ExportController::class, 'exportFinancialReports'])->name('financial-reports.export');
     Route::get('/financial-reports', [Admin\FinancialReportController::class, 'index'])->name('financial-reports.index');
+
+    Route::get('notifications/by-date', [Admin\NotificationController::class, 'getAppointmentsByDate'])
+        ->name('notifications.by-date');
+
 });
 // ADMIN ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -86,6 +90,8 @@ Route::middleware(['auth', 'role:employee'])->prefix('employee')->name('employee
         Route::delete('/cancel/{id}', [Employee\AppointmentController::class, 'cancel'])->name('appointments.cancel');
     });
     Route::resource('appointments', Employee\AppointmentController::class);
+
+
 });
 // EMPLOYEE ------------------------------------------------------------------------------------------------------------------------------
 
