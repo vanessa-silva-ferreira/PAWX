@@ -1,3 +1,6 @@
+@php
+    $rolePrefix = auth()->user()->getRole() === 'admin' ? 'admin' : 'employee';
+@endphp
 <div class="flex flex-col space-y-4 mt-16 py-6 px-6">
 <div class="overflow-x-auto">
         <div class="container mx-auto">
@@ -64,27 +67,10 @@
                         <td class="py-6 px-6">{{ $service->cost }}</td>
                         <td class="py-6 px-6">{{ $service->price }}</td>
                         <td class="py-6 px-6">{{ $service->obs}}</td>
-                        <td class="flex space-x-1 py-6 px-6">
-                        {{--                            <a href="{{ route('admin.services.show', $service->id) }}" class="text-stone-400 hover:text-blue-800" title="View">--}}
-                        {{--                                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">--}}
-                        {{--                                    <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>--}}
-                        {{--                                    <circle cx="12" cy="12" r="3"/>--}}
-                        {{--                                </svg>--}}
-                        {{--                            </a>--}}
-                        {{--                            <a href="{{ route('admin.services.edit', $service->id) }}" class="text-stone-400 hover:text-yellow-800" title="Edit">--}}
-                        {{--                                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil">--}}
-                        {{--                                    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>--}}
-                        {{--                                    <path d="m15 5 4 4"/>--}}
-                        {{--                                </svg>--}}
-                        {{--                            </a>--}}
-                        {{--                        </td>--}}
-                        {{--                        <td class="px-2 text-left">--}}
-                        {{--                            <form method="POST" action="{{ route('admin.services.destroy', $service->id) }}">--}}
-                        {{--                                @csrf--}}
-                        {{--                                @method('DELETE')--}}
-                        {{--                                <button type="submit" class="text-red-500 hover:text-red-800">Delete</button>--}}
-                        {{--                            </form>--}}
-                        {{--                        </td>--}}
+                        <td class="flex space-x-0.5 py-6 px-6">
+                            <x-dashboard.data-display.table-actions :resource="'services'" :id="$service->id" :rolePrefix="$rolePrefix" />
+                        </td>
+
                     </tr>
                 @endforeach
                 </tbody>

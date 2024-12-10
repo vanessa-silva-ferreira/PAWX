@@ -3,7 +3,7 @@
 @endphp
 
 <div class="mx-10 my-10 bg-white p-6">
-    <x-dashboard.title>New Appointment</x-dashboard.title>
+    <x-utilities.title>Marcação</x-utilities.title>
 
     @if ($errors->any())
         <div class="p-4 mb-4 text-red-700 bg-red-100 rounded-lg">
@@ -135,12 +135,16 @@
                 <x-form.select
                     id="status"
                     name="status"
-                    :options="[['value' => 'pending', 'label' => 'Pending'], ['value' => 'confirmed', 'label' => 'Confirmed']]"
+                    :options="[
+        ['value' => App\Enums\AppointmentStatus::PENDING->value, 'label' => App\Enums\AppointmentStatus::PENDING->value],
+        ['value' => App\Enums\AppointmentStatus::CONFIRMED->value, 'label' => App\Enums\AppointmentStatus::CONFIRMED->value]
+    ]"
                     selected="{{ old('status') }}"
                     valueKey="value"
                     labelKey="label"
                     required
                 />
+
                 <x-form.label for="status">Status</x-form.label>
                 @error('status')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>

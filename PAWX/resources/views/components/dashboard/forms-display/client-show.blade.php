@@ -23,7 +23,7 @@
                     value="{{ old('nif', $client->user->nif) }}"
                     readonly
                 />
-                <x-form.label for="nif">Número de Identificação Fiscal</x-form.label>
+                <x-form.label for="nif">NIF</x-form.label>
             </div>
         </div>
 

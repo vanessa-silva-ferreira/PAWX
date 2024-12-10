@@ -1,9 +1,12 @@
 @vite('resources/js/calendar.js')
 
+@php
+    $rolePrefix = auth()->user()->getRole();
+    $date = $date ?? now()->toDateString();
+@endphp
+
 <div class="bg-white rounded-lg p-6 w-full">
-
     <div class="flex justify-end items-center w-full mb-8">
-
         <div class="flex items-center justify-end">
             <div class="relative inline-block text-right">
                 <div>
@@ -22,74 +25,34 @@
 
                 <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-white rounded-lg border border-stone-200 hidden"
                      role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                    <a href="/profile" class="block px-4 py-2 text-stone-600 hover:bg-stone-100 hover:text-stone-800" role="menuitem" tabindex="-1" id="user-menu-item-0">Editar Conta</a>
-                    <a href="/logout" class="block px-4 py-2 text-stone-600 hover:bg-stone-100 hover:text-stone-800" role="menuitem" tabindex="-1" id="user-menu-item-1">Sair</a>
+                    <a href="{{url($rolePrefix . '/account/edit')}}" class="block px-4 py-2 text-stone-600 hover:bg-stone-100 hover:text-stone-800" role="menuitem" tabindex="-1" id="user-menu-item-0">Editar Conta</a>
+                    <a href="#" class="block px-4 py-2 text-stone-600 hover:bg-stone-100 hover:text-stone-800" role="menuitem" tabindex="-1" id="user-menu-item-0">Lista de Removidos</a>
+                    <x-action.logout />
                 </div>
             </div>
         </div>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const userMenuButton = document.getElementById('user-menu-button');
-                const dropdownMenu = document.querySelector('.dropdown-menu');
-
-                userMenuButton.addEventListener('click', function() {
-                    dropdownMenu.classList.toggle('hidden');
-                    this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
-                });
-
-                // Close the dropdown when clicking outside of it
-                window.addEventListener('click', function(event) {
-                    if (!userMenuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                        dropdownMenu.classList.add('hidden');
-                        userMenuButton.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            });
-        </script>
     </div>
 </div>
-<div>
-    <div class="flex justify-between items-center mb-4">
-        <button id="prevMonth" class="text-stone-500 hover:stone-stone-800">
-            &#10094;
-        </button>
-        <h2 id="currentMonth" class="text-lg font-bold text-stone-800"></h2>
-        <button id="nextMonth" class="text-stone-500 hover:text-stone-800">
-            &#10095;
-        </button>
-    </div>
 
-    <div class="grid grid-cols-7 gap-2 text-center text-stone-600 font-medium">
-        <div>S</div>
-        <div>T</div>
-        <div>Q</div>
-        <div>Q</div>
-        <div>S</div>
-        <div>S</div>
-        <div>D</div>
-    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const userMenuButton = document.getElementById('user-menu-button');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
 
-    <div id="daysContainer" class="grid grid-cols-7 gap-2 mt-2 text-center text-stone-700"></div>
-</div>
+        userMenuButton.addEventListener('click', function() {
+            dropdownMenu.classList.toggle('hidden');
+            this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+        });
 
-<!-- Secção de Notificações -->
-<div id="notificationSection" class="bg-white rounded-lg p-6 w-full mt-4 hidden">
-    <h3 id="notificationDate" class="text-lg font-bold mb-4 text-stone-800"></h3>
-    <ul id="notificationList" class="list-disc list-inside text-stone-700 mb-4"></ul>
-    <div class="flex items-center space-x-2">
-        <input
-            type="text"
-            id="newNotification"
-            class="flex-grow border border-stone-300 rounded px-2 py-1"
-            placeholder="Add a new notification"
-        />
-        <a
-            href="{{ route('admin.appointments.create') }}"
-            id="addNotification"
-            class="bg-stone-500 text-white px-3 py-1 rounded hover:bg-pawx-orange"
-        >
-            Add
-        </a>
-    </div>
-</div>
+        window.addEventListener('click', function(event) {
+            if (!userMenuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add('hidden');
+                userMenuButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+</script>
+
+@include('components.dashboard.notification-bar.notification-calendar')
+
+

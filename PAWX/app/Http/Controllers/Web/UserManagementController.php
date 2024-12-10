@@ -11,15 +11,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserManagementController extends Controller
 {
-    public function createAdmin()
-    {
-        return view('dashboards.admins.admin-create');
-    }
-
-    public function storeAdmin(Request $request)
-    {
-        return $this->createUser($request, 'admin');
-    }
 
     public function createUser(StoreUserRequest $request, string $type)
     {
@@ -42,6 +33,34 @@ class UserManagementController extends Controller
         return $user;
     }
 
+    public function editUser()
+    {
+        $user = auth()->user();
+        $role = $user->getRole();
+
+        $viewPath = "pages.{$role}.edit";
+
+        return view($viewPath, compact('user', 'role'));
+    }
+
+    public function updateUser(UpdateUserRequest $request)
+    {
+        $user = auth()->user();
+
+        $userData = $request->validated();
+
+        if ($request->filled('password')) {
+            $userData['password'] = Hash::make($request->password);
+        } else {
+            unset($userData['password']);
+        }
+
+        $user->update($userData);
+
+        return redirect()->route($user->getRole() . '.account.edit')->with('success', 'Conta atualizada com sucesso.');
+    }
+
+
     public function createEmployee()
     {
         return view('dashboards.admin.employee-create.blade.php');
@@ -62,20 +81,7 @@ class UserManagementController extends Controller
         return $this->createUser($request, 'client');
     }
 
-    public function updateUser(UpdateUserRequest $request,  int $id)
-    {
-        $user = User::findOrFail($id);
 
-        $userData = $request->validated();
-
-        if ($request->filled('password')) {
-            $userData['password'] = Hash::make($request->password);
-        }
-
-        $user->update($userData);
-
-        return $user;
-    }
 
     public function buildType(string $prefix, string $type)
     {
