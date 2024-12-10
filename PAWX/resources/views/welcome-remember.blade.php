@@ -13,7 +13,7 @@
 
 <section class="py-6 bg-gray-100">
     <div class="max-w-4xl mx-auto text-center">
-        <h1 class="text-3xl font-bold text-indigo-600">Recordar</h1>
+        <h1 class="text-3xl font-bold text-pawx-orange-600">Recordar</h1>
         <p class="mt-2 text-sm text-gray-600">
             Uma homenagem aos nossos amigos de quatro patas que trouxeram amor e felicidade às nossas vidas.
         </p>
