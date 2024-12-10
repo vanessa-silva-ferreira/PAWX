@@ -2,15 +2,13 @@
 
 use App\Http\Controllers\Calendar;
 use App\Http\Controllers\Web\Auth\{LoginController, LogoutController, RegisterController};
-use App\Http\Controllers\Web\Employee\AppointmentController;
-use App\Http\Controllers\Web\{Admin, Employee, Client, ExportController};
+use App\Http\Controllers\Web\{Admin, Employee, Client, ExportController, UserManagementController};
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 
 
 Route::aliasMiddleware('role', CheckRole::class);
 
-// Public routes
 Route::view('/', 'welcome')->name('welcome');
 Route::view('/services', 'welcome-services')->name('welcome-services');
 Route::view('/gallery', 'welcome-gallery')->name('welcome-gallery');
@@ -31,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('dashboard', [Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::get('dashboard-data', [Admin\DashboardController::class, 'getDashboardData'])->name('dashboard.data');
+
+    Route::get('/account/edit', [UserManagementController::class, 'editUser'])->name('account.edit');
+    Route::put('/account/update', [UserManagementController::class, 'updateUser'])->name('account.update');
 
     Route::prefix('employees')->group(function () {
         Route::get('trashed', [Admin\EmployeeController::class, 'trashed'])->name('employees.trashed');
@@ -71,6 +72,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 // EMPLOYEE ------------------------------------------------------------------------------------------------------------------------------
 Route::middleware(['auth', 'role:employee'])->prefix('employee')->name('employee.')->group(function () {
     Route::get('dashboard', [Employee\DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/account/edit', [UserManagementController::class, 'editUser'])->name('account.edit');
+    Route::put('/account/update', [UserManagementController::class, 'updateUser'])->name('account.update');
+
     Route::resource('clients', Employee\ClientController::class);
 //    Route::resource('pets', Employee\PetController::class);
     Route::resource('pets', \App\Http\Controllers\Web\Employee\PetController::class);
@@ -82,25 +87,15 @@ Route::middleware(['auth', 'role:employee'])->prefix('employee')->name('employee
     });
     Route::resource('appointments', Employee\AppointmentController::class);
 });
-//Route::middleware(['auth', 'role:employee'])->prefix('employee')->name('employee.')->group(function () {
-//    Route::get('dashboard', [Employee\DashboardController::class, 'index'])->name('dashboard');
-//    Route::resource('clients', Employee\ClientController::class);
-//    Route::resource('pets', Employee\PetController::class);
-//    Route::resource('appointments', Employee\AppointmentController::class);
-//
-//    Route::prefix('appointments')->group(function () {
-//        // List canceled appointments (soft-deleted)
-//        Route::get('/trashed', [AppointmentController::class, 'trashed'])->name('appointments.trashed');
-//        // Restore canceled appointment
-//        Route::patch('/restore/{id}', [AppointmentController::class, 'restore'])->name('appointments.restore');
-//        // Cancel appointments (soft delete)
-//        Route::delete('/cancel/{id}', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
-//    });
-//});
+// EMPLOYEE ------------------------------------------------------------------------------------------------------------------------------
 
+// CLIENT --------------------------------------------------------------------------------------------------------------------------------
 Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->group(function () {
     Route::get('dashboard', [Client\DashboardController::class, 'index'])->name('dashboard');
-//    Route::resource('pets', Client\PetController::class);
+
+    Route::get('/account/edit', [UserManagementController::class, 'editUser'])->name('account.edit');
+    Route::put('/account/update', [UserManagementController::class, 'updateUser'])->name('account.update');
+
     Route::resource('pets', \App\Http\Controllers\Web\Client\PetController::class);
 
     Route::prefix('appointments')->group(function () {
@@ -108,16 +103,7 @@ Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->g
     });
     Route::resource('appointments', Client\AppointmentController::class);
 });
-
-//Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->group(function () {
-//    Route::get('dashboard', [Client\DashboardController::class, 'index'])->name('dashboard');
-//    Route::resource('pets', Client\PetController::class);
-//    Route::resource('appointments', Client\AppointmentController::class);
-//    Route::prefix('appointments')->group(function () {
-//        // Cancel appointments (soft delete)
-//        Route::delete('/cancel/{id}', [Client\AppointmentController::class, 'cancel'])->name('appointments.cancel');
-//    });
-//});
+// CLIENT --------------------------------------------------------------------------------------------------------------------------------
 
 Route::get('/test-role', function () {
     $user = auth()->user();
@@ -136,6 +122,3 @@ Route::get('/google/callback', [App\Http\Controllers\Web\Auth\GoogleLoginControl
 
 Route::post('/calendar/navigate', [Calendar::class, 'navigate'])->name('calendar.navigate');
 Route::post('/calendar/select', [Calendar::class, 'selectDay'])->name('calendar.select');
-
-//Route::post('/calendar/navigate', [Calendar::class, 'navigate'])->name('calendar.navigate');
-//Route::post('/calendar/select', [Calendar::class, 'selectDay'])->name('calendar.select');

@@ -1,5 +1,9 @@
 @vite('resources/js/calendar.js')
 
+@php
+    $rolePrefix = auth()->user()->getRole();
+@endphp
+
 <div class="bg-white rounded-lg p-6 w-full">
 
     <div class="flex justify-end items-center w-full mb-8">
@@ -22,8 +26,8 @@
 
                 <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-white rounded-lg border border-stone-200 hidden"
                      role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                    <a href="/profile" class="block px-4 py-2 text-stone-600 hover:bg-stone-100 hover:text-stone-800" role="menuitem" tabindex="-1" id="user-menu-item-0">Editar Conta</a>
-                    <a href="/logout" class="block px-4 py-2 text-stone-600 hover:bg-stone-100 hover:text-stone-800" role="menuitem" tabindex="-1" id="user-menu-item-1">Sair</a>
+                    <a href="{{url($rolePrefix . '/account/edit')}}" class="block px-4 py-2 text-stone-600 hover:bg-stone-100 hover:text-stone-800" role="menuitem" tabindex="-1" id="user-menu-item-0">Editar Conta</a>
+                    <x-action.logout />
                 </div>
             </div>
         </div>

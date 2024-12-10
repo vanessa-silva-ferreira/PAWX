@@ -58,7 +58,7 @@ class AppointmentController extends Controller
         }
 
         // Paginate the results
-        $appointments = $query->simplePaginate(10);
+        $appointments = $query->simplePaginate(5);
 
         return view('pages.admin.appointments.index', compact('appointments'));
     }
@@ -191,5 +191,4 @@ class AppointmentController extends Controller
         return redirect()->route('admin.appointments.index')
             ->with('success', 'Appointment permanently deleted successfully!');
     }
-
 }
