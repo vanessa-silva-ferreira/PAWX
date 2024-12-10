@@ -23,8 +23,8 @@
                 Oferecemos aos seus animais a melhor experiência de banho, mantendo-os limpos e felizes.
             </p>
             <div class="flex space-x-4 lg:space-x-8 mt-6">
-                <button class="bg-gray-700 text-white px-4 lg:px-6 py-3 rounded hover:bg-gray-600">Preços</button>
-                <button class="bg-gray-700 text-white px-4 lg:px-6 py-3 rounded hover:bg-gray-600">Agendar</button>
+                <a href="{{ route('auth') }}" class="bg-orange-500 text-white px-4 lg:px-6 py-3 rounded hover:bg-orange-600 shadow-md">Preços</a>
+                <a href="{{ route('auth') }}" class="bg-orange-500 text-white px-4 lg:px-6 py-3 rounded hover:bg-orange-600 shadow-md">Agendar</a>
             </div>
         </div>
 
@@ -35,8 +35,8 @@
                 Pêlo limpo e macio para os seus animais. Os nossos profissionais mantêm-nos bem aparados e com boa aparência.
             </p>
             <div class="flex space-x-4 lg:space-x-8 mt-6">
-                <button class="bg-gray-700 text-white px-4 lg:px-6 py-3 rounded hover:bg-gray-600">Preços</button>
-                <button class="bg-gray-700 text-white px-4 lg:px-6 py-3 rounded hover:bg-gray-600">Agendar</button>
+                <a href="{{ route('auth') }}" class="bg-orange-500 text-white px-4 lg:px-6 py-3 rounded hover:bg-orange-600 shadow-md">Preços</a>
+                <a href="{{ route('auth') }}" class="bg-orange-500 text-white px-4 lg:px-6 py-3 rounded hover:bg-orange-600 shadow-md">Agendar</a>
             </div>
         </div>
     </div>

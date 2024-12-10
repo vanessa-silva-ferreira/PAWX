@@ -18,8 +18,14 @@ Route::view('/contact', 'welcome-contact')->name('welcome-contact');
 Route::view('/remember', 'welcome-remember')->name('welcome-remember');
 Route::view('/auth', 'auth.auth')->name('auth');
 
-Route::post('login', [LoginController::class, 'login'])->name('login');
+
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login.form');
+
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('register', [RegisterController::class, 'register'])->name('register');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
