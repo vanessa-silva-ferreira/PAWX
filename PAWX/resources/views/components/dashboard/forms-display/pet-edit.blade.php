@@ -8,8 +8,10 @@
 </style>
 
 @php
-    $rolePrefix = auth()->user()->getRole() === 'admin' ? 'admin' : 'employee';
+    $role = auth()->user()->getRole();
+    $rolePrefix = $role === 'admin' ? 'admin' : ($role === 'employee' ? 'employee' : ($role === 'client' ? 'client' : 'guest'));
 @endphp
+
 
 <script src="{{ asset('js/pet-form.js') }}" defer></script>
 <script src="{{ asset('js/birthdate-age.js') }}"></script>
@@ -17,7 +19,7 @@
 <div class="mx-24 my-16 bg-white p-6">
 {{--    <x-dashboard.title>Editar Animal</x-dashboard.title>--}}
 
-    <form action="{{ route('admin.pets.update', $pet->id) }}" method="POST" class="space-y-6"
+    <form action="{{route($rolePrefix.'pets.update', $pet->id) }}" method="POST" class="space-y-6"
           enctype="multipart/form-data">
         @csrf
         @method('PUT')

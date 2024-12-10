@@ -2,61 +2,109 @@
     $rolePrefix = auth()->user()->getRole() === 'admin' ? 'admin' : 'employee';
 @endphp
 
-<div class="flex flex-col space-y-6">
-    <div class="flex-1 space-y-4 content-start">
-        <h2 class="text-left text-3xl font-extrabold text-orange-600">
-            Detalhes da Marcação
-        </h2>
-    </div>
-    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <div class="space-y-4">
-            <div>
-                <x-form.label for="client_id" class="text-gray-700 font-semibold">Cliente:</x-form.label>
-                <p class="rounded h-8 bg-gray-100 text-gray-700 w-full ring-1 ring-gray-600 p-2">
-                    {{ optional(optional($appointment->pet->client)->user)->name ?? 'N/A' }}
-                </p>
+<div class="mx-4 my-6 bg-white p-6">
+    <x-utilities.title>Marcação</x-utilities.title>
+    <form class="space-y-6 mt-6">
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Client Display -->
+            <div class="relative w-full">
+                <x-form.input
+                    id="client_id"
+                    name="client_id"
+                    valueKey="id"
+                    labelKey="user.name"
+                    value="{{ $appointment->pet->client->user->name}}"
+                    disabled
+                />
+                <x-form.label for="client_id">Cliente</x-form.label>
             </div>
-            <div>
-                <x-form.label for="pet_id" class="text-gray-700 font-semibold">Animal:</x-form.label>
-                <p class="rounded h-8 bg-gray-100 text-gray-700 w-full ring-1 ring-gray-600 p-2">
-                    {{ $appointment->pet->name }}
-                </p>
-            </div>
-            <div>
-                <x-form.label for="service" class="text-gray-700 font-semibold">Serviço:</x-form.label>
-                <p class="rounded h-8 bg-gray-100 text-gray-700 w-full ring-1 ring-gray-600 p-2">
-                    {{ $appointment->service->name }}
-                </p>
+
+            <div class="relative w-full">
+                <x-form.input
+                    id="pet_id"
+                    name="pet_id"
+                    valueKey="id"
+                    labelKey="pet.name"
+                    value="{{ $appointment->pet->name}}"
+                    disabled
+                />
+                <x-form.label for="pet_id">Animal</x-form.label>
             </div>
         </div>
 
-        <div class="flex space-x-4">
-            <div class="flex-1">
-                <x-form.label for="date" class="text-gray-700 font-semibold">Data:</x-form.label>
-                <p class="rounded h-8 bg-gray-100 text-gray-700 w-full ring-1 ring-gray-600 p-2">
-                    {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d-m-Y') }}
-                </p>
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="relative w-full">
+                <x-form.input
+                    id="employee_id"
+                    name="employee_id"
+                    valueKey="id"
+                    labelKey="employee.name"
+                    value="{{ $appointment->employee->user->name}}"
+                    disabled
+                />
+                <x-form.label for="employee_id">Funcionário</x-form.label>
             </div>
-            <div class="flex-1">
-                <x-form.label for="time" class="text-gray-700 font-semibold">Hora:</x-form.label>
-                <p class="rounded h-8 bg-gray-100 text-gray-700 w-full ring-1 ring-gray-600 p-2">
 
-                </p>
+            <div class="relative w-full">
+                <x-form.input
+                    id="service_id"
+                    name="service_id"
+                    valueKey="id"
+                    labelKey="name"
+                    value="{{ $appointment->service->name }}"
+                    disabled
+                />
+                <x-form.label for="service_id">Serviço</x-form.label>
             </div>
         </div>
-        <div class="flex space-x-4">
-            <div class="flex-1">
-                <x-form.label for="status" class="text-gray-700 font-semibold">Estado:</x-form.label>
-                <p class="rounded h-8 bg-gray-100 text-gray-700 w-full ring-1 ring-gray-600 p-2">
-                    {{ $appointment->status }}
-                </p>
+
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="relative w-full">
+                <x-form.input
+                    id="total_price"
+                    name="total_price"
+                    valueKey="id"
+                    labelKey="date"
+                    value="{{ number_format($appointment->total_price, 2) }}"
+                    disabled
+                />
+                <x-form.label for="total_price">Valor</x-form.label>
             </div>
-            <div class="flex-1">
-                <x-form.label for="total_price" class="text-gray-700 font-semibold">Custo:</x-form.label>
-                <p class="rounded h-8 bg-gray-100 text-gray-700 w-full ring-1 ring-gray-600 p-2">
-                    {{ $appointment->total_price }}
-                </p>
+
+            <div class="relative w-full">
+                <x-form.input
+                    id="status"
+                    name="status"
+                    valueKey="id"
+                    labelKey="name"
+                    value="{{ $appointment->status }}"
+                    disabled
+                />
+                <x-form.label for="status">Estado</x-form.label>
             </div>
         </div>
-    </div>
+
+        <div class="form-group grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8">
+            <div class="relative w-full">
+                <x-form.input
+                    id="appointment_date"
+                    name="appointment_date"
+                    valueKey="id"
+                    labelKey="date"
+                    value="{{$appointment->appointment_date->format('Y-m-d H:i') }}"
+                    disabled
+                />
+                <x-form.label for="appointment_date">Data da Marcação</x-form.label>
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <a href="{{ route('admin.appointments.index') }}" class="px-8 py-2 bg-gray-200 text-gray-800 rounded-lg">
+                Voltar
+            </a>
+        </div>
+    </form>
 </div>
+
+
+

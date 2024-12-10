@@ -1,12 +1,12 @@
-<div class="mx-24 my-16 bg-white p-6">
-    <x-dashboard.title>Cliente No. {{$client->id}}</x-dashboard.title>
+<div class="mx-10 my-10 bg-white p-6">
+    <x-utilities.title>Criar Cliente</x-utilities.title>
 
-    <form action="{{ route('admin.clients.update', $client->id) }}" method="POST" class="space-y-6">
+    <form action="{{ route('admin.clients.update', $client->id) }}" method="POST" class="space-y-6 mt-16">
         @csrf
         @method('PUT')
 
-        <div class="form-group grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="relative w-full md:col-span-2">
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="relative w-full">
                 <x-form.input
                     id="name"
                     name="name"
@@ -27,18 +27,20 @@
             </div>
         </div>
 
-        <div class="relative w-full">
-            <x-form.input
-                id="address"
-                name="address"
-                value="{{ old('address', $client->user->address) }}"
-                readonly
-            />
-            <x-form.label for="address">Morada</x-form.label>
+        <div class="form-group grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8">
+            <div class="relative w-full">
+                <x-form.input
+                    id="address"
+                    name="address"
+                    value="{{ old('address', $client->user->address) }}"
+                    readonly
+                />
+                <x-form.label for="address">Morada</x-form.label>
+            </div>
         </div>
 
-        <div class="form-group grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="relative w-full md:col-span-2">
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="relative w-full">
                 <x-form.input
                     id="email"
                     name="email"
@@ -48,7 +50,7 @@
                 <x-form.label for="email">Email <span class="text-pawx-orange">*</span></x-form.label>
             </div>
 
-            <div class="relative w-full mb-6">
+            <div class="relative w-full">
                 <x-form.input
                     id="phone_number"
                     name="phone_number"
