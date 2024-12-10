@@ -35,8 +35,8 @@
                 Pêlo limpo e macio para os seus animais. Os nossos profissionais mantêm-nos bem aparados e com boa aparência.
             </p>
             <div class="flex space-x-4 lg:space-x-8 mt-6">
-                <a href="{{ route('auth') }}" class="bg-orange-500 text-white px-4 lg:px-6 py-3 rounded hover:bg-orange-600 shadow-md">Preços</a>
-                <a href="{{ route('auth') }}" class="bg-orange-500 text-white px-4 lg:px-6 py-3 rounded hover:bg-orange-600 shadow-md">Agendar</a>
+                <a href="{{ route('auth') }}" class="bg-orange-500 text-white px-4 lg:px-6 py-3 rounded hover:bg-pawx-orange shadow-md">Preços</a>
+                <a href="{{ route('auth') }}" class="bg-orange-500 text-white px-4 lg:px-6 py-3 rounded hover:bg-pawx-orange shadow-md">Agendar</a>
             </div>
         </div>
     </div>
