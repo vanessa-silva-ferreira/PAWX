@@ -68,7 +68,7 @@
                     value="{{ old('phone_number') }}"
                     maxlength="9"
                 />
-                <x-form.label for="phone_number">Contacto Telefónico</x-form.label>
+                <x-form.label for="phone_number">Contacto</x-form.label>
                 <x-form.validation-error name="phone_number"/>
             </div>
         </div>

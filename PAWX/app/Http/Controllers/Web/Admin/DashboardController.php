@@ -18,7 +18,6 @@ class DashboardController extends Controller
 
         $search = $request->input('search');
 
-        // Fix: Only eager load the relationships, not specific attributes
         $query = Appointment::with(['pet', 'employee', 'pet.client', 'service'])
             ->orderBy('id', 'desc');
 

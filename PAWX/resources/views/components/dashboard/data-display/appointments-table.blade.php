@@ -73,7 +73,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($appointments as $appointment)
+                @forelse($appointments as $appointment)
                     <tr class="hover:bg-pawx-brown/5 text-pawx-brown/80  text-left">
                         <th class="py-6 px-6">{{ $appointment->id }}</th>
                         <td class="py-6 px-6">
@@ -92,7 +92,13 @@
                             <x-dashboard.data-display.table-actions :resource="'appointments'" :id="$appointment->id" :rolePrefix="$rolePrefix" />
                         </td>
                     </tr>
-                @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center text-stone-400">
+                                Não foram encontrados resultados
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
             <div class="mt-4">

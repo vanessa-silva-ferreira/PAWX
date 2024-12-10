@@ -39,7 +39,7 @@ class PetController extends Controller
             });
         }
 
-        $pets = $query->simplePaginate(5);
+        $pets = $query->paginate(5);
 
         return view('pages.admin.pets.index', compact('pets'));
     }
@@ -48,17 +48,14 @@ class PetController extends Controller
     {
         $pet = Pet::findOrFail($id);
 
-        if(Gate::denies('view', $pet)){
-            abort(403, 'Unauthorized action.');
-        }
+        Gate::authorize('view', $pet);
 
         return view('pages.admin.pets.show', compact('pet'));
     }
 
     public function create(): View {
-        if(Gate::denies('create', Pet::class)){
-            abort(403, 'Unauthorized action.');
-        }
+
+        Gate::authorize('create', Pet::class);
 
         $clients = Client::all();
         $sizes = Size::all();
@@ -70,9 +67,7 @@ class PetController extends Controller
 
     public function store(StorePetRequest $request)
     {
-        if (Gate::denies('create', Pet::class)) {
-            abort(403, 'Unauthorized action.');
-        }
+        Gate::authorize('create', Pet::class);
 
         $client_id = $request->input('client_id');
         if (!Client::where('id', $client_id)->exists()) {
@@ -123,5 +118,15 @@ class PetController extends Controller
         }
 
         return redirect()->route('admin.pets.index')->with('success', 'Animal atualizado com sucesso!');
+    }
+
+    public function destroy($id)
+    {
+        $pet = Pet::findOrFail($id);
+
+        $pet->delete();
+
+        return redirect()->route('admin.pets.index')
+            ->with('success', 'Animal removida com sucesso.');
     }
 }

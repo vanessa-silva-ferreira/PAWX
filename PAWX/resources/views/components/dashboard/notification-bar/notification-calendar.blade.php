@@ -233,7 +233,7 @@
                         <a href="/${rolePrefix}/appointments/${notification.id}" class="text-pawx-brown/60 hover:text-pawx-brown/60 block" title="Show">
                             <strong>${notification.pet.name}</strong>, ${notification.pet.species}<br>
                             ${notification.pet.breed}, ${notification.pet.fur_type}, ${notification.pet.size}<br>
-                            ${notification.service}, às ${new Date(notification.appointment_date).toLocaleString('pt-PT')}<br><br>
+                            ${notification.service}, às ${new Date(notification.appointment_date).toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}<br><br>
                             ${notification.status_html}<br>
                         </a>
                     `;

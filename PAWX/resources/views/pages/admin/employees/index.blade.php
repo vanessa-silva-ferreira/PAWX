@@ -82,8 +82,7 @@
                         </thead>
                         <tbody>
                         @forelse ($employees as $employee)
-                            <tr class="hover:bg-pawx-brown/5 text-pawx-brown/80 cursor-pointer text-sm text-left"
-                                onclick="window.location='{{ route('admin.employees.show', $employee->id) }}';">
+                            <tr class="hover:bg-pawx-brown/5 text-pawx-brown/80 text-sm text-left">
 
                                 <th class="py-6 px-6">{{ $employee->employee->id }}</th>
                                 <td class="py-6 px-6">{{ $employee->name }}</td>
@@ -113,5 +112,4 @@
 @endsection
 @section('notifications')
     @include('partials.dashboard.notification-bar')
-    {{--    @include('partials.dashboard.notifications', ['notifications' => $notifications])--}}
 @endsection
