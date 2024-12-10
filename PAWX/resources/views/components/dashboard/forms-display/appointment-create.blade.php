@@ -135,12 +135,16 @@
                 <x-form.select
                     id="status"
                     name="status"
-                    :options="[['value' => 'pending', 'label' => 'Pending'], ['value' => 'confirmed', 'label' => 'Confirmed']]"
+                    :options="[
+        ['value' => App\Enums\AppointmentStatus::PENDING->value, 'label' => App\Enums\AppointmentStatus::PENDING->value],
+        ['value' => App\Enums\AppointmentStatus::CONFIRMED->value, 'label' => App\Enums\AppointmentStatus::CONFIRMED->value]
+    ]"
                     selected="{{ old('status') }}"
                     valueKey="value"
                     labelKey="label"
                     required
                 />
+
                 <x-form.label for="status">Status</x-form.label>
                 @error('status')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>

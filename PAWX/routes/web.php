@@ -69,6 +69,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::get('notifications/by-date', [Admin\NotificationController::class, 'getAppointmentsByDate'])
         ->name('notifications.by-date');
+    Route::get('/notifications/monthly', [Admin\NotificationController::class, 'getAppointmentsByMonth'])->name('notifications.monthly');
 
 });
 // ADMIN ---------------------------------------------------------------------------------------------------------------------------------
