@@ -17,6 +17,7 @@ class NotificationController extends Controller
             ->orderBy('appointment_date', 'asc')
             ->get();
 
+
         return response()->json([
             'notifications' => $appointments->map(function ($appointment) {
                 return [
@@ -31,8 +32,8 @@ class NotificationController extends Controller
                     ],
                     'client' => $appointment->pet->client->user->name,
                     'status_html' => view('components.utilities.appointment-status-tag', ['status' => $appointment->status])->render(),
-                    'appointment_date' => $appointment->appointment_date,
-                ];
+                    'appointment_date' => $appointment->appointment_date->format('Y-m-d H:i:s'),
+                    ];
             }),
         ]);
     }

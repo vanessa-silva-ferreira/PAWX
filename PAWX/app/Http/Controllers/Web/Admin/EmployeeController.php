@@ -31,7 +31,7 @@ class EmployeeController extends Controller
             });
         }
 
-        $employees = $query->simplePaginate(5);
+        $employees = $query->paginate(5);
 
         return view('pages.admin.employees.index', compact('employees'));
     }
@@ -104,34 +104,5 @@ class EmployeeController extends Controller
 
         return redirect()->route('admin.employees.index')
             ->with('success', 'Colaborador removido com sucesso.');
-    }
-    public function trashed()
-    {
-        $employees = Employee::onlyTrashed()->with('user')->paginate(5);
-        return view('pages.admin.employees.trashed', compact('employees'));
-    }
-
-    public function restore($id)
-    {
-        $employee = Employee::withTrashed()->with('user')->findOrFail($id);
-
-        Gate::authorize('manage-employees');
-
-        $employee->user->restore();
-
-        return redirect()->route('admin.employees.trashed')
-            ->with('success', 'Colaborador restaurado com sucesso.');
-    }
-
-    public function forceDelete($id)
-    {
-        $employee = Employee::withTrashed()->with('user')->findOrFail($id);
-
-        Gate::authorize('manage-employees');
-
-        $employee->user->forceDelete();
-
-        return redirect()->route('admin.employees.trashed')
-            ->with('success', 'Colaborador removido permanentemente.');
     }
 }

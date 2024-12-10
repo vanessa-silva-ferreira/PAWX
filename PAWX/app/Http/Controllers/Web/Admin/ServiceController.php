@@ -93,9 +93,7 @@ class ServiceController extends Controller
     {
         $service = Service::findOrFail($id);
 
-        if (Gate::denies('update', $service)) {
-            abort(403, 'Unauthorized action.');
-        }
+        Gate::authorize('update', $service);
 
         $service->update($request->validated());
 
@@ -106,27 +104,16 @@ class ServiceController extends Controller
     /**
      * Remove the specified service from storage.
      */
+
     public function destroy($id)
     {
         $service = Service::findOrFail($id);
 
-        if (Gate::denies('delete', $service)) {
-            abort(403, 'Unauthorized action.');
-        }
+        Gate::authorize('delete', $service);
 
         $service->delete();
 
         return redirect()->route('admin.services.index')
-            ->with('success', 'Service deleted successfully!');
+            ->with('success', 'Serviço removido com sucesso!');
     }
-
-//    /**
-//     * Return a list of services as JSON (useful for appointments).
-//     */
-//    public function list(): \Illuminate\Http\JsonResponse
-//    {
-//        $services = Service::select('id', 'name', 'cost', 'price', 'obs')->get();
-//
-//        return response()->json($services);
-//    }
 }

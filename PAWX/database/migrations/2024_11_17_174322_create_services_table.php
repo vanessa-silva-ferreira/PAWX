@@ -17,6 +17,7 @@ return new class extends Migration
             $table->double('price');
             $table->double('cost');
             $table->string('obs');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

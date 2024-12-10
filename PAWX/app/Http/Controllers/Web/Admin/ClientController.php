@@ -15,16 +15,7 @@ class ClientController extends Controller
 {
     public function index(Request $request): View
     {
-        // not needed because the policies already determine who can have access
-        // $user = auth()->user();
         Gate::authorize('view-any-clients');
-
-        // PROBLEM: "Subquery returns more than 1 row"
-        // $clients = User::whereHas('client')
-        // ->with('client')
-        // ->orderByDesc(Client::select('id')->whereColumn('users.id', 'clients.user_id'))
-        // ->simplePaginate(5);
-
 
         $search = $request->input('search');
 
@@ -46,7 +37,7 @@ class ClientController extends Controller
             });
         }
 
-        $clients = $query->simplePaginate(5);
+        $clients = $query->paginate(5);
 
         return view('pages.admin.clients.index', compact('clients'));
     }
@@ -120,33 +111,33 @@ class ClientController extends Controller
         return redirect()->route('admin.clients.index')
             ->with('success', 'Cliente removido com sucesso.');
     }
-    public function trashed()
-    {
-        $clients = Client::onlyTrashed()->with('user')->paginate(5);
-        return view('pages.admin.clients.trashed', compact('clients'));
-    }
-
-    public function restore($id)
-    {
-        $client = Client::withTrashed()->with('user')->findOrFail($id);
-
-        Gate::authorize('manage-clients');
-
-        $client->user->restore();
-
-        return redirect()->route('admin.clients.trashed')
-            ->with('success', 'Cliente restaurado com sucesso.');
-    }
-
-    public function forceDelete($id)
-    {
-        $client = Client::withTrashed()->with('user')->findOrFail($id);
-
-        Gate::authorize('manage-clients');
-
-        $client->user->forceDelete();
-
-        return redirect()->route('admin.clients.trashed')
-            ->with('success', 'Cliente removido permanentemente.');
-    }
+//    public function trashed()
+//    {
+//        $clients = Client::onlyTrashed()->with('user')->paginate(5);
+//        return view('pages.admin.clients.trashed', compact('clients'));
+//    }
+//
+//    public function restore($id)
+//    {
+//        $client = Client::withTrashed()->with('user')->findOrFail($id);
+//
+//        Gate::authorize('manage-clients');
+//
+//        $client->user->restore();
+//
+//        return redirect()->route('admin.clients.trashed')
+//            ->with('success', 'Cliente restaurado com sucesso.');
+//    }
+//
+//    public function forceDelete($id)
+//    {
+//        $client = Client::withTrashed()->with('user')->findOrFail($id);
+//
+//        Gate::authorize('manage-clients');
+//
+//        $client->user->forceDelete();
+//
+//        return redirect()->route('admin.clients.trashed')
+//            ->with('success', 'Cliente removido permanentemente.');
+//    }
 }

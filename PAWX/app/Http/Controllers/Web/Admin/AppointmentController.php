@@ -27,19 +27,13 @@ class AppointmentController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        // Retrieve the search term (if any)
         $search = $request->input('search');
 
-        // Build the base query
         $query = Appointment::with(['pet', 'employee.user', 'service'])
             ->orderByDesc(
                 Pet::selectRaw('MAX(id)')
                     ->whereColumn('appointments.pet_id', 'pets.id')
             );
-
-        // Fix: Only eager load the relationships, not specific attributes
-        //$query = Appointment::with(['pet', 'employee', 'pet.client', 'service'])
-        //    ->orderBy('id', 'desc');
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -57,8 +51,7 @@ class AppointmentController extends Controller
             });
         }
 
-        // Paginate the results
-        $appointments = $query->simplePaginate(5);
+        $appointments = $query->paginate(5);
 
         return view('pages.admin.appointments.index', compact('appointments'));
     }
@@ -85,7 +78,6 @@ class AppointmentController extends Controller
         $clients = Client::with('pets')->get();
         $services = Service::all();
 
-        // Include 'clients' in the compact array
         return view('pages.admin.appointments.create', compact('pets', 'employees', 'clients', 'services'));
     }
 
@@ -101,23 +93,21 @@ class AppointmentController extends Controller
         \Log::info('Form submitted', $request->all());
 
         return redirect()->route('admin.dashboard')
-            ->with('success', 'Appointment created successfully!');
+            ->with('success', 'Marcação criada com sucesso!');
     }
 
     public function edit($appointmentId): View
     {
         $appointment = Appointment::with(['pet.client.user', 'service'])->findOrFail($appointmentId);
 
-        // Authorization check
         if (Gate::denies('update', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
 
-        // Fetch related data
         $pets = Pet::all();
         $employees = Employee::all();
         $services = Service::all();
-        $clients = Client::with('user')->get(); // Fetch all clients with their users
+        $clients = Client::with('user')->get();
 
         return view('pages.admin.appointments.edit', compact('appointment', 'pets', 'employees', 'services', 'clients'));
     }
@@ -136,59 +126,16 @@ class AppointmentController extends Controller
         $appointment->update($request->validated());
 
         return redirect()->route('admin.appointments.index')
-            ->with('success', 'Appointment updated successfully!');
+            ->with('success', 'Marcação atualizada com sucesso!');
     }
 
-    public function trashed(): View
-    {
-        if (Gate::denies('trashed', Appointment::class)) {
-            abort(403, 'Unauthorized action.');
-        }
-        Gate::authorize('trashed', Appointment::class);
-
-        $trashedAppointments = Appointment::onlyTrashed()
-            ->with(['pet', 'pet.client', 'employee.name', 'service.name'])
-            ->paginate(10);;
-        return view('pages.admin.appointments.trashed', compact('trashedAppointments'));
-    }
-
-    public function restore($id)
-    {
-        $appointment = Appointment::withTrashed()->findOrFail($id);
-
-        if (Gate::denies('restore', $appointment)) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $appointment->restore();
-
-        return redirect()->route('admin.appointments.trashed')
-            ->with('success', 'Appointment restored successfully!');
-    }
-
-
-    public function cancel($id)
+    public function destroy($id)
     {
         $appointment = Appointment::findOrFail($id);
-
-        if (Gate::denies('cancel', $appointment)) {
-            abort(403, 'Unauthorized action.');
-        }
 
         $appointment->delete();
 
         return redirect()->route('admin.appointments.index')
-            ->with('success', 'Appointment canceled successfully!');
-    }
-
-    public function forceDelete($id)
-    {
-        $appointment = Appointment::withTrashed()->findOrFail($id);
-        if (Gate::denies('forceDelete', $appointment)) {
-            abort(403, 'Unauthorized action.');
-        }
-        $appointment->forceDelete();
-        return redirect()->route('admin.appointments.index')
-            ->with('success', 'Appointment permanently deleted successfully!');
+            ->with('success', 'Marcação removida com sucesso.');
     }
 }

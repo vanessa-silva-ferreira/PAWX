@@ -76,8 +76,7 @@
                     </thead>
                     <tbody>
                     @forelse ($clients as $client)
-                        <tr class="hover:bg-pawx-brown/5 text-pawx-brown/80 cursor-pointer text-sm  text-left"
-                            onclick="window.location='{{ route($rolePrefix . '.clients.show', $client->id) }}';">
+                        <tr class="hover:bg-pawx-brown/5 text-pawx-brown/80  text-sm  text-left">
 
                             <th class="py-6 px-6">{{ $client->client->id }}</th>
                             <td class="py-6 px-6">{{ $client->name }}</td>

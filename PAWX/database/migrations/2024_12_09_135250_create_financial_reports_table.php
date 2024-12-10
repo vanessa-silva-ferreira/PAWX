@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('financial_reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('appointment_id')->constrained();
+            $table->foreignId('appointment_id')->constrained('appointments')->onDelete('cascade');
             $table->timestamps();
         });
     }

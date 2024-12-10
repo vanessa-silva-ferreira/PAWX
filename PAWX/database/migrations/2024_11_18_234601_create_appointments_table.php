@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pet_id')->constrained();
-            $table->foreignId('employee_id')->constrained();
-            $table->foreignId('service_id')->constrained('services');
+            $table->foreignId('employee_id')->constrained()->onDelete('cascade');
+            $table->foreignId('service_id')->constrained()->onDelete('cascade');
             $table->dateTime('appointment_date');
             $table->string('status');
             $table->double('total_price');

@@ -39,31 +39,19 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/account/edit', [UserManagementController::class, 'editUser'])->name('account.edit');
     Route::put('/account/update', [UserManagementController::class, 'updateUser'])->name('account.update');
 
-    Route::prefix('employees')->group(function () {
-        Route::get('trashed', [Admin\EmployeeController::class, 'trashed'])->name('employees.trashed');
-        Route::patch('{employee}/restore', [Admin\EmployeeController::class, 'restore'])->name('employees.restore');
-        Route::delete('{employee}/forceDelete', [Admin\EmployeeController::class, 'forceDelete'])->name('employees.forceDelete');
-    });
     Route::get('employees/export', [Admin\ExportController::class, 'exportEmployees'])->name('employees.export');
     Route::resource('employees', Admin\EmployeeController::class);
 
-    Route::prefix('clients')->group(function () {
-        Route::get('trashed', [Admin\ClientController::class, 'trashed'])->name('clients.trashed');
-        Route::patch('{client}/restore', [Admin\ClientController::class, 'restore'])->name('clients.restore');
-        Route::delete('{client}/forceDelete', [Admin\ClientController::class, 'forceDelete'])->name('clients.forceDelete');
-    });
     Route::get('clients/export', [ExportController::class, 'exportClients'])->name('clients.export');
     Route::resource('clients', Admin\ClientController::class);
 
     Route::get('pets/export', [ExportController::class, 'exportPets'])->name('pets.export');
     Route::resource('pets', \App\Http\Controllers\Web\Admin\PetController::class);
 
-    Route::prefix('appointments')->group(function () {
-        Route::get('/trashed', [Admin\AppointmentController::class, 'trashed'])->name('appointments.trashed');
-        Route::patch('/restore/{id}', [Admin\AppointmentController::class, 'restore'])->name('appointments.restore');
-        Route::delete('/cancel/{id}', [Admin\AppointmentController::class, 'cancel'])->name('appointments.cancel');
-        Route::delete('/force-delete/{id}', [Admin\AppointmentController::class, 'forceDelete'])->name('appointments.forceDelete');
-    });
+//    Route::prefix('appointments')->group(function () {
+//        Route::delete('/cancel/{id}', [Admin\AppointmentController::class, 'cancel'])->name('appointments.cancel');
+//    });
+
     Route::get('appointments/export', [ExportController::class, 'exportAppointments'])->name('appointments.export');
     Route::resource('appointments', Admin\AppointmentController::class);
 
@@ -77,6 +65,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         ->name('notifications.by-date');
     Route::get('/notifications/monthly', [Admin\NotificationController::class, 'getAppointmentsByMonth'])->name('notifications.monthly');
 
+    Route::prefix('trashed')->group(function () {
+        Route::get('/', [App\Http\Controllers\Web\Admin\TrashController::class, 'index'])->name('trashed.index');
+        Route::patch('{id}/{type}/restore', [App\Http\Controllers\Web\Admin\TrashController::class, 'restore'])->name('trashed.restore');
+        Route::delete('{id}/{type}/forceDelete', [App\Http\Controllers\Web\Admin\TrashController::class, 'forceDelete'])->name('trashed.forceDelete');
+    });
 });
 // ADMIN ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -91,14 +84,7 @@ Route::middleware(['auth', 'role:employee'])->prefix('employee')->name('employee
 //    Route::resource('pets', Employee\PetController::class);
     Route::resource('pets', \App\Http\Controllers\Web\Employee\PetController::class);
 
-    Route::prefix('appointments')->group(function () {
-        Route::get('/trashed', [Employee\AppointmentController::class, 'trashed'])->name('appointments.trashed');
-        Route::patch('/restore/{id}', [Employee\AppointmentController::class, 'restore'])->name('appointments.restore');
-        Route::delete('/cancel/{id}', [Employee\AppointmentController::class, 'cancel'])->name('appointments.cancel');
-    });
     Route::resource('appointments', Employee\AppointmentController::class);
-
-
 });
 // EMPLOYEE ------------------------------------------------------------------------------------------------------------------------------
 
@@ -111,9 +97,9 @@ Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->g
 
     Route::resource('pets', \App\Http\Controllers\Web\Client\PetController::class);
 
-    Route::prefix('appointments')->group(function () {
-        Route::delete('/cancel/{id}', [Client\AppointmentController::class, 'cancel'])->name('appointments.cancel');
-    });
+//    Route::prefix('appointments')->group(function () {
+//        Route::delete('/cancel/{id}', [Client\AppointmentController::class, 'cancel'])->name('appointments.cancel');
+//    });
     Route::resource('appointments', Client\AppointmentController::class);
 });
 // CLIENT --------------------------------------------------------------------------------------------------------------------------------
