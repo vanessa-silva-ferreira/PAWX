@@ -3,7 +3,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     padding: 0 1rem;
     max-width: 100%;
     box-sizing: border-box;
@@ -15,12 +15,13 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     flex: 1 1 calc(20% - 1rem);
-    max-width: 140px;
+    max-width: 200px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     text-align: left;
 }
+
 
 .user-info {
     display: flex;
@@ -65,9 +66,9 @@
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 200px;
+    max-width: 250px;
     text-align: center;
-    margin: 20px;
+    margin: auto;
 }
 
 .score-circle {
@@ -99,4 +100,18 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+    .feedback-card {
+        flex: 1 1 calc(45% - 1rem);
+        max-width: 150px;
+    }
+    .user-info img {
+        width: 30px;
+        height: 30px;
+    }
+    .feedback-summary {
+        max-width: 200px;
+    }
 }
