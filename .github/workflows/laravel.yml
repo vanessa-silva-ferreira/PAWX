@@ -2,9 +2,15 @@ name: Laravel Deploy
 
 on:
   push:
-    branches: ["*"]
+    branches:
+      - main
   pull_request:
-    branches: [ "*" ]
+    branches:
+      - '*'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
