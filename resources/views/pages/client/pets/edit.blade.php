@@ -89,19 +89,6 @@
                     name="obs"
                     class="form-control">{{ old('obs', $pet->obs) }}</textarea>
             </div>
-
-{{--            <div class="form-group">--}}
-{{--                <label for="client_id">Client</label>--}}
-{{--                <select id="client_id" name="client_id" class="form-control" required>--}}
-{{--                    <option value="">Select a Client</option>--}}
-{{--                    @foreach ($clients as $client)--}}
-{{--                        <option value="{{ $client->id }}" {{ old('client_id', $pet->client_id) == $client->id ? 'selected' : '' }}>--}}
-{{--                            {{ $client->id }}--}}
-{{--                        </option>--}}
-{{--                    @endforeach--}}
-{{--                </select>--}}
-{{--            </div>--}}
-
             <button type="submit" class="btn btn-primary">Update Pet</button>
         </form>
     </div>

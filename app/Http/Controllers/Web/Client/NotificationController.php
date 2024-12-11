@@ -14,7 +14,6 @@ class NotificationController extends Controller
         $date = $request->input('date', now()->toDateString());
         $user = Auth::user();
 
-        // Fetch appointments for the logged-in client
         $appointments = Appointment::with(['service', 'pet.client.user', 'pet.breed.species'])
             ->whereHas('pet.client', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
@@ -52,7 +51,6 @@ class NotificationController extends Controller
         $startOfMonth = now()->create($year, $month, 1)->startOfMonth();
         $endOfMonth = $startOfMonth->copy()->endOfMonth();
 
-        // Fetch appointments for the logged-in client
         $appointments = Appointment::whereHas('pet.client', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })

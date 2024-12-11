@@ -1,4 +1,3 @@
-
-    <button type="submit" {{ $attributes }}>
-        {{ $slot }}
-    </button>
+<button type="submit" {{ $attributes }}>
+    {{ $slot }}
+</button>

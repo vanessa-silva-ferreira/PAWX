@@ -25,7 +25,6 @@ class DashboardController extends Controller
     {
         $user = auth()->user()->load('client');
 
-        // Ensure the user is a client
         if (!$user || !$user->client) {
             abort(403, 'Unauthorized action.');
         }
@@ -35,7 +34,6 @@ class DashboardController extends Controller
         $days = $request->get('days', 30);
         $startDate = Carbon::now()->subDays($days);
 
-        // Retrieve client-specific data
         $appointmentCount = Appointment::whereHas('pet', function ($query) use ($clientId) {
             $query->where('client_id', $clientId);
         })->where('created_at', '>=', $startDate)->count();

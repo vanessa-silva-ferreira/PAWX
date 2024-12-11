@@ -111,7 +111,9 @@ class PetController extends Controller
 
     public function update(UpdatePetRequest $request, Pet $pet) {
 
+
         Gate::authorize('update', $pet);
+  
         $validatedData = $request->validate($this->petRules());
 
         $pet->update($this->extractPetData($validatedData));

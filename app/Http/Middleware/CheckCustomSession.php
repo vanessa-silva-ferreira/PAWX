@@ -15,7 +15,6 @@ class CheckCustomSession
      */
     public function handle(Request $request, Closure $next): Response
     {
-
         $sessionToken = $request->cookie('custom_session');
 
         if ($sessionToken && session()->has($sessionToken)) {

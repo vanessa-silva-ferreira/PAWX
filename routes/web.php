@@ -48,10 +48,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('pets/export', [ExportController::class, 'exportPets'])->name('pets.export');
     Route::resource('pets', \App\Http\Controllers\Web\Admin\PetController::class);
 
-//    Route::prefix('appointments')->group(function () {
-//        Route::delete('/cancel/{id}', [Admin\AppointmentController::class, 'cancel'])->name('appointments.cancel');
-//    });
-
     Route::get('appointments/export', [ExportController::class, 'exportAppointments'])->name('appointments.export');
     Route::resource('appointments', Admin\AppointmentController::class);
 
