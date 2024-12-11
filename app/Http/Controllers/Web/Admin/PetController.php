@@ -96,7 +96,9 @@ class PetController extends Controller
     {
         $pet = Pet::with(['size', 'breed.species', 'photos'])->findOrFail($id);
 
-        Gate::authorize('update', $pet);
+        if (!Gate::allows('update', $pet)) {
+            abort(403, 'Não autorizado.');
+        }
 
         $clients = Client::all();
         $sizes = Size::all();
@@ -108,16 +110,30 @@ class PetController extends Controller
 
     public function update(UpdatePetRequest $request, Pet $pet) {
 
+
+        //dd($request->all());
         Gate::authorize('update', $pet);
 
-        $pet->update($request->validated());
+//
+//        $pet->update($request->validated());
+//
+//        if (isset($request->validated()['photos'])) {
+//            $pet->photos()->delete();
+//            $pet->photos()->createMany($request->validated()['photos']);
+//        }
+//
+//        return redirect()->route('admin.pets.index')->with('success', 'Animal atualizado com sucesso!');
+        $validatedData = $request->validate($this->petRules());
 
-        if (isset($request->validated()['photos'])) {
+        $pet->update($this->extractPetData($validatedData));
+
+        if ($request->hasFile('photos')) {
             $pet->photos()->delete();
-            $pet->photos()->createMany($request->validated()['photos']);
+            $uploadedPhotos = $this->handlePhotos($request->file('photos'));
+            $pet->photos()->createMany($uploadedPhotos);
         }
 
-        return redirect()->route('admin.pets.index')->with('success', 'Animal atualizado com sucesso!');
+        return redirect()->route('admin.pets.index')->with('success', 'Animal atualizado com sucesso.');
     }
 
     public function destroy($id)
