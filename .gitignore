@@ -10,8 +10,8 @@
 /.vscode
 /.zed
 /node_modules
-/public/build
 /public/hot
+/public/build
 /public/storage
 /storage/*.key
 /storage/pail
@@ -32,3 +32,4 @@ vendor/
 xdebug*.tgz
 yarn-error.log
 resources*.zip
+.vercel

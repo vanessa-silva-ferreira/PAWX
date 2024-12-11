@@ -8,7 +8,7 @@
 @section('content')
 
     <div class="mx-24 my-16 bg-white p-6">
-        <x-dashboard.title>Editar Colaborador</x-dashboard.title>
+{{--        <x-dashboard.title>Editar Colaborador</x-dashboard.title>--}}
 
         <form action="{{ route('admin.employees.update', $employee->id) }}" method="POST" class="space-y-6">
             @csrf

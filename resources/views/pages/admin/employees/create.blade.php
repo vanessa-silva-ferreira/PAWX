@@ -7,7 +7,7 @@
 @section('content')
 
     <div class="mx-24 my-16 bg-white p-6">
-        <x-dashboard.title>Colaborador</x-dashboard.title>
+{{--        <x-dashboard.title>Colaborador</x-dashboard.title>--}}
 
         <form action="{{ route('admin.employees.store') }}" method="POST" class="space-y-6">
             @csrf
