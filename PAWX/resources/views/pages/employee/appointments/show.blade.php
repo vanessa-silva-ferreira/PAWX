@@ -5,8 +5,9 @@
 @endsection
 
 @section('content')
-    <x-dashboard.data-display.pets-table :pets="$pets"/>
+    <x-dashboard.forms-display.appointment-show :appointment="$appointment"/>
 @endsection
+
 @section('notifications')
     @include('partials.dashboard.notification-bar')
     {{--    @include('partials.dashboard.notifications', ['notifications' => $notifications])--}}

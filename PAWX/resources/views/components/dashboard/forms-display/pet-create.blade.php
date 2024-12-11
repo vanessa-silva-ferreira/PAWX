@@ -1,6 +1,9 @@
 @vite('resources/js/birthdate-age.js')
 @vite('resources/js/pet-form.js')
-
+@php
+    $role = auth()->user()->getRole();
+    $rolePrefix = $role === 'admin' ? 'admin' : ($role === 'employee' ? 'employee' : ($role === 'client' ? 'client' : 'guest'));
+@endphp
 <style>
     .form-radio:checked {
         accent-color: #ff7f50;
@@ -23,7 +26,7 @@
                     {{--        </div>--}}
                     {{--    @endif--}}
 
-                    <form action="{{ route('admin.pets.store') }}" method="POST" class="space-y-6"
+                    <form action="{{ route($rolePrefix . '.pets.store') }}" method="POST" class="space-y-6"
                           enctype="multipart/form-data">
                         @csrf
 

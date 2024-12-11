@@ -33,9 +33,15 @@ class PetController extends Controller
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%$search%")
-                    ->orWhere('species', 'like', "%$search%")
-                    ->orWhere('breed', 'like', "%$search%")
-                    ->orWhereHas('client', fn($q) => $q->where('name', 'like', "%$search%"));
+                    ->orWhereHas('breed', function ($query) use ($search) {
+                        $query->where('name', 'like', "%$search%")
+                            ->orWhereHas('species', function ($subQuery) use ($search) {
+                                $subQuery->where('name', 'like', "%$search%");
+                            });
+                    })
+                    ->orWhereHas('client', function ($query) use ($search) {
+                        $query->where('name', 'like', "%$search%");
+                    });
             });
         }
 

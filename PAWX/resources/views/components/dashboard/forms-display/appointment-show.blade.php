@@ -99,7 +99,7 @@
         </div>
 
         <div class="mt-6">
-            <a href="{{ route('admin.appointments.index') }}" class="px-8 py-2 bg-gray-200 text-gray-800 rounded-lg">
+            <a href="{{ route($rolePrefix . '.appointments.index') }}" class="px-8 py-2 bg-gray-200 text-gray-800 rounded-lg">
                 Voltar
             </a>
         </div>

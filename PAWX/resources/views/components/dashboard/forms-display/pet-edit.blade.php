@@ -15,7 +15,7 @@
 <div class="mx-24 my-16 bg-white p-6">
 {{--    <x-dashboard.title>Editar Animal</x-dashboard.title>--}}
 
-    <form action="{{route($rolePrefix.'pets.update', $pet->id) }}" method="POST" class="space-y-6"
+    <form action="{{route($rolePrefix . '.pets.update', $pet->id) }}" method="POST" class="space-y-6"
           enctype="multipart/form-data">
         @csrf
         @method('PUT')

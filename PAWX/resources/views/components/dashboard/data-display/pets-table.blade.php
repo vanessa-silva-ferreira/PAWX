@@ -1,5 +1,9 @@
 @php
-    $rolePrefix = auth()->user()->getRole() === 'admin' ? 'admin' : 'employee';
+    $rolePrefix = auth()->user()->getRole() === 'admin'
+        ? 'admin'
+        : (auth()->user()->getRole() === 'employee'
+            ? 'employee'
+            : 'client');
     use Carbon\Carbon;
 @endphp
 

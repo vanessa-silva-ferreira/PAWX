@@ -1,7 +1,7 @@
 @php
-    $rolePrefix = auth()->user()->getRole() === 'admin' ? 'admin' : 'employee';
+    $role = auth()->user()->getRole();
+    $rolePrefix = $role === 'admin' ? 'admin' : ($role === 'employee' ? 'employee' : ($role === 'client' ? 'client' : 'guest'));
 @endphp
-
 <div class="flex flex-col space-y-4 mt-16 py-6 px-6">
     <div class="overflow-x-auto">
         <div class="container mx-auto">

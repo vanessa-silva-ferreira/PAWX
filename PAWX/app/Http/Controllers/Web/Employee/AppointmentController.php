@@ -31,10 +31,13 @@ class AppointmentController extends Controller
 
     public function show($id)
     {
-        if (Gate::denies('view', Appointment::class)) {
+        $appointment = Appointment::findOrFail($id);
+
+        if (Gate::denies('view', $appointment)) {
             abort(403, 'Unauthorized action.');
         }
-        $appointment = Appointment::with(['pet', 'pet.client', 'service.name'])->findOrFail($id);
+
+        $appointment->load(['pet', 'pet.client', 'service']);
 
         return view('pages.employee.appointments.show', compact('appointment'));
     }
@@ -99,8 +102,9 @@ class AppointmentController extends Controller
         $pets = Pet::all();
         $employees = Employee::all();
         $services = Service::all();
+        $clients = Client::with('user')->get();
 
-        return view('pages.admin.appointments.edit', compact('appointment', 'pets', 'employees', 'services'));
+        return view('pages.admin.appointments.edit', compact('appointment', 'pets', 'employees', 'services', 'clients'));
     }
 
     /**
