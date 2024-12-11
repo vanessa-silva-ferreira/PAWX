@@ -10,5 +10,4 @@
 
 @section('notifications')
     @include('partials.dashboard.notification-bar')
-    {{--    @include('partials.dashboard.notifications', ['notifications' => $notifications])--}}
 @endsection
