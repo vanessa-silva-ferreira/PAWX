@@ -6,23 +6,18 @@
         accent-color: #ff7f50;
     }
 </style>
+
+@php
+    $role = auth()->user()->getRole();
+    $rolePrefix = $role === 'admin' ? 'admin' : ($role === 'employee' ? 'employee' : ($role === 'client' ? 'client' : 'guest'));
+@endphp
+
 <div class="flex flex-col space-y-4 mt-16 py-6 px-6">
     <div class="overflow-x-auto">
         <div class="container mx-auto">
             <div class="mb-4">
                 <x-utilities.title>Animal</x-utilities.title>
                 <div class=" mt-10">
-                    {{--    <x-dashboard.title>Animal</x-dashboard.title>--}}
-                    {{--    @if ($errors->any())--}}
-                    {{--        <div class="p-4 mb-4 text-red-700 bg-red-100 rounded-lg">--}}
-                    {{--            <ul>--}}
-                    {{--                @foreach ($errors->all() as $error)--}}
-                    {{--                    <li>{{ $error }}</li>--}}
-                    {{--                @endforeach--}}
-                    {{--            </ul>--}}
-                    {{--        </div>--}}
-                    {{--    @endif--}}
-
                     <form action="{{ route('admin.pets.store') }}" method="POST" class="space-y-6"
                           enctype="multipart/form-data">
                         @csrf
@@ -251,10 +246,16 @@
                         </div>
 
                         <input type="hidden" id="status" name="status" value="active"/>
-                        <div>
+
+                        <div class="flex gap-4 mt-6">
                             <x-form.button class="px-8 py-2 bg-pawx-orange text-white rounded-lg mt-6">
                                 Criar Animal
                             </x-form.button>
+
+                            <a href="{{ route($rolePrefix . '.pets.index') }}"
+                               class="px-8 py-2 text-stone-500 bg-white border border-stone-300 rounded-lg hover:bg-stone-100 focus:outline-none mt-6 flex items-center justify-center">
+                                Voltar
+                            </a>
                         </div>
 
                     </form>

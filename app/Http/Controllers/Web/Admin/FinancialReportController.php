@@ -29,7 +29,7 @@ class FinancialReportController extends Controller
             });
         }
 
-        $financialReports = $query->paginate(10);
+        $financialReports = $query->paginate(5);
 
         return view('pages.admin.financial-reports', compact('financialReports', 'startDate', 'endDate', 'month'));
     }

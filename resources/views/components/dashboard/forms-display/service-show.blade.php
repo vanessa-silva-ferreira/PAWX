@@ -51,14 +51,16 @@
             </div>
         </div>
 
-    <div class="flex justify-start space-x-4 mt-12">
-        <a href="{{ route('admin.services.edit', $service->id) }}"
-           class="px-8 py-2 bg-pawx-orange text-white rounded-lg">
-            Editar Serviço
-        </a>
-        <a href="{{ route($rolePrefix . '.services.index') }}" class="px-8 py-2 bg-gray-300 text-black rounded-lg">
-            Voltar
-        </a>
-    </div>
+        <div class="flex gap-4 mt-6">
+            <a href="{{ route($rolePrefix . '.services.edit', $service->id) }}"
+               class="px-8 py-2 bg-pawx-orange text-white rounded-lg">
+                Editar Serviço
+            </a>
+
+            <a href="{{ route($rolePrefix . '.services.index') }}"
+               class="px-8 py-2 text-stone-500 bg-white border border-stone-300 rounded-lg hover:bg-stone-100 focus:outline-none">
+                Voltar
+            </a>
+        </div>
     </form>
 </div>
