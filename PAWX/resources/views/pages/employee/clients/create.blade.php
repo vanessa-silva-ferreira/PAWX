@@ -1,26 +1,14 @@
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+@extends('layouts.dashboard')
 
-<form action="{{ route('employee.clients.store') }}" method="POST">
-    @csrf
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" value="{{ old('name') }}" required>
+@section('sidebar')
+    @include('partials.dashboard.sidebar')
+@endsection
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="{{ old('email') }}" required>
+@section('content')
+    <x-dashboard.forms-display.client-create/>
+@endsection
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-
-    <label for="password_confirmation">Confirm Password:</label>
-    <input type="password" id="password_confirmation" name="password_confirmation" required>
-
-    <button type="submit">Create Client</button>
-</form>
+@section('notifications')
+    @include('partials.dashboard.notification-bar')
+    {{--    @include('partials.dashboard.notifications', ['notifications' => $notifications])--}}
+@endsection

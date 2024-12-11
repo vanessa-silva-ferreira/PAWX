@@ -3,9 +3,9 @@
 @endphp
 
 <div class="mx-24 my-16 bg-white p-6">
-{{--    <x-dashboard.title>Cliente</x-dashboard.title>--}}
+   <x-utilities.title>Cliente</x-utilities.title>
 
-    <form action="{{ route('admin.clients.store') }}" method="POST" class="space-y-6">
+    <form action="{{ route($rolePrefix .'.clients.store') }}" method="POST" class="space-y-6">
         @csrf
         <div class="form-group grid grid-cols-1 md:grid-cols-3 md:gap-6">
             <div class="relative w-full md:col-span-2">

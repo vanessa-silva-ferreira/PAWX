@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.appointments.store') }}" method="POST" class="space-y-6 mt-16">
+    <form action="{{ route($rolePrefix .'.appointments.store') }}" method="POST" class="space-y-6 mt-16">
         @csrf
 
         <div class="form-group grid grid-cols-1 md:grid-cols-4 gap-6">

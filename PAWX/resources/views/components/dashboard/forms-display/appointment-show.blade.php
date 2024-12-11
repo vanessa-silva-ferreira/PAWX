@@ -4,9 +4,7 @@
 
 <div class="flex flex-col space-y-6">
     <div class="flex-1 space-y-4 content-start">
-        <h2 class="text-left text-3xl font-extrabold text-orange-600">
-            Detalhes da Marcação
-        </h2>
+        <x-utilities.title>Detalhes Marcação</x-utilities.title>
     </div>
     <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <div class="space-y-4">

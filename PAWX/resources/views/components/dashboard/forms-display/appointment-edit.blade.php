@@ -4,11 +4,9 @@
 
 <div class="flex flex-col space-y-6">
     <div class="flex-1 space-y-4 content-start">
-        <h2 class="text-left text-3xl font-extrabold text-orange-600">
-            Editar Marcação
-        </h2>
+        <x-utilities.title>Editar Marcação</x-utilities.title>
     </div>
-    <form action="{{ route('admin.appointments.update', $appointment->id) }}" method="POST" class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+    <form action="{{ route( $rolePrefix .'.appointments.update', $appointment->id) }}" method="POST" class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         @csrf
         @method('PUT')
 
