@@ -1,20 +1,15 @@
 @extends('layouts.dashboard')
 
-@section('content')
-    <div class="container">
-        <h1>Client Details</h1>
-        @if ($client)
-            <div class="client-details">
-                {{--                <p><strong>ID:</strong> {{ $client->client->id }}</p>--}}
+@section('sidebar')
+    @include('partials.dashboard.sidebar')
+@endsection
 
-                <td>{{$client->id}}</td>
-                <td>{{ $client->user->name }}</td>
-                <td>{{ $client->user->email }}</td>
-                <td>{{ $client->user->phone_number }}</td>
-                <a href="{{ route('employee.clients.index') }}" class="btn btn-primary">Back to Clients</a>
-            </div>
-        @else
-            <p>No employee data available.</p>
-        @endif
-    </div>
+
+@section('content')
+    <x-dashboard.forms-display.client-show :client="$client"/>
+@endsection
+
+@section('notifications')
+    @include('partials.dashboard.notification-bar')
+    {{--    @include('partials.dashboard.notifications', ['notifications' => $notifications])--}}
 @endsection

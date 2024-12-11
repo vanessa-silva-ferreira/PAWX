@@ -1,5 +1,4 @@
 @vite('resources/js/birthdate-age.js')
-{{--@vite('resources/js/pet-form.js')--}}
 
 <style>
     .form-radio:checked {
@@ -12,9 +11,6 @@
     $rolePrefix = $role === 'admin' ? 'admin' : ($role === 'employee' ? 'employee' : ($role === 'client' ? 'client' : 'guest'));
 @endphp
 
-
-<script src="{{ asset('js/pet-form.js') }}" defer></script>
-<script src="{{ asset('js/birthdate-age.js') }}"></script>
 
 <div class="mx-24 my-16 bg-white p-6">
 {{--    <x-dashboard.title>Editar Animal</x-dashboard.title>--}}
@@ -83,7 +79,7 @@
                     :options="collect(\App\Enums\FurType::cases())->map(fn($case) => ['value' => $case->value, 'label' => ucfirst($case->value)])"
                     placeholder=""
                     required="true"
-                    selected="{{ old('fur_type', $pet->breed->fur_type) }}"
+                    selected="{{ old('fur_type', $pet->breed->fur_type  ?? '') }}"
                     valueKey="value"
                     labelKey="label"
                 >
@@ -119,16 +115,17 @@
                         name="birthdate"
                         id="birthdate"
                         class="w-1/2 focus:outline-none focus:ring-0"
-                        value="{{ old('birthdate', $pet->birthdate) }}"
+                        value="{{ old('birthdate', $pet->birthdate ? $pet->birthdate->format('Y-m-d') : '') }}"
                     />
                     <input
                         type="number"
                         id="age_years"
                         name="age_years"
                         placeholder="Idade"
-                        value="{{ old('age_years', $pet->age_years) }}"
+                        value="{{ old('age_years', $pet->age_years ?? '') }}"
                         class="w-1/2 focus:outline-none focus:ring-0 placeholder:text-sm uppercase"
                     />
+
                 </div>
                 <x-form.validation-error name="birthdate"/>
             </div>
@@ -136,7 +133,7 @@
             <div class="relative w-full">
                 <x-form.label for="gender">Género</x-form.label>
                 <div
-                    class="gap-8 flex h-16 p-4 pt-6 pb-2 mt-1 mb-3 border border-stone-200 rounded-md items-center focus:outline-none focus:ring-1 focus:ring-pawx-orange text-pawx-brown/70 bg-white">
+                    class="gap-8 flex h-16 p-4 pt-6 pb-2 mt-1 mb-3 border border-stone-200 rounded-md items-center focus:outline-none focus:ring-1 focus:ring-pawx-orange text-pawx-brown/70 bg-white min-w-[200px]">
                     <label class="flex items-center gap-2">
                         <input
                             type="radio"
@@ -165,7 +162,7 @@
             <div class="relative w-full">
                 <x-form.label for="spay_neuter_status">Esterilização</x-form.label>
                 <div
-                    class="gap-8 flex h-16 p-4 pt-6 pb-2 mt-1 mb-3 border border-stone-200 rounded-md items-center focus:outline-none focus:ring-1 focus:ring-pawx-orange text-pawx-brown/70 bg-white">
+                    class="gap-8 flex h-16 p-4 pt-6 pb-2 mt-1 mb-3 border border-stone-200 rounded-md items-center focus:outline-none focus:ring-1 focus:ring-pawx-orange text-pawx-brown/70 bg-white min-w-[170px]">
                     <label class="flex items-center gap-2">
                         <input
                             type="radio"
@@ -250,104 +247,3 @@
 </div>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const allBreeds = [...document.querySelectorAll('#breed_id option[data-species-id]')];
-
-        const speciesSelect = document.getElementById('species_id');
-        const breedSelect = document.getElementById('breed_id');
-        const furTypeSelect = document.getElementById('fur_type');
-
-        const initialSpeciesId = speciesSelect.value;
-        const initialBreedId = breedSelect.value;
-        const initialFurType = furTypeSelect.value;
-
-        function updateBreeds(speciesId = null, furType = null) {
-            breedSelect.innerHTML = '<option value="" disabled hidden> </option>';
-
-            const matchingBreeds = allBreeds.filter(breed => {
-                const matchesSpecies = !speciesId || breed.getAttribute('data-species-id') === speciesId;
-                const matchesFurType = !furType || breed.getAttribute('data-fur-type') === furType;
-                return matchesSpecies && matchesFurType;
-            });
-
-            matchingBreeds.forEach(breed => {
-                const newOption = document.createElement('option');
-                newOption.value = breed.value;
-                newOption.textContent = breed.textContent;
-                newOption.setAttribute('data-species-id', breed.getAttribute('data-species-id'));
-                newOption.setAttribute('data-fur-type', breed.getAttribute('data-fur-type'));
-                breedSelect.appendChild(newOption);
-            });
-
-            breedSelect.selectedIndex = 0;
-        }
-
-        function updateFurTypes(speciesId = null) {
-            furTypeSelect.innerHTML = '<option value="" disabled hidden> </option>';
-
-            const matchingFurTypes = new Set();
-            allBreeds.forEach(breed => {
-                if (!speciesId || breed.getAttribute('data-species-id') === speciesId) {
-                    matchingFurTypes.add(breed.getAttribute('data-fur-type'));
-                }
-            });
-
-            matchingFurTypes.forEach(furType => {
-                if (furType) {
-                    const newOption = document.createElement('option');
-                    newOption.value = furType;
-                    newOption.textContent = furType;
-                    furTypeSelect.appendChild(newOption);
-                }
-            });
-
-            furTypeSelect.selectedIndex = 0;
-        }
-
-        function syncBreedData() {
-            const selectedBreed = breedSelect.options[breedSelect.selectedIndex];
-            if (selectedBreed) {
-                const speciesId = selectedBreed.getAttribute('data-species-id');
-                const furType = selectedBreed.getAttribute('data-fur-type');
-
-                if (speciesId) {
-                    speciesSelect.value = speciesId;
-                    updateFurTypes(speciesId);
-                }
-
-                if (furType) {
-                    furTypeSelect.value = furType;
-                }
-            }
-        }
-
-        function handleSpeciesChange() {
-            const speciesId = speciesSelect.value;
-            updateFurTypes(speciesId);
-            updateBreeds(speciesId);
-        }
-
-        function handleFurTypeChange() {
-            const furType = furTypeSelect.value;
-            updateBreeds(speciesSelect.value, furType);
-        }
-
-        function handleBreedChange() {
-            syncBreedData();
-        }
-
-        speciesSelect.addEventListener('change', handleSpeciesChange);
-        furTypeSelect.addEventListener('change', handleFurTypeChange);
-        breedSelect.addEventListener('change', handleBreedChange);
-
-        if (initialSpeciesId) {
-            updateFurTypes(initialSpeciesId);
-            updateBreeds(initialSpeciesId, initialFurType);
-
-            if (initialFurType) furTypeSelect.value = initialFurType;
-            if (initialBreedId) breedSelect.value = initialBreedId;
-        }
-    });
-
-</script>

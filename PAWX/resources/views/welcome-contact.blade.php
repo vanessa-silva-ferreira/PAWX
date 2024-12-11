@@ -15,29 +15,34 @@
     <div class="max-w-4xl mx-auto text-center">
         <h2 class="text-3xl lg:text-5xl font-bold text-gray-700">Entre em Contacto</h2>
         <p class="mt-4 text-lg text-gray-600">
-            Gostaria de saber mais sobre os nossos serviços ou agendar uma consulta? Envie-nos uma mensagem ou visite-nos!
+            Gostaria de saber mais sobre os nossos serviços ou agendar uma consulta? Visite-nos ou entre em contacto pelos seguintes canais!
         </p>
     </div>
 </section>
 
 <section class="p-8 lg:p-16 bg-gray-100">
     <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-        <form class="bg-white p-6 rounded-lg shadow-lg space-y-4">
-            <div>
-                <label for="nome" class="block text-sm font-medium text-gray-700">Nome</label>
-                <input type="text" id="nome" name="nome" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-            </div>
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-            </div>
-            <div>
-                <label for="mensagem" class="block text-sm font-medium text-gray-700">Mensagem</label>
-                <textarea id="mensagem" name="mensagem" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"></textarea>
-            </div>
-            <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700">Enviar</button>
-        </form>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h3 class="text-2xl font-bold text-pawx-orange mb-4">Contactos</h3>
+            <ul class="space-y-4 text-gray-700 text-lg">
+                <li>
+                    <strong>Telefone:</strong> <a href="tel:+351915424674" class="text-blue-600 hover:underline">+351 915424674</a>
+                </li>
+                <li>
+                    <strong>Email:</strong> <a href="mailto:pawx@gmail.com" class="text-blue-600 hover:underline">pawx@gmail.com</a>
+                </li>
+                <li>
+                    <strong>Redes Sociais:</strong>
+                    <div class="flex space-x-4 mt-2">
+                        <a href="https://www.facebook.com/pawxpetcare" target="_blank" class="text-blue-600 hover:underline">Facebook</a>
+                        <a href="https://www.instagram.com/pawx_petcare" target="_blank" class="text-pink-500 hover:underline">Instagram</a>
+                    </div>
+                </li>
+                <li>
+                    <strong>Localização:</strong> Canelas, Vila Nova de Gaia
+                </li>
+            </ul>
+        </div>
 
         <div class="bg-white rounded-lg shadow-lg">
             <iframe
@@ -50,8 +55,6 @@
         </div>
     </div>
 </section>
-
-@include('welcome-footer')
 
 </body>
 </html>

@@ -2,9 +2,11 @@
     $rolePrefix = auth()->user()->getRole() === 'admin' ? 'admin' : 'employee';
 @endphp
 
-<div class="mx-10 my-10 bg-white p-6">
-    <x-utilities.title>Editar Marcação</x-utilities.title>
-    <form action="{{ route('admin.appointments.update', $appointment->id) }}" method="POST" class="space-y-6 mt-16">
+<div class="flex flex-col space-y-6">
+    <div class="flex-1 space-y-4 content-start">
+        <x-utilities.title>Editar Marcação</x-utilities.title>
+    </div>
+    <form action="{{ route( $rolePrefix .'.appointments.update', $appointment->id) }}" method="POST" class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         @csrf
         @method('PUT')
 

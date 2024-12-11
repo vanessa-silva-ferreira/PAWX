@@ -24,14 +24,18 @@
     <div class="max-w-6xl mx-auto">
         <div class="flex items-center gap-4 mb-6">
             <input type="text" id="searchInput" placeholder="Pesquisar por nome ou ano..."
-                   class="flex-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                   class="flex-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-pawx-orange focus:border-pawx-orange">
         </div>
 
         <div id="cardContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
 
-        <div id="pagination" class="mt-6 flex justify-center gap-2"></div>
+        <div id="pagination" class="mt-6 flex justify-center gap-2">
+            <button style="background-color: #FF7F50; color: white;" class="py-2 px-4 rounded-lg shadow-md hover:bg-orange-700">1</button>
+            <button style="background-color: #FF7F50; color: white;" class="py-2 px-4 rounded-lg shadow-md hover:bg-orange-700">2</button>
+        </div>
     </div>
 </section>
+
 
 @include('welcome-footer')
 

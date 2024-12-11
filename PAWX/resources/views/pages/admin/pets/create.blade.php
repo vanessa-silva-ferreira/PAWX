@@ -5,9 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="pl-20 pr-20">
     <x-dashboard.forms-display.pet-create :clients="$clients" :species="$species" :breeds="$breeds" :sizes="$sizes" />
-    </div>
 @endsection
 
 @section('notifications')
