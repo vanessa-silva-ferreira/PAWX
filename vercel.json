@@ -1,24 +1,4 @@
 {
-    "headers": [
-        {
-            "source": "/favicon.ico",
-            "headers": [
-                {
-                    "key": "Cache-Control",
-                    "value": "public, max-age=3600"
-                }
-            ]
-        },
-        {
-            "source": "/assets/(.*)",
-            "headers": [
-                {
-                    "key": "Cache-Control",
-                    "value": "public, max-age=31556952, immutable"
-                }
-            ]
-        }
-    ],
     "version": 2,
     "framework": null,
     "functions": {

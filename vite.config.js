@@ -13,14 +13,14 @@ export default defineConfig({
         }),
     ],
 
-//    build: {
-//        outDir: 'public/build',
-//        rollupOptions: {
-//            output: {
-//                assetFileNames: 'images/[name][extname]',
-//            },
-//        },
-//    },
+   build: {
+       outDir: 'public/build',
+       rollupOptions: {
+           output: {
+               assetFileNames: 'images/[name][extname]',
+           },
+       },
+   },
     server: {
         watch: {
             ignored: ['**/vendor/**', '**/node_modules/**']
