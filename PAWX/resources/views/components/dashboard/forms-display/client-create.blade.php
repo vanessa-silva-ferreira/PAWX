@@ -2,13 +2,14 @@
     $rolePrefix = auth()->user()->getRole() === 'admin' ? 'admin' : 'employee';
 @endphp
 
+
 <div class="mx-24 my-16 bg-white p-6">
    <x-utilities.title>Cliente</x-utilities.title>
 
     <form action="{{ route($rolePrefix .'.clients.store') }}" method="POST" class="space-y-6">
         @csrf
-        <div class="form-group grid grid-cols-1 md:grid-cols-3 md:gap-6">
-            <div class="relative w-full md:col-span-2">
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="relative w-full">
                 <x-form.input
                     type="text"
                     id="name"
@@ -36,19 +37,21 @@
             </div>
         </div>
 
-        <div class="relative w-full">
-            <x-form.input
-                type="text"
-                id="address"
-                name="address"
-                value="{{ old('address') }}"
-            />
-            <x-form.label for="address">Morada</x-form.label>
-            <x-form.validation-error name="address"/>
+        <div class="form-group grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8">
+            <div class="relative w-full">
+                <x-form.input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value="{{ old('address') }}"
+                />
+                <x-form.label for="address">Morada</x-form.label>
+                <x-form.validation-error name="address"/>
+            </div>
         </div>
 
-        <div class="form-group grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="relative w-full md:col-span-2">
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="relative w-full">
                 <x-form.input
                     type="email"
                     id="email"
@@ -73,7 +76,7 @@
             </div>
         </div>
 
-        <div class="form-group grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="relative w-full ">
                 <x-form.input
                     type="password"

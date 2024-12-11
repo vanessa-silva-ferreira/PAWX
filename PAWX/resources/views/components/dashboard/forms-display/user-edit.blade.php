@@ -11,11 +11,11 @@
         </div>
     @endif
 
-    <form action="{{ route($rolePrefix . '.account.update') }}" method="POST" class="space-y-6">
+    <form action="{{ route($rolePrefix . '.account.update') }}" method="POST" class="space-y-6 mt-16">
         @csrf
         @method('PUT')
-        <div class="form-group grid grid-cols-1 md:grid-cols-3 md:gap-6">
-            <div class="relative w-full md:col-span-2">
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="relative w-full">
                 <x-form.input
                     type="text"
                     id="name"
@@ -26,7 +26,6 @@
                 <x-form.label for="name">Nome <span class="text-pawx-orange">*</span></x-form.label>
                 <x-form.validation-error name="name"/>
             </div>
-
             <div class="relative w-full">
                 <x-form.input
                     type="text"
@@ -43,19 +42,21 @@
             </div>
         </div>
 
-        <div class="relative w-full">
-            <x-form.input
-                type="text"
-                id="address"
-                name="address"
-                value="{{ old('nif', $user->address) }}"
-            />
-            <x-form.label for="address">Morada</x-form.label>
-            <x-form.validation-error name="address"/>
+        <div class="form-group grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8">
+            <div class="relative w-full">
+                <x-form.input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value="{{ old('nif', $user->address) }}"
+                />
+                <x-form.label for="address">Morada</x-form.label>
+                <x-form.validation-error name="address"/>
+            </div>
         </div>
 
-        <div class="form-group grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="relative w-full md:col-span-2">
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="relative w-full">
                 <x-form.input
                     type="email"
                     id="email"
@@ -66,7 +67,6 @@
                 <x-form.label for="email">Email <span class="text-pawx-orange">*</span></x-form.label>
                 <x-form.validation-error name="email"/>
             </div>
-
             <div class="relative w-full">
                 <x-form.input
                     type="text"
@@ -80,7 +80,7 @@
             </div>
         </div>
 
-        <div class="form-group grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="relative w-full ">
                 <x-form.input
                     type="password"

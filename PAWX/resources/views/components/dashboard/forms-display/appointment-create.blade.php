@@ -4,7 +4,6 @@
 
 <div class="mx-10 my-10 bg-white p-6">
     <x-utilities.title>Marcação</x-utilities.title>
-
     @if ($errors->any())
         <div class="p-4 mb-4 text-red-700 bg-red-100 rounded-lg">
             <ul>
@@ -18,7 +17,7 @@
     <form action="{{ route($rolePrefix .'.appointments.store') }}" method="POST" class="space-y-6 mt-16">
         @csrf
 
-        <div class="form-group grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Client Dropdown -->
             <div class="relative w-full">
                 <x-form.select
@@ -27,11 +26,12 @@
                     :options="$clients"
                     valueKey="id"
                     labelKey="user.name"
+                    class="w-full"
                     placeholder="Select a Client"
                     required
                     selected="{{ old('client_id') }}"
                 />
-                <x-form.label for="client_id">Client</x-form.label>
+                <x-form.label for="client_id">Cliente</x-form.label>
                 @error('client_id')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -41,6 +41,7 @@
                 <x-form.select
                     id="pet_id"
                     name="pet_id"
+                    class="w-full"
                     required
                 >
                     <option value="" disabled hidden>Select a Pet</option>
@@ -54,17 +55,18 @@
                         </option>
                     @endforeach
                 </x-form.select>
-                <x-form.label for="pet_id">Pet</x-form.label>
+                <x-form.label for="pet_id">Animal</x-form.label>
                 <x-form.validation-error name="pet_id"/>
             </div>
         </div>
 
-        <div class="form-group grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="relative w-full">
                 <x-form.select
                     id="employee_id"
                     name="employee_id"
                     required
+                    class="w-full"
                 >
                     <option value="" disabled hidden>Select an Employee</option>
                     @foreach($employees as $employee)
@@ -72,11 +74,11 @@
                             value="{{ $employee->id }}"
                             {{ old('employee_id') == $employee->id ? 'selected' : '' }}
                         >
-                            {{ $employee->user->name }} <!-- Access employee's name through the user relationship -->
+                            {{ $employee->user->name }}
                         </option>
                     @endforeach
                 </x-form.select>
-                <x-form.label for="employee_id">Employee</x-form.label>
+                <x-form.label for="employee_id">Funcionário</x-form.label>
                 @error('employee_id')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -92,45 +94,17 @@
                     placeholder="Select a Service"
                     required
                     selected="{{ old('service_id') }}"
+                    class="w-full"
                 />
-                <x-form.label for="service_id">Service</x-form.label>
+                <x-form.label for="service_id">Serviço</x-form.label>
                 @error('service_id')
-                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="relative w-full">
-                <x-form.input
-                    type="datetime-local"
-                    id="appointment_date"
-                    name="appointment_date"
-                    value="{{ old('appointment_date') }}"
-                    required
-                />
-                <x-form.label for="appointment_date">Appointment Date</x-form.label>
-                @error('appointment_date')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
         </div>
 
-        <div class="form-group grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="relative w-full">
-                <x-form.input
-                    type="number"
-                    id="total_price"
-                    name="total_price"
-                    value="{{ old('total_price') }}"
-                    step="0.01"
-                    min="0"
-                    required
-                />
-                <x-form.label for="total_price">Total Price</x-form.label>
-                @error('total_price')
-                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
 
+        <div class="form-group grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="relative w-full">
                 <x-form.select
                     id="status"
@@ -145,8 +119,39 @@
                     required
                 />
 
-                <x-form.label for="status">Status</x-form.label>
+                <x-form.label for="status">Estado</x-form.label>
                 @error('status')
+                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="relative w-full">
+                <x-form.input
+                    type="number"
+                    id="total_price"
+                    name="total_price"
+                    value="{{ old('total_price') }}"
+                    step="0.01"
+                    min="0"
+                    required
+                />
+                <x-form.label for="total_price">Valor</x-form.label>
+                @error('total_price')
+                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-group grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8">
+            <div class="relative w-full">
+                <x-form.input
+                    type="datetime-local"
+                    id="appointment_date"
+                    name="appointment_date"
+                    value="{{ old('appointment_date') }}"
+                    required
+                />
+                <x-form.label for="appointment_date">Data da Marcação</x-form.label>
+                @error('appointment_date')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
@@ -154,7 +159,7 @@
 
         <div>
             <x-form.button class="px-8 py-2 bg-pawx-orange text-white rounded-lg mt-6">
-                Create Appointment
+                Criar Marcação
             </x-form.button>
         </div>
     </form>
