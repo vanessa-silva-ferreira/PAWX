@@ -94,7 +94,7 @@ class PetController extends Controller
 
     public function edit($id): View
     {
-        $pet = Pet::with(['size', 'breed', 'photos'])->findOrFail($id);
+        $pet = Pet::with(['size', 'breed.species', 'photos'])->findOrFail($id);
 
         Gate::authorize('update', $pet);
 

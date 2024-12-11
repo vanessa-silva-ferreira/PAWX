@@ -2,108 +2,143 @@
     $rolePrefix = auth()->user()->getRole() === 'admin' ? 'admin' : 'employee';
 @endphp
 
-<div class="mx-10 my-10 bg-white p-6 rounded-lg shadow">
-    <h1 class="text-2xl font-bold mb-6 uppercase" style="color: #81C784">Adicionar Novo Animal</h1>
-
-    <div class="container mx-auto px-4 lg:px-5">
-        <h1 class="text-2xl font-bold text-center mb-6">Pet Details: {{ $pet->name }}</h1>
-        <form>
-            <div class="flex flex-col space-y-6">
-                <div class="flex space-x-4">
-                    <!-- Left Column -->
-                    <div class="flex-1 space-y-4">
-                        <div class="form-group">
-                            <label class="text-gray-700 font-semibold">Name</label>
-                            <input
-                                type="text"
-                                class="form-control rounded h-8 w-full ring-1 ring-gray-300 bg-gray-100"
-                                value="{{ $pet->name }}"
-                                disabled>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-gray-700 font-semibold">Birthdate</label>
-                            <input
-                                type="date"
-                                class="form-control rounded h-8 w-full ring-1 ring-gray-300 bg-gray-100"
-                                value="{{ $pet->birthdate }}"
-                                disabled>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-gray-700 font-semibold">Gender</label>
-                            <input
-                                type="text"
-                                class="form-control rounded h-8 w-full ring-1 ring-gray-300 bg-gray-100"
-                                value="{{ ucfirst($pet->gender) }}"
-                                disabled>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-gray-700 font-semibold">Medical History</label>
-                            <textarea
-                                class="form-control w-full rounded border-gray-300 bg-gray-100"
-                                disabled>{{ $pet->medical_history ?? 'No medical history available.' }}</textarea>
-                        </div>
-                    </div>
-
-                    <!-- Right Column -->
-                    <div class="flex-1 space-y-4">
-                        <div class="form-group">
-                            <label class="text-gray-700 font-semibold">Status</label>
-                            <input
-                                type="text"
-                                class="form-control rounded h-8 w-full ring-1 ring-gray-300 bg-gray-100"
-                                value="{{ ucfirst($pet->status) }}"
-                                disabled>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-gray-700 font-semibold">Observations</label>
-                            <textarea
-                                class="form-control w-full rounded border-gray-300 bg-gray-100"
-                                disabled>{{ $pet->obs ?? 'No observations available.' }}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-gray-700 font-semibold">Client</label>
-                            <input
-                                type="text"
-                                class="form-control rounded h-8 w-full ring-1 ring-gray-300 bg-gray-100"
-                                value="{{ $pet->client->id }}"
-                                disabled>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-gray-700 font-semibold">Spay/Neuter Status</label>
-                            <div class="space-y-2">
-                                <div class="form-check flex space-x-4">
-                                    <div class="flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="spay_neuter_status"
-                                            id="spayed"
-                                            value="1"
-                                            class="form-check-input"
-                                            {{ $pet->spay_neuter_status == '1' ? 'checked' : '' }}
-                                            disabled>
-                                        <label for="spayed" class="form-check-label ml-2 text-gray-700 font-semibold">
-                                            Spayed/Neutered
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="spay_neuter_status"
-                                            id="not_spayed"
-                                            value="0"
-                                            class="form-check-input"
-                                            {{ $pet->spay_neuter_status == '0' ? 'checked' : '' }}
-                                            disabled>
-                                        <label for="not_spayed" class="form-check-label ml-2 text-gray-700 font-semibold">
-                                            Not Spayed/Neutered
-                                        </label>
-                                    </div>
+<div class="flex flex-col space-y-4 mt-16 py-6 px-6">
+    <div class="overflow-x-auto">
+        <div class="container mx-auto">
+            <div class="mb-4">
+                <x-utilities.title>Animal</x-utilities.title>
+                <div class=" mt-10">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="space-y-6 md:col-span-2">
+                            <div class="form-group grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="relative w-full md:col-span-2">
+                                    <x-form.label>Nome</x-form.label>
+                                    <x-form.input
+                                        name="name"
+                                        value="{{ $pet->name }}"
+                                        readonly
+                                    />
+                                </div>
+                                <div class="relative w-full">
+                                    <x-form.label>Espécie</x-form.label>
+                                    <x-form.input
+                                        name="name"
+                                        value="{{ $pet->breed->species->name }}"
+                                        readonly
+                                    />
                                 </div>
                             </div>
+
+                            <div class="form-group grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="relative w-full">
+                                    <x-form.label>Raça</x-form.label>
+                                    <x-form.input
+                                        name="name"
+                                        value="{{ $pet->breed->name }}"
+                                        readonly
+                                    />
+                                </div>
+                                <div class="relative w-full">
+                                    <x-form.label>Pelagem</x-form.label>
+                                    <x-form.input
+                                        name="name"
+                                        value="{{ $pet->breed->fur_type }}"
+                                        readonly
+                                    />
+                                </div>
+                                <div class="relative w-full">
+                                    <x-form.label>Porte</x-form.label>
+                                    <x-form.input
+                                        name="name"
+                                        value="{{ $pet->size->category }}"
+                                        readonly
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="form-group grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="relative w-full">
+                                    <x-form.label>Data de Nascimento</x-form.label>
+                                    <x-form.input
+                                        name="name"
+                                        value="{{ $pet->birthdate->format('d/m/Y')}}"
+                                        readonly
+                                    />
+                                </div>
+                                <div class="relative w-full">
+                                    <x-form.label>Género</x-form.label>
+                                    <x-form.input
+                                        name="name"
+                                        value="{{ $pet->gender === 'male' ? 'Macho' : 'Fêmea' }}"
+                                        readonly
+                                    />
+                                </div>
+                                <div class="relative w-full">
+                                    <x-form.label>Esterilização</x-form.label>
+                                    <x-form.input
+                                        name="name"
+                                        value="{{ $pet->spay_neuter_status ? 'Sim' : 'Não' }}"
+                                        readonly
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="form-group grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="relative w-full">
+                                    <x-form.label>Histórico Médico</x-form.label>
+                                    <x-form.textarea
+                                        id="medical_history"
+                                        name="medical_history"
+                                        :value="$pet->medical_history ?? 'Nenhum histórico disponível'"
+                                        readonly
+                                    />
+                                </div>
+                                <div class="relative w-full">
+                                    <x-form.label>Observações</x-form.label>
+                                    <x-form.textarea
+                                        id="obs"
+                                        name="obs"
+                                        :value="$pet->obs ?? 'Nenhuma observação disponível'"
+                                        readonly
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="relative w-full">
+                                <x-form.label>Cliente</x-form.label>
+                                <x-form.input
+                                    name="name"
+                                    value="{{ $pet->client->user->name }}"
+                                    readonly
+                                />
+                            </div>
+
+                        </div>
+
+                        <div class="relative w-full border rounded-lg border-stone-200">
+                            <x-form.label>Foto</x-form.label>
+                            <div class="grid grid-cols-2 gap-4">
+                                @foreach ($pet->photos as $index => $photo)
+                                    <img src="{{ asset($photo->photo_url) }}" alt="{{ $pet->name }}"
+                                         class="w-full h-full object-cover">
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 mt-6">
+                            <a href="{{ route($rolePrefix . '.pets.edit', $pet->id) }}"
+                               class="px-8 py-2 bg-pawx-orange text-white rounded-lg">
+                                Editar Animal
+                            </a>
+
+                            <a href="{{ route($rolePrefix . '.pets.index') }}"
+                               class="px-8 py-2 text-stone-500 bg-white border border-stone-300 rounded-lg hover:bg-stone-100 focus:outline-none">
+                                Voltar
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>

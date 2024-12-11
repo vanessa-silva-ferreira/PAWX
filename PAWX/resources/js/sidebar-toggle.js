@@ -1,53 +1,68 @@
-// Keep track of the current viewport state
-let wasMobile = false;
+let wasMobile = window.matchMedia("(max-width: 768px)").matches;
 
-function toggleSidebar(forceCollapse = null) {
+// Function to get collapsed state from localStorage
+function getCollapsedState() {
+    return localStorage.getItem('sidebarCollapsed') === 'true';
+}
+
+// Update the sidebar based on the collapsed state
+function setSidebarState(isCollapsed) {
     const sidebar = document.getElementById('sidebar');
-    const toggleIcon = document.getElementById('toggle-icon');
-    const menuTexts = document.querySelectorAll('#menu-text');
-    const searchSection = document.getElementById('search-section');
-
-    if (!sidebar || !toggleIcon) {
-        console.error('Sidebar or Toggle Icon element is missing!');
-        return;
-    }
-
-    // Determine if we should collapse or expand based on `forceCollapse`
-    const attrName = "data-collapsed";
-    const isCollapsed = forceCollapse !== null ? forceCollapse : sidebar.getAttribute(attrName) === "true";
-    sidebar.setAttribute(attrName, `${!isCollapsed}`);
+    sidebar.setAttribute("data-collapsed", isCollapsed);
 
     // Update classes for width adjustment
-    sidebar.classList.toggle('max-w-[6.7rem]', isCollapsed); // Collapse for mobile
-    sidebar.classList.toggle('max-w-64', !isCollapsed); // Expand for desktop
+    sidebar.classList.toggle('max-w-[6.7rem]', isCollapsed); // Collapse
+    sidebar.classList.toggle('max-w-64', !isCollapsed); // Expand
 
-    // Toggle visibility of menu texts and search section
-    menuTexts?.forEach(text => text.classList.toggle('hidden', isCollapsed));
-    searchSection?.classList.toggle('hidden', isCollapsed);
+    const menuTexts = document.querySelectorAll('#menu-text');
+    menuTexts.forEach(text => text.classList.toggle('hidden', isCollapsed));
+}
 
-    // Update toggle icon
-    toggleIcon.innerText = isCollapsed ? '+' : '-';
+// Toggle sidebar visibility and save to localStorage
+function toggleSidebar() {
+    const isCollapsed = getCollapsedState();
+    setSidebarState(!isCollapsed);
+
+    // Save new state to localStorage
+    localStorage.setItem('sidebarCollapsed', `${!isCollapsed}`);
+}
+
+// Function to highlight the selected menu item without changing sidebar state
+function highlightMenuItem() {
+    const menuItems = document.querySelectorAll('a');
+
+    // Remove active class from all items
+    menuItems.forEach(menuItem => menuItem.classList.remove('bg-stone-200'));
+
+    // Add active class to the selected item
+    this.classList.add('bg-stone-200'); // Use 'this' to refer to the clicked item
 }
 
 function handleViewportChange() {
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-    // Only toggle if transitioning between mobile and desktop states
+    // Collapse or expand based on viewport state
     if (isMobile !== wasMobile) {
-        toggleSidebar(isMobile); // Collapse if mobile, expand if desktop
-        wasMobile = isMobile;    // Update the state
+        toggleSidebar(isMobile);
+        wasMobile = isMobile;
     }
 }
 
-// Add event listener for viewport changes
-window.addEventListener('resize', handleViewportChange);
-
-// Run on page load to set the initial state
+// Event listeners
 document.addEventListener('DOMContentLoaded', () => {
-    wasMobile = window.matchMedia("(max-width: 768px)").matches; // Initialize the state
-    toggleSidebar(wasMobile); // Collapse for mobile, expand for desktop
-    handleViewportChange(); // Ensure correct initial state
+    const initialState = getCollapsedState();
+    setSidebarState(initialState); // Set initial sidebar state
+
+    const menuItems = document.querySelectorAll('a');
+    menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+            highlightMenuItem.call(this); // Call highlight function
+        });
+    });
+
+    handleViewportChange();
 });
 
 const toggleBtn = document.querySelector('#toggle-sidebar');
-toggleBtn.addEventListener('click', () => toggleSidebar());
+toggleBtn.addEventListener('click', toggleSidebar);
+window.addEventListener('resize', handleViewportChange);
