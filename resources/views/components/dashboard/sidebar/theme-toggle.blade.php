@@ -97,15 +97,11 @@
     function setLightTheme() {
         const html = document.documentElement;
         html.classList.remove('dark');
-        // document.getElementById('icon-sun').classList.add('hidden');
-        // document.getElementById('icon-moon').classList.remove('hidden');
     }
 
     function setDarkTheme() {
         const html = document.documentElement;
         html.classList.add('dark');
-        // document.getElementById('icon-moon').classList.add('hidden');
-        // document.getElementById('icon-sun').classList.remove('hidden');
     }
 
     document.addEventListener('DOMContentLoaded', (event) => {
