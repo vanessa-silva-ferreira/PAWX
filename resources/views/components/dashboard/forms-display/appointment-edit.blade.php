@@ -102,7 +102,6 @@
                 <x-form.button class="px-8 py-2 bg-pawx-orange text-white rounded-lg mt-6">
                     Editar Marcação
                 </x-form.button>
-
                 <a href="{{ route($rolePrefix . '.appointments.index') }}"
                    class="px-8 py-2 text-stone-500 bg-white border border-stone-300 rounded-lg hover:bg-stone-100 focus:outline-none mt-6 flex items-center justify-center">
                     Voltar

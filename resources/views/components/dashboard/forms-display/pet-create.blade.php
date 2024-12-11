@@ -18,7 +18,7 @@
             <div class="mb-4">
                 <x-utilities.title>Criar Animal</x-utilities.title>
                 <div class=" mt-10">
-                    <form action="{{ route('admin.pets.store') }}" method="POST" class="space-y-6"
+                    <form action="{{ route( $rolePrefix . '.pets.store') }}" method="POST" class="space-y-6"
                           enctype="multipart/form-data">
                         @csrf
 
