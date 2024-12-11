@@ -72,17 +72,6 @@ class AppointmentController extends Controller
         if ($employee) {
             $employee->notify(new AppointmentNotification($appointment));
         }
-//        $pet = Pet::find($appointment->pet_id);
-//        $client = $pet->client;
-//
-//        if($client) {
-//            $client->notify(new AppointmentNotification([
-//                'id' => $appointment->id,
-//                'date' => $appointment->appointment_date,
-//                'time' => $appointment->appointment_date->format('H:i'),
-//                'status' => $appointment->status,
-//            ]));
-
 
         return redirect()->route('employee.dashboard')
             ->with('success', 'Appointment created successfully!');

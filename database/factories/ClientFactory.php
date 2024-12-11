@@ -18,7 +18,6 @@ class ClientFactory extends Factory
     {
         return [
             'user_id' => $this->faker->unique()->numberBetween(3, 50),
-            //random_int(1, 200),
         ];
     }
 }
