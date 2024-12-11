@@ -31,8 +31,6 @@ class AppointmentPolicy
         if(in_array($user->getRole(), ['admin', 'employee'])){
             return true;
         }
-        //$pet = Pet::findOrFail($appointment->pet_id);
-
         return $user->getRole() === 'client' && $appointment->pet->client_id === $user->client->id;
     }
 

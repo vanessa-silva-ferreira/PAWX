@@ -111,33 +111,4 @@ class ClientController extends Controller
         return redirect()->route('admin.clients.index')
             ->with('success', 'Cliente removido com sucesso.');
     }
-//    public function trashed()
-//    {
-//        $clients = Client::onlyTrashed()->with('user')->paginate(5);
-//        return view('pages.admin.clients.trashed', compact('clients'));
-//    }
-//
-//    public function restore($id)
-//    {
-//        $client = Client::withTrashed()->with('user')->findOrFail($id);
-//
-//        Gate::authorize('manage-clients');
-//
-//        $client->user->restore();
-//
-//        return redirect()->route('admin.clients.trashed')
-//            ->with('success', 'Cliente restaurado com sucesso.');
-//    }
-//
-//    public function forceDelete($id)
-//    {
-//        $client = Client::withTrashed()->with('user')->findOrFail($id);
-//
-//        Gate::authorize('manage-clients');
-//
-//        $client->user->forceDelete();
-//
-//        return redirect()->route('admin.clients.trashed')
-//            ->with('success', 'Cliente removido permanentemente.');
-//    }
 }

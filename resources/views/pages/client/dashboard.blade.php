@@ -5,25 +5,11 @@
 @endsection
 
 @section('content')
-    <div class="container mx-auto">
-        <h1 class="text-2xl font-bold">Client Dashboard</h1>
-        <p>Welcome to the client panel.</p>
-    </div>
+        <x-dashboard.data-display.pets-table :pets="$pets"/>
 @endsection
 
 @section('notifications')
     @include('partials.dashboard.notification-bar')
-    {{--    @include('partials.dashboard.notifications', ['notifications' => $notifications])--}}
 @endsection
 
-
-{{--@extends('layouts.dashboard')--}}
-
-{{--@include('partials.dashboard.sidebar')--}}
-
-{{--@section('content')--}}
-{{--    <div class="container">--}}
-{{--        <h1>Admin Dashboard</h1>--}}
-{{--    </div>--}}
-{{--@endsection--}}
 

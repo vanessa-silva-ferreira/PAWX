@@ -19,9 +19,6 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        if (Gate::denies('viewAny', Appointment::class)) {
-            abort(403, 'Unauthorized action.');
-        }
         $user = auth()->user()->load('client');
 
         if (!$user || !$user->client) {
@@ -30,15 +27,16 @@ class AppointmentController extends Controller
 
         $client = $user->client;
 
-        $appointments = Appointment::with(['pet', 'employee', 'service.name'])
-            ->whereHas('pet', function ($query) use($client) {
+        $appointments = Appointment::with(['pet', 'employee', 'service'])
+            ->whereHas('pet', function ($query) use ($client) {
                 $query->where('client_id', $client->id);
             })
             ->orderBy('appointment_date', 'desc')
             ->paginate(10);
 
-        return view('client.appointments.index', compact('appointments'));
+        return view('pages.client.appointments.index', compact('appointments'));
     }
+
 
     public function show($id)
     {

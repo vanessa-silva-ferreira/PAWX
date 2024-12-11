@@ -39,23 +39,24 @@
                                 <path d="M10 16h4"/>
                                 <path d="M12 14v4"/>
                             </svg>
-                            <span class="ml-2">Nova</spana
+                            <span class="ml-2">Nova</span>
                         </a>
 
-                        <a
+                        @if(auth()->user()->hasRole('admin'))
+                            <a
                                 href="{{ route('admin.appointments.export') }}"
                                 class="button flex items-center px-4 py-2 text-sm text-stone-500 bg-white border border-stone-300 rounded-lg hover:bg-stone-100 focus:outline-none"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" class="lucide lucide-download">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                <polyline points="7 10 12 15 17 10"/>
-                                <line x1="12" x2="12" y1="15" y2="3"/>
-                            </svg>
-                            <span class="ml-2">Exportar</span>
-                        </a>
-
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="lucide lucide-download">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" x2="12" y1="15" y2="3"/>
+                                </svg>
+                                <span class="ml-2">Exportar</span>
+                            </a>
+                        @endif
                     </form>
                 </div>
             </div>
