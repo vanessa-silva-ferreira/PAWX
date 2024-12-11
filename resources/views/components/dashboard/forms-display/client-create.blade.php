@@ -3,7 +3,7 @@
 @endphp
 
 <div class="mx-10 my-10 bg-white p-6">
-    <x-utilities.title>Crir Cliente</x-utilities.title>
+    <x-utilities.title>Criar Cliente</x-utilities.title>
     <form action="{{ route($rolePrefix .'.clients.store') }}" method="POST" class="space-y-6 mt-16">
         @csrf
         <div class="form-group w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
