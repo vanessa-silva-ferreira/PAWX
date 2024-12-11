@@ -1,38 +1,66 @@
-# Plataforma de Gestão para Serviços de Banho e Tosa
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-## 1. Objetivo da Aplicação
-Criar uma plataforma de gestão para serviços de banho e tosa, permitindo agendamento online, controle de clientes e animais, notificações automáticas e integração com uma aplicação Android. A solução proporcionará uma interface intuitiva e eficiente tanto para os clientes quanto para os administradores, permitindo agendamentos, controle financeiro e relatórios detalhados.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## 2. Funcionalidades Principais
+## About Laravel
 
-### Para Utilizadores (Clientes):
-- [ ] **Registo/Login**: Registo simples via e-mail, redes sociais ou Google.
-- [ ] **Agendamento de Serviços**: Interface que permite a marcação de banhos, tosas e outros serviços com confirmação em tempo real.
-- [ ] **Visualização de Calendário**: Exibição de horários disponíveis para agendamento com opção de filtro por serviço, dia e hora.
-- [ ] **Notificações**: Envio de lembretes automáticos via SMS ou e-mail antes do serviço e notificação quando o animal estiver pronto para ser retirado.
-- [ ] **Histórico de Serviços**: Acesso ao histórico de agendamentos passados e futuros, com informações detalhadas dos serviços realizados.
-- [ ] **Chamada de Cortesia**: Funcionalidade que permite que o sistema envie uma notificação ou mensagem ao cliente após determinado período sem retornar, incentivando a fidelização.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-### Para Administradores (Negócio):
-- [ ] **Gestão de Agenda**: Controle completo de marcações através de um painel de calendário, com opções para ajustar horários, remarcar ou cancelar agendamentos.
-- [ ] **Base de Dados de Clientes e Animais**: Registo de clientes e seus respetivos animais, com informações detalhadas sobre cada animal, como raça, peso, tipo de pelo e histórico de serviços.
-- [ ] **Gestão de Custos**: Definição de preços personalizados com base no tipo de serviço, peso e tipo de pelo do animal, além de taxas adicionais conforme a necessidade.
-- [ ] **Orçamentos Personalizados**: Geração de orçamentos automáticos para os clientes, com cálculo baseado nos serviços escolhidos e nas características do animal.
-- [ ] **Notificações Automáticas**: Envio de mensagens automáticas para o cliente sobre o tempo médio de atendimento e a conclusão do serviço.
-- [ ] **Relatórios Detalhados**:
-  - [ ] Relatórios sobre clientes e animais.
-  - [ ] Vendas diárias, mensais e anuais.
-  - [ ] Projeções futuras com base nos históricos de serviços e sazonalidade.
-  - [ ] Feedback dos clientes para aprimoramento contínuo.
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-### Integração com Aplicação Android
-- [ ] Possibilidade de conectar a aplicação ao sistema Android, permitindo a gestão completa via dispositivo móvel.
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## 3. Plataformas
-- [ ] **Website Responsivo**: Interface adaptada para desktop e dispositivos móveis, permitindo que os clientes agendem e acompanhem serviços de qualquer dispositivo.
-- [ ] **Aplicação Móvel**: Aplicação nativa ou híbrida para Android, facilitando o acesso e a gestão em dispositivos móveis por parte dos administradores e clientes.
+## Learning Laravel
 
-## 4. Design e UX/UI
-- [ ] **Interface Amigável**: Design intuitivo e simplificado, garantindo que os clientes possam agendar serviços em poucos cliques e os administradores possam gerenciar o negócio sem complicações.
-- [ ] **Tema Responsivo**: A interface será ajustável a diferentes tamanhos de tela (desktop, tablet e telemóvel) para uma experiência de utilizador consistente em qualquer dispositivo.
-- [ ] **Acessibilidade e Usabilidade**: Foco na acessibilidade para garantir que pessoas com diferentes capacidades possam utilizar a aplicação. Testes regulares de usabilidade serão realizados para melhorias contínuas.
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+
+## Laravel Sponsors
+
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+
+### Premium Partners
+
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[WebReinvent](https://webreinvent.com/)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Jump24](https://jump24.co.uk)**
+- **[Redberry](https://redberry.international/laravel/)**
+- **[Active Logic](https://activelogic.com)**
+- **[byte5](https://byte5.de)**
+- **[OP.GG](https://op.gg)**
+
+## Contributing
+
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+
+## Code of Conduct
+
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
