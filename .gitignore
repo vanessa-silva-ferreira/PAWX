@@ -20,7 +20,7 @@ Homestead.json
 Homestead.yaml
 app/storage/
 auth.json
-bootstrap/
+bootstrap/cache/*.php
 node_modules/
 npm-debug.log
 public/hot
