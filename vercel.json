@@ -2,8 +2,25 @@
     "version": 2,
     "framework": null,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.6.0" }
+        "api/index.php": { "runtime": "vercel-php@0.7.3" }
     },
+    "github": {
+        "silent": true,
+        "autoJobCancelation": true
+    },
+    "outputDirectory": "public/build",
+    "images": {
+        "sizes": [256, 640, 1080, 2048, 3840],
+        "localPatterns": [{
+            "pathname": "^/assets/.*$",
+            "search": ""
+        }],
+        "minimumCacheTTL": 60,
+        "dangerouslyAllowSVG": false,
+        "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
+        "contentDispositionType": "inline"
+    },
+    "public": true,
     "routes": [
         {
             "src": "/(.*)",
@@ -23,6 +40,7 @@
 
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie"
+        "SESSION_DRIVER": "cookie",
+        "NODE_PATH": "node"
     }
 }
