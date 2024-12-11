@@ -20,7 +20,7 @@ Route::view('/auth', 'auth.auth')->name('auth');
 
 
 Route::get('/login', function () {
-    return view('auth.login');
+    return view('auth.auth');
 })->name('login.form');
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
@@ -97,9 +97,6 @@ Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->g
 
     Route::resource('pets', \App\Http\Controllers\Web\Client\PetController::class);
 
-//    Route::prefix('appointments')->group(function () {
-//        Route::delete('/cancel/{id}', [Client\AppointmentController::class, 'cancel'])->name('appointments.cancel');
-//    });
     Route::resource('appointments', Client\AppointmentController::class);
 });
 // CLIENT --------------------------------------------------------------------------------------------------------------------------------

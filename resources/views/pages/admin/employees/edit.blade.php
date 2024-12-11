@@ -10,7 +10,7 @@
         <div class="overflow-x-auto">
             <div class="container mx-auto">
                 <div class="mb-4">
-                    <x-utilities.title>Colaborador</x-utilities.title>
+                    <x-utilities.title>Editar Colaborador</x-utilities.title>
                     <div class=" mt-10">
 
                         <form action="{{ route('admin.employees.update', $employee->id) }}" method="POST"
@@ -82,37 +82,9 @@
                                 </div>
                             </div>
 
-                            <div class="form-group grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="relative w-full mb-6">
-                                    <x-form.input
-                                        type="password"
-                                        id="password"
-                                        name="password"
-                                        placeholder="Insira se quiser alterar"
-                                        disabled
-                                        hidden
-                                    />
-                                    <x-form.label for="password">Palavra-passe</x-form.label>
-                                    <x-form.validation-error hidden name="password"/>
-                                </div>
-
-                                <div class="relative w-full mb-6">
-                                    <x-form.input
-                                        type="password"
-                                        id="password_confirmation"
-                                        name="password_confirmation"
-                                        placeholder="Confirme se quiser alterar"
-                                        disabled
-                                        hidden
-                                    />
-                                    <x-form.label for="password_confirmation">Confirmar Palavra-passe</x-form.label>
-                                    <x-form.validation-error name="password_confirmation"/>
-                                </div>
-                            </div>
-
                             <div class="flex justify-start space-x-4 mt-6">
                                 <x-form.button class="px-8 py-2 bg-pawx-orange text-white rounded-lg">
-                                    Atualizar Colaborador
+                                    Editar Colaborador
                                 </x-form.button>
 
                                 <a href="{{ route('admin.employees.index') }}"
