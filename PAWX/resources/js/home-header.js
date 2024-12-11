@@ -8,10 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     mobileMenuButton.addEventListener('click', () => {
-        if (mobileMenu.classList.contains('hidden')) {
-            mobileMenu.classList.remove('hidden');
-        } else {
-            mobileMenu.classList.add('hidden');
-        }
+        mobileMenu.classList.toggle('hidden');
     });
 });

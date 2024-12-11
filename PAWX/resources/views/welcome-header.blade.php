@@ -1,4 +1,4 @@
-<header class="bg-white text-gray-800 p-4 lg:p-6 flex justify-between items-center shadow-md">
+<header class="bg-white text-gray-800 p-4 lg:p-6 flex justify-between items-center shadow-md relative">
     <div class="text-lg font-bold">PAWX</div>
 
     <nav class="hidden md:flex flex-wrap justify-center space-x-4 lg:space-x-6 text-sm lg:text-lg font-semibold">
@@ -28,7 +28,7 @@
         </button>
     </div>
 
-    <nav id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-md flex flex-col space-y-2 p-4">
+    <nav id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-md flex flex-col space-y-2 p-4 z-50">
         <a href="{{ route('welcome') }}" class="block hover:text-gray-500 uppercase">HOME</a>
         <a href="{{ route('welcome-services') }}" class="block hover:text-gray-500 uppercase">SERVIÇOS</a>
         <a href="{{ route('welcome-gallery') }}" class="block hover:text-gray-500 uppercase">GALERIA</a>

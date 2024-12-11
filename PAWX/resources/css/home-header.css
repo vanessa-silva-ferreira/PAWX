@@ -4,30 +4,43 @@
 .hidden {
     display: none;
 }
-
 @media (max-width: 768px) {
     #mobile-menu {
-        transition: all 0.3s ease-in-out;
+        flex-direction: column;
+        background-color: white;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        z-index: 10;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 }
-
 header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding: 1rem;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+nav a {
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: inherit;
 }
 nav {
     display: flex;
     justify-content: space-around;
     width: 100%;
 }
-
 header .text-lg {
     flex: 1;
     text-align: center;
 }
-
 header .md:hidden {
     margin-left: auto;
+}
+#sidebar {
+    transition: max-width 0.3s ease-in-out;
 }
