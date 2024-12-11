@@ -32,3 +32,4 @@ vendor/
 xdebug*.tgz
 yarn-error.log
 resources*.zip
+.vercel

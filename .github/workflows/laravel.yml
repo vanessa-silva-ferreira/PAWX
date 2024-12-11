@@ -2,11 +2,9 @@ name: Laravel Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: ['*']
   pull_request:
-    branches:
-      - '*'
+    branches: ['*']
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
