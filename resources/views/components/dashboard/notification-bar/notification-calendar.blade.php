@@ -6,8 +6,7 @@
     $rolePrefix = $user->hasRole('client') ? '' : 'admin/';
 @endphp
 
-<div id="notification-bar" class="bg-white rounded-lg p-6 w-full" data-user-role="{{ $user->getRole() }}">
-{{--<div id="notification-bar" class="bg-white rounded-lg p-6 w-full">--}}
+<div id="notification-bar" class="bg-white rounded-lg p-6 w-full hidden lg:block" data-user-role="{{ $user->getRole() }}">
     <div class="mb-4">
         <div class="flex justify-between items-center mb-4">
             <button id="prevMonth" class="text-stone-500 hover:text-stone-800 uppercase text-sm font-bold">
@@ -53,3 +52,5 @@
         <ul id="notificationList" class="list-disc list-inside text-stone-600"></ul>
     </div>
 </div>
+
+
