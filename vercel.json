@@ -27,6 +27,7 @@
             "dest": "/api/index.php"
         }
     ],
+    "buildCommand": "bash build.sh",
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
