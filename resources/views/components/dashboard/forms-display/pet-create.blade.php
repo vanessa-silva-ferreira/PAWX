@@ -16,7 +16,7 @@
     <div class="overflow-x-auto">
         <div class="container mx-auto">
             <div class="mb-4">
-                <x-utilities.title>Animal</x-utilities.title>
+                <x-utilities.title>Criar Animal</x-utilities.title>
                 <div class=" mt-10">
                     <form action="{{ route( $rolePrefix . '.pets.store') }}" method="POST" class="space-y-6"
                           enctype="multipart/form-data">

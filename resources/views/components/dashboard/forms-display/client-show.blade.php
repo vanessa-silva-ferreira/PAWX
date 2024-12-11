@@ -3,7 +3,7 @@
 @endphp
 
 <div class="mx-10 my-10 bg-white p-6">
-    <x-utilities.title>Editar Cliente</x-utilities.title>
+    <x-utilities.title>Ver Cliente</x-utilities.title>
     <form action="{{ route($rolePrefix .'.clients.update', $client->id) }}" method="POST"
           class="space-y-6 mt-16">
         @csrf

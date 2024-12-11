@@ -23,7 +23,6 @@ class ServiceController extends Controller
         }
 
         $search = $request->input('search');
-
         $query = Service::orderBy('name', 'asc');
 
         if ($search) {
@@ -32,8 +31,9 @@ class ServiceController extends Controller
 
         $services = $query->paginate(10);
 
-        return view('pages.admin.services.index', compact('services'));
+        return view('pages.admin.services.index', compact('services', 'search'));
     }
+
 
     public function show($id)
     {
