@@ -1,6 +1,6 @@
 <?php
 
-namespace app\View\Composers;
+namespace App\View\Composers;
 
 use App\Models\Appointment;
 use Illuminate\View\View;

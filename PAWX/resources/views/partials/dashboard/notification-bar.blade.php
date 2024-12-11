@@ -1,5 +1,3 @@
-@vite('resources/js/calendar.js')
-
 @php
     $rolePrefix = auth()->user()->getRole();
     $date = $date ?? now()->toDateString();
@@ -25,6 +23,7 @@
 
                 <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-white rounded-lg border border-stone-200 hidden"
                      role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                    <a href="{{url($rolePrefix . '/dashboard')}}" class="block px-4 py-2 text-stone-600 hover:bg-stone-100 hover:text-stone-800" role="menuitem" tabindex="-1" id="user-menu-item-0">Dashboard</a>
                     <a href="{{url($rolePrefix . '/account/edit')}}" class="block px-4 py-2 text-stone-600 hover:bg-stone-100 hover:text-stone-800" role="menuitem" tabindex="-1" id="user-menu-item-0">Editar Conta</a>
                     <a href="{{ route('admin.trashed.index') }}" class="block px-4 py-2 text-stone-600 hover:bg-stone-100 hover:text-stone-800" role="menuitem" tabindex="-1" id="user-menu-item-0">Lista de Removidos</a>
                     <x-action.logout />

@@ -39,7 +39,7 @@
                                 <path d="M10 16h4"/>
                                 <path d="M12 14v4"/>
                             </svg>
-                            <span class="ml-2">Nova</span>
+                            <span class="ml-2">Nova</spana
                         </a>
 
                         <a
