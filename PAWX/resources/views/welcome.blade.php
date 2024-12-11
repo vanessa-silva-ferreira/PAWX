@@ -11,138 +11,82 @@
 
 @include('welcome-header')
 
-<div class="carousel-wrapper">
-    <div class="carousel-container">
-        <div class="carousel-images"></div>
-    </div>
-</div>
-
 <section class="bg-gray-100 p-6 relative -mb-4">
-
-    <button id="prevFeedback" class="absolute left-0 top-1/2 transform -translate-y-1/2">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-    </button>
-    <button id="nextFeedback" class="absolute right-0 top-1/2 transform -translate-y-1/2">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-    </button>
-
-
-    <div id="feedbackCarousel" class="flex gap-6 overflow-hidden scroll-smooth">
-        <!-- Card 1 -->
-        <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
-            <div class="flex items-center space-x-4">
-                <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Pedro A." class="w-10 h-10 rounded-full">
-                <div>
-                    <h4 class="font-bold text-gray-800">Pedro A.</h4>
-                    <span class="text-sm text-gray-500">404 avaliações &middot; 1 de dezembro de 2024</span>
-                </div>
-                <div class="ml-auto text-green-600 font-bold text-lg">9/10</div>
-            </div>
-            <p class="text-gray-700 mt-3 text-sm">Excelente atendimento ao meu gato! Serviço simpático e cuidadoso. Recomendo muito.</p>
+    <div class="carousel-wrapper">
+        <div class="carousel-container">
+            <div class="carousel-images"></div>
         </div>
-
-
-        <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
-            <div class="flex items-center space-x-4">
-                <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Ana B." class="w-10 h-10 rounded-full">
-                <div>
-                    <h4 class="font-bold text-gray-800">Ana B.</h4>
-                    <span class="text-sm text-gray-500">34 avaliações &middot; 27 de novembro de 2024</span>
-                </div>
-                <div class="ml-auto text-green-600 font-bold text-lg">9.5/10</div>
-            </div>
-            <p class="text-gray-700 mt-3 text-sm">O meu cão adorou o corte e ficou muito mais calmo. Ambiente limpo e organizado.</p>
-        </div>
-
-
-        <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
-            <div class="flex items-center space-x-4">
-                <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="João C." class="w-10 h-10 rounded-full">
-                <div>
-                    <h4 class="font-bold text-gray-800">João C.</h4>
-                    <span class="text-sm text-gray-500">15 avaliações &middot; 25 de novembro de 2024</span>
-                </div>
-                <div class="ml-auto text-green-600 font-bold text-lg">8.5/10</div>
-            </div>
-            <p class="text-gray-700 mt-3 text-sm">Ótimo corte e tratamento para o meu cão. Preço justo e ótimo atendimento.</p>
-        </div>
-
-
-        <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
-            <div class="flex items-center space-x-4">
-                <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="Sara D." class="w-10 h-10 rounded-full">
-                <div>
-                    <h4 class="font-bold text-gray-800">Sara D.</h4>
-                    <span class="text-sm text-gray-500">22 avaliações &middot; 20 de novembro de 2024</span>
-                </div>
-                <div class="ml-auto text-green-600 font-bold text-lg">10/10</div>
-            </div>
-            <p class="text-gray-700 mt-3 text-sm">Nota 10 para o atendimento e serviços. Minha gata foi muito bem tratada.</p>
-        </div>
-
-
-        <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
-            <div class="flex items-center space-x-4">
-                <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="Miguel P." class="w-10 h-10 rounded-full">
-                <div>
-                    <h4 class="font-bold text-gray-800">Miguel P.</h4>
-                    <span class="text-sm text-gray-500">18 avaliações &middot; 18 de novembro de 2024</span>
-                </div>
-                <div class="ml-auto text-green-600 font-bold text-lg">9/10</div>
-            </div>
-            <p class="text-gray-700 mt-3 text-sm">Sempre bem atendido, recomendo! Excelente para banho e corte de unhas.</p>
-        </div>
-
-
-        <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
-            <div class="flex items-center space-x-4">
-                <img src="https://randomuser.me/api/portraits/women/6.jpg" alt="Joana F." class="w-10 h-10 rounded-full">
-                <div>
-                    <h4 class="font-bold text-gray-800">Joana F.</h4>
-                    <span class="text-sm text-gray-500">10 avaliações &middot; 15 de novembro de 2024</span>
-                </div>
-                <div class="ml-auto text-green-600 font-bold text-lg">8/10</div>
-            </div>
-            <p class="text-gray-700 mt-3 text-sm">O Meu gato adorou o banho! Muito obrigado por cuidarem tão bem dele.</p>
-        </div>
-
-
-        <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
-            <div class="flex items-center space-x-4">
-                <img src="https://randomuser.me/api/portraits/men/7.jpg" alt="Manuel R." class="w-10 h-10 rounded-full">
-                <div>
-                    <h4 class="font-bold text-gray-800">Manuel R.</h4>
-                    <span class="text-sm text-gray-500">25 avaliações &middot; 10 de novembro de 2024</span>
-                </div>
-                <div class="ml-auto text-green-600 font-bold text-lg">9.5/10</div>
-            </div>
-            <p class="text-gray-700 mt-3 text-sm">
-                Serviço impecável. O meu cão foi tratado com muito carinho e ficou super feliz. Recomendo a todos.
-            </p>
-        </div>
-
-
-        <div class="min-w-[250px] bg-white rounded-lg shadow p-4 flex-shrink-0">
-            <div class="flex items-center space-x-4">
-                <img src="https://randomuser.me/api/portraits/women/7.jpg" alt="Sofia T." class="w-10 h-10 rounded-full">
-                <div>
-                    <h4 class="font-bold text-gray-800">Sofia T.</h4>
-                    <span class="text-sm text-gray-500">18 avaliações &middot; 5 de dezembro de 2024</span>
-                </div>
-                <div class="ml-auto text-green-600 font-bold text-lg">10/10</div>
-            </div>
-            <p class="text-gray-700 mt-3 text-sm">
-                Fiquei muito satisfeita com o corte de unhas do meu gato. O ambiente era tranquilo e ele sentiu-se confortável.
-            </p>
-        </div>
-
-
     </div>
 </section>
+
+<section class="bg-gray-100 py-6">
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-4 w-full mx-auto px-0">
+        <div class="bg-white shadow-md rounded-lg p-4 relative flex flex-col items-start">
+            <span class="absolute top-2 right-2 text-blue-500 text-sm font-semibold">10/10</span>
+            <div class="flex items-center mb-3">
+                <img class="w-10 h-10 rounded-full mr-3" src="https://randomuser.me/api/portraits/women/1.jpg" alt="Sabrina">
+                <div>
+                    <h4 class="text-sm font-bold">Sabrina Alves</h4>
+                    <p class="text-xs text-gray-500">9 de dezembro de 2024</p>
+                </div>
+            </div>
+            <p class="text-sm text-gray-700">A minha gata ficou impecável após o banho e a tosquia. Atendimento fantástico!</p>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-4 relative flex flex-col items-start">
+            <span class="absolute top-2 right-2 text-blue-500 text-sm font-semibold">9/10</span>
+            <div class="flex items-center mb-3">
+                <img class="w-10 h-10 rounded-full mr-3" src="https://randomuser.me/api/portraits/women/2.jpg" alt="Carla">
+                <div>
+                    <h4 class="text-sm font-bold">Carla Carrazeda</h4>
+                    <p class="text-xs text-gray-500">7 de dezembro de 2024</p>
+                </div>
+            </div>
+            <p class="text-sm text-gray-700">A tosquia da minha cadela foi perfeita. Recomendo a todos!</p>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-4 relative flex flex-col items-start">
+            <span class="absolute top-2 right-2 text-blue-500 text-sm font-semibold">9.2/10</span>
+            <div class="flex items-center mb-3">
+                <img class="w-10 h-10 rounded-full mr-3" src="https://randomuser.me/api/portraits/men/2.jpg" alt="Lucas">
+                <div>
+                    <h4 class="text-sm font-bold">Lucas Damasco</h4>
+                    <p class="text-xs text-gray-500">6 de dezembro de 2024</p>
+                </div>
+            </div>
+            <p class="text-sm text-gray-700">O banho deixou o meu gato super cheiroso e relaxado. Adorei o atendimento!</p>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-4 relative flex flex-col items-start">
+            <span class="absolute top-2 right-2 text-blue-500 text-sm font-semibold">8.8/10</span>
+            <div class="flex items-center mb-3">
+                <img class="w-10 h-10 rounded-full mr-3" src="https://randomuser.me/api/portraits/women/3.jpg" alt="Maria">
+                <div>
+                    <h4 class="text-sm font-bold">Maria Santos</h4>
+                    <p class="text-xs text-gray-500">5 de dezembro de 2024</p>
+                </div>
+            </div>
+            <p class="text-sm text-gray-700">O meu cão adorou o banho. Atendimento impecável e muito profissional.</p>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-4 relative flex flex-col items-start">
+            <span class="absolute top-2 right-2 text-blue-500 text-sm font-semibold">9.7/10</span>
+            <div class="flex items-center mb-3">
+                <img class="w-10 h-10 rounded-full mr-3" src="https://randomuser.me/api/portraits/men/3.jpg" alt="Rui">
+                <div>
+                    <h4 class="text-sm font-bold">Rui Torres</h4>
+                    <p class="text-xs text-gray-500">4 de dezembro de 2024</p>
+                </div>
+            </div>
+            <p class="text-sm text-gray-700">Recomendo os serviços de tosquia e banho! O meu gato ficou perfeito.</p>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-4 flex items-center justify-center">
+            <div class="text-center">
+                <div class="text-3xl font-bold text-blue-500">9.53</div>
+                <p class="text-sm font-semibold text-gray-700">Excelente experiência</p>
+                <p class="text-xs text-gray-500">123 avaliações</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 
 @include('welcome-footer')
 

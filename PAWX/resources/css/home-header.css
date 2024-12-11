@@ -1,33 +1,38 @@
 #mobile-menu {
-    transition: all 0.3s ease-in-out;
+    display: none;
 }
+
 .hidden {
     display: none;
 }
 
-@media (max-width: 768px) {
-    #mobile-menu {
-        transition: all 0.3s ease-in-out;
-    }
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
 }
 
 header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding: 1rem;
-}
-nav {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-}
-
-header .text-lg {
-    flex: 1;
-    text-align: center;
+    background-color: #ffffff;
 }
 
 header .md:hidden {
     margin-left: auto;
+}
+
+@media (max-width: 768px) {
+    #mobile-menu {
+        display: block;
+    }
+    nav {
+        display: none;
+    }
+    header {
+        justify-content: center;
+    }
 }
