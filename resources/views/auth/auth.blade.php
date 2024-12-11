@@ -104,11 +104,14 @@
                         @endif
                     </div>
 
-                    <x-auth.social-buttons :buttons="[
-                        ['src' => 'https://1000logos.net/wp-content/uploads/2016/11/Google-Symbol-640x400.png', 'alt' => 'G'],
-                        ['src' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/512px-Apple_logo_black.svg.png', 'alt' => 'Apple'],
-                        ['src' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/512px-Microsoft_logo.svg.png', 'alt' => 'Microsoft']
-                    ]" dividerText="OU"></x-auth.social-buttons>
+                    <x-auth.social-buttons
+                        :buttons="[
+                                ['src' => 'https://1000logos.net/wp-content/uploads/2016/11/Google-Symbol-640x400.png', 'alt' => 'Google', 'link' => route('google.redirect')],
+                                ['src' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/512px-Apple_logo_black.svg.png', 'alt' => 'Apple', 'link' => '#'],
+                                ['src' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/512px-Microsoft_logo.svg.png', 'alt' => 'Microsoft', 'link' => '#']
+                            ]"
+                        dividerText="OU"
+                    />
 
                     <div class="h-6">
                     </div>
