@@ -13,49 +13,55 @@ document.addEventListener('DOMContentLoaded', () => {
     const carouselContainer = document.querySelector('.carousel-container');
     const carouselImages = document.querySelector('.carousel-images');
 
-    if (!carouselContainer || !carouselImages) {
-        console.error('Carousel elements not found!');
-        return;
+    if (!carouselContainer || !carouselImages) return;
+
+    const images = [pet2, pet4, pet9, pet10, pet3, pet2];
+    const totalImages = images.length;
+
+    for (let i = 0; i < 3; i++) {
+        images.forEach((src) => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = 'Carousel Image';
+            img.style.height = '550px';
+            img.style.width = 'auto';
+            carouselImages.appendChild(img);
+        });
     }
 
-    const images = [pet1, pet2, pet3, pet4, pet5, pet6, pet7, pet8, pet9, pet10];
-    images.forEach((src) => {
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = 'Carousel Image';
-        carouselImages.appendChild(img);
-    });
-
     let offset = 0;
-    const totalImages = images.length;
-    const imageWidth = carouselContainer.offsetWidth;
+    let totalCarouselWidth = 0;
 
-    carouselImages.style.display = 'flex';
-    carouselImages.style.transition = 'transform 0.5s ease-in-out';
+    function initializeCarousel() {
+        offset = 0;
+        totalCarouselWidth = carouselImages.scrollWidth;
+        carouselImages.style.transition = 'none';
+        carouselImages.style.transform = `translateX(0px)`;
+        carouselImages.offsetHeight;
+        carouselImages.style.transition = 'transform 0.2s linear';
+    }
 
-    function continuousScroll() {
+    function scrollCarousel() {
         offset -= 1;
-        carouselImages.style.transform = `translateX(${offset}px)`;
 
-        if (Math.abs(offset) >= imageWidth * totalImages) {
+        if (Math.abs(offset) >= totalCarouselWidth / 3) {
             offset = 0;
             carouselImages.style.transition = 'none';
             carouselImages.style.transform = `translateX(${offset}px)`;
-            carouselImages.offsetHeight; // Trigger reflow
-            carouselImages.style.transition = 'transform 0.5s ease-in-out';
+            carouselImages.offsetHeight;
+            carouselImages.style.transition = 'transform 0.2s linear';
         }
 
-        requestAnimationFrame(continuousScroll);
+        carouselImages.style.transform = `translateX(${offset}px)`;
+        requestAnimationFrame(scrollCarousel);
     }
 
-    continuousScroll();
+    window.addEventListener('load', () => {
+        initializeCarousel();
+        scrollCarousel();
+    });
 
     window.addEventListener('resize', () => {
-        offset = 0;
-        carouselImages.style.transition = 'none';
-        carouselImages.offsetHeight;
-        carouselImages.style.transition = '';
+        initializeCarousel();
     });
 });
-
-
