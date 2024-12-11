@@ -21,15 +21,26 @@ class DashboardController extends Controller
         $query = Appointment::with(['pet', 'employee', 'pet.client', 'service'])
             ->orderBy('id', 'desc');
 
+
         if ($search) {
             $query->where(function ($q) use ($search) {
-                $q->where('appointment_date', 'like', "%$search%")
-                    ->orWhereHas('pet', fn($q) => $q->where('name', 'like', "%$search%"))
-                    ->orWhereHas('employee', fn($q) => $q->where('name', 'like', "%$search%"));
+                $q->orWhereHas('pet', function ($subQuery) use ($search) {
+                    $subQuery->where('name', 'like', "%$search%");
+                })
+                    ->orWhereHas('service', function ($subQuery) use ($search) {
+                        $subQuery->where('name', 'like', "%$search%");
+                    })
+                    ->orWhereHas('employee.user', function ($subQuery) use ($search) {
+                        $subQuery->where('name', 'like', "%$search%")
+                            ->orWhere('email', 'like', "%$search%");
+                    })
+                    ->orWhereHas('pet.client.user', function ($subQuery) use ($search) {
+                        $subQuery->where('name', 'like', "%$search%");
+                    });
             });
         }
 
-        $appointments = $query->paginate(4);
+        $appointments = $query->paginate(5);
 
         return view('pages.admin.dashboard', compact('appointmentCount', 'totalRevenue', 'petCount', 'appointments'));
     }

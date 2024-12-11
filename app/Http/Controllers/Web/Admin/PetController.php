@@ -27,14 +27,14 @@ class PetController extends Controller
 
         $search = $request->input('search');
 
-        $query = Pet::with('client')
-            ->orderByDesc('id');
+        $query = Pet::with('client', 'breed', 'size')
+        ->orderByDesc('id');
 
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%$search%")
-                    ->orWhere('species', 'like', "%$search%")
-                    ->orWhere('breed', 'like', "%$search%")
+                    ->orWhereHas('breed', fn($q) => $q->where('name', 'like', "%$search%"))
+                    ->orWhereHas('size', fn($q) => $q->where('category', 'like', "%$search%"))
                     ->orWhereHas('client', fn($q) => $q->where('name', 'like', "%$search%"));
             });
         }
@@ -43,6 +43,7 @@ class PetController extends Controller
 
         return view('pages.admin.pets.index', compact('pets'));
     }
+
 
     public function show($id): View
     {
