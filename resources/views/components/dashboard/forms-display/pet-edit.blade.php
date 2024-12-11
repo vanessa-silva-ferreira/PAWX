@@ -235,15 +235,15 @@
                 </div>
                 <input type="hidden" id="status" name="status" value="active"/>
             </div>
-                <div class="flex gap-4 mt-6">
-                    <x-form.button class="px-8 py-2 bg-pawx-orange text-white rounded-lg mt-6">
-                        Guardar Alterações
-                    </x-form.button>
+            <div class="flex gap-4 mt-6">
+                <x-form.button class="px-8 py-2 bg-pawx-orange text-white rounded-lg mt-6">
+                    Guardar Alterações
+                </x-form.button>
 
-                    <a href="{{ route($rolePrefix . '.pets.index') }}"
-                       class="px-8 py-2 text-stone-500 bg-white border border-stone-300 rounded-lg hover:bg-stone-100 focus:outline-none mt-6 flex items-center justify-center">
-                        Voltar
-                    </a>
-                </div>
+                <a href="{{ route($rolePrefix . '.pets.index') }}"
+                   class="px-8 py-2 text-stone-500 bg-white border border-stone-300 rounded-lg hover:bg-stone-100 focus:outline-none mt-6 flex items-center justify-center">
+                    Voltar
+                </a>
+            </div>
         </form>
 </div>
