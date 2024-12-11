@@ -2,9 +2,9 @@ name: Laravel Deploy
 
 on:
   push:
-    branches: ['*']
+    branches: ["*"]
   pull_request:
-    branches: ['*']
+    branches: [ "*" ]
 
 #concurrency:
 #  group: ${{ github.workflow }}-${{ github.ref }}
@@ -46,7 +46,7 @@ jobs:
 
       - name: Node build
         run: |
-          npm ci --no-audit --omit=optional --no-fund --no-package-lock
+          npm install
           npm run build
 
       - name: Install vercel
@@ -67,8 +67,8 @@ jobs:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
-      - name: Deploy to Vercel
-        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
-        env:
-          VERCEL_ORG_ID: ${{ env.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ env.VERCEL_PROJECT_ID }}
+#      - name: Deploy to Vercel
+#        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
+#        env:
+#          VERCEL_ORG_ID: ${{ env.VERCEL_ORG_ID }}
+#          VERCEL_PROJECT_ID: ${{ env.VERCEL_PROJECT_ID }}

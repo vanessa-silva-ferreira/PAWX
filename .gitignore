@@ -10,8 +10,8 @@
 /.vscode
 /.zed
 /node_modules
-/public/build
 /public/hot
+/public/build
 /public/storage
 /storage/*.key
 /storage/pail

@@ -1,28 +1,24 @@
 {
     "version": 2,
-    "framework": null,
     "functions": {
         "api/index.php": { "runtime": "vercel-php@0.7.3" }
     },
-    "github": {
-        "silent": true,
-        "autoJobCancelation": true
-    },
-    "public": true,
     "routes": [
+        {
+            "src": "/build/assets/(.*)",
+            "dest": "/public/build/assets/$1"
+        },
         {
             "src": "/build/(.*)",
             "dest": "/public/build/$1"
-        },
-        {
-            "src": "/(favicon\\.ico|robots\\.txt|sitemap\\.xml)",
-            "dest": "/public/$1"
         },
         {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
     ],
+    "buildCommand": "npm run build",
+    "outputDirectory": "public",
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
@@ -34,7 +30,6 @@
         "VIEW_COMPILED_PATH": "/tmp",
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie",
-        "NODE_PATH": "node"
+        "SESSION_DRIVER": "cookie"
     }
 }
