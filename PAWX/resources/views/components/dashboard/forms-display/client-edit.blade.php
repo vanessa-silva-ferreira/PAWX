@@ -6,11 +6,14 @@
 @endsection
 
 @section('content')
+    @php
+        $rolePrefix = auth()->user()->getRole() === 'admin' ? 'admin' : 'employee';
+    @endphp
 
     <div class="mx-24 my-16 bg-white p-6">
-        <x-dashboard.title>Editar Cliente</x-dashboard.title>
+        <x-utilities.title>Editar Cliente</x-utilities.title>
 
-        <form action="{{ route('admin.clients.update', $client->id) }}" method="POST" class="space-y-6">
+        <form action="{{ route($rolePrefix .'.clients.update', $client->id) }}" method="POST" class="space-y-6">
             @csrf
             @method('PUT')
 
@@ -35,7 +38,7 @@
                         value="{{ old('nif', $client->user->nif) }}"
                         maxlength="9"
                     />
-                    <x-form.label for="nif">Número de Identificação Fiscal</x-form.label>
+                    <x-form.label for="nif">NIF</x-form.label>
                     <x-form.validation-error name="nif"/>
                 </div>
             </div>
@@ -107,7 +110,7 @@
                     Atualizar Cliente
                 </x-form.button>
 
-                <a href="{{ route('admin.employees.index') }}" class="px-8 py-2 bg-pawx-brown/10 text-black rounded-lg">
+                <a href="{{ route( $rolePrefix .'.clients.index') }}" class="px-8 py-2 bg-pawx-brown/10 text-black rounded-lg">
                     Voltar
                 </a>
             </div>
